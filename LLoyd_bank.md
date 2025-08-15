@@ -32,7 +32,7 @@ a. minRelicas /maxRelicas -> range for scaling
 b. metrics -> scaling cond ( e.g, CPU usage > 50 %)  
 c. works with metrics-server in cluster  
 
-Question 2: "Secrets across environments" in Azure DevOps / Kubernetes context.
+## Question 2: "Secrets across environments" in Azure DevOps / Kubernetes context.
 Let’s break it down simply for interview prep.  
 
 When we deploy app across Dev, QA , Stage , Prod , we often need different secret (DB passwords, API keys, connection strings )  
