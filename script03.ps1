@@ -1,7 +1,0 @@
-$resourceGroupName="app-grp"
-$location="North Europe"
-$networkName="app-network"
-$addressPrefix="10.0.0.0/16"
-
-New-AzVirtualNetwork -Name $networkName -resourceGroupName $resourceGroupName `
--Location $location -addressPrefix $addressPrefix
