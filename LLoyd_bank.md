@@ -28,7 +28,7 @@ spec:
 ```
 
 ## Explanation:
-. minRelicas /maxRelicas -> range for scaling
-. metrics -> scaling cond ( e.g, CPU usage > 50 %)
-. works with metrics-server in cluster
+a. minRelicas /maxRelicas -> range for scaling
+b. metrics -> scaling cond ( e.g, CPU usage > 50 %)
+c. works with metrics-server in cluster
 
