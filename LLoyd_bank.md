@@ -97,5 +97,43 @@ steps:
 
 “I’d start by checking the Azure DevOps pipeline logs to find the failing step, then verify service connections, artifacts, and production configurations. I’d also check Azure Monitor/App Insights for runtime errors. If I can’t resolve quickly, I’d rollback to the last working deployment and then debug in a safe environment.”
 
+## ques 4 : how did you check Health of conatiner configuration in k8s.  
 
+### Types of Health checks.  
+#### 1. Liveness Probe: Ensure if the container is alive , if fails , k8s restart the conatiner.  
+#### 2. Readiness Probe : checks if the container is ready ti accepts, if it fails, traffic is not sent to it.  
+#### 3. Startup Probe : Ensures slow-starting apps get enough time before k8s starts liveness checks.  
+ ```yaml
 
+apiVersion: v1
+kind: Pod
+metadata:
+  name: myapp-pod
+spec:
+  containers:
+  - name: myapp
+    image: myapp:latest
+    ports:
+    - containerPort: 8080
+    livenessProbe:
+      httpGet:
+        path: /health
+        port: 8080
+      initialDelaySeconds: 10
+      periodSeconds: 5
+    readinessProbe:
+      httpGet:
+        path: /ready
+        port: 8080
+      initialDelaySeconds: 5
+      periodSeconds: 5
+
+```
+### How it works  
+. LivenessProbe -> if /health fails repetadely, pod is restarting.
+. readinessProbe -> if /ready  fails, pod stays running but is removed the service load balancer.  
+. Startup Probe -> (Optional) Prevents liveness from killing slow-starting apps.  
+ 
+ 💡 Quick Interview Answer:
+
+“In Kubernetes, I configure liveness, readiness, and startup probes in the pod spec. Liveness ensures the container is restarted if unresponsive, readiness ensures it only gets traffic when ready, and startup helps with slow initializations. This keeps the application stable and reliable.”
