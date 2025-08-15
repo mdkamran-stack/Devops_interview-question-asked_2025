@@ -6,6 +6,7 @@ HPA in kubernetes automatically adjust the number of pod replicas in a deploymen
 This ensures the application scales up under high load and scale down during low usage, optimizing cost and performance.
 
 ## Basic HPA Example (YAML)
+```yml
 apiVersion: autoscaling/v2
 kind: HorizontalPodAutoscaler
 metadata:
@@ -24,6 +25,7 @@ spec:
       target:
         type: Utilization
         averageUtilization: 50
+    ```
 
 ## Explanation:
 . minRelicas /maxRelicas -> range for scaling
