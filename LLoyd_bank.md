@@ -25,7 +25,7 @@ spec:
       target:
         type: Utilization
         averageUtilization: 50
-    ```
+```
 
 ## Explanation:
 . minRelicas /maxRelicas -> range for scaling
