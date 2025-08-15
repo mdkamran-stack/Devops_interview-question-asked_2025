@@ -71,7 +71,31 @@ steps:
     KeyVaultName: 'my-dev-kv'
     SecretsFilter: '*'
     RunAsPreJob: true
-```
+```  
+## Question 3 If is prod deploy failing how troubeshoot.  
+
+### 1 Check pipeline Logs
+  . identify which stage failed (build, test,deploy)  
+  . Looks for specific error message and failed task.  
+### 2 Verify service connections  
+  . Ensure Azure service connection is valid and cred haven't expired.
+### 3 Validate deployment artifacts.  
+  .  check if build artifacts are generated and match expected version.  
+  . confirm integrity of container images or packages.  
+### 4 check infrastucture readiness  
+  . validate target env availability (App Service , AKS , VM).  
+  . verify network connectivity and firewall rules.  
+### 5 Review secrets and configurations.  
+  . Ensure environment variables, secrets and conf file are corrected for pod.  
+### 6 check deployment strategies.  
+   . if using Blud-Green /canary, verify routing and rollback points.  
+### 7 Use azure monitoring & App insights.  
+    . check logs, metrics, and alert to identify and rollback issues.  
+### 8 Rollback if Needed  
+     . Use last successful build or inrastructure snapshort to restore service.  
+### 💡 Quick 10-sec interview answer:
+
+“I’d start by checking the Azure DevOps pipeline logs to find the failing step, then verify service connections, artifacts, and production configurations. I’d also check Azure Monitor/App Insights for runtime errors. If I can’t resolve quickly, I’d rollback to the last working deployment and then debug in a safe environment.”
 
 
 
