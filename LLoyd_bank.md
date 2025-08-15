@@ -136,4 +136,80 @@ spec:
  
  💡 Quick Interview Answer:
 
-“In Kubernetes, I configure liveness, readiness, and startup probes in the pod spec. Liveness ensures the container is restarted if unresponsive, readiness ensures it only gets traffic when ready, and startup helps with slow initializations. This keeps the application stable and reliable.”
+“In Kubernetes, I configure liveness, readiness, and startup probes in the pod spec. Liveness ensures the container is restarted if unresponsive, readiness ensures it only gets traffic when ready, and startup helps with slow initializations. This keeps the application stable and reliable.”  
+
+## In Kubernetes, How the auto-healing mechanism automatically detects and recovers from failed workloads without manual intervention.  
+
+### How Auto Healing works.  
+
+1  **Liveness Probes**  
+ . If a container becomes unresponsive or unhealthy, the **liveness Probe** triggers at restart.
+2  **ReplicaSet/Deployment Controller**
+  . Ensure the desired no.of pod always running.
+  . if a pod crashes or deleted a new pod will automatically created.  
+3  **Node Failure Recover**
+  . If pod goes down a qubescheduler will shedule a new nodes.  
+4. **Horizontal pod Autoscaler (HPA)**
+  . Not exactly healing, but it can automatically scale pod up/Down to avoid overload failures.
+
+  ### Example Deployment with Auto-Healing
+  ```yaml
+  apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: myapp
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: myapp
+  template:
+    metadata:
+      labels:
+        app: myapp
+    spec:
+      containers:
+      - name: myapp
+        image: myapp:latest
+        ports:
+        - containerPort: 8080
+        livenessProbe:
+          httpGet:
+            path: /health
+            port: 8080
+          initialDelaySeconds: 10
+          periodSeconds: 5
+```
+💡 Quick Interview Answer:  
+ 
+ "K8s auto-heals workloads by restarting unhealthy containers using liveness probes, rescheduling pods to healthy nodes if a node fails and maintaining the desired replica count via **ReplicaSets**. This ensures minimal downtime without manual intervention."
+
+## Question :  
+### What are key factors to secure kubernetes cluster.
+
+1 **API Server & Access Control**
+ . Enable RBAC 
+ . use AzureAD INtegration for AKS authentication.
+ . Restrict API server access with authorized IP ranges.  
+  
+2 **Network Security**
+ . Implement Network policies to control pod-to-pod and pod to external traffic.
+ . Use Azure NSG & firewall for cluster
+ . Disable public access to sensitive services.
+3 **Pod Security**
+ . Enforce Pod Security Standards. OPA/Gatekeeper to prevent running privileged containers.
+ . Run containers as non-rot users.
+ . Limit conatiner capabilities.
+ 4 **Secrets Management**
+  . Store secrets in azure key-vault, not plain-text in manifests.
+  . Enable kubernetes Secrets encryption at rest.
+ 5 **Cluster Maintenance**  
+  . Regular patch and updates k8s version & node OS.
+  . Use Azure Defender for k8s for runtime threat detection.  
+  6 **Image Security**  
+  . Use only trusted images from private registry(ACR).  
+  . Scan images for vulnerabilities with Microsoft Defender.
+
+💡 Quick 15-sec answer for interviews:
+
+“I secure AKS clusters by enforcing RBAC, network policies, and pod security standards, integrating with Azure AD, storing secrets in Key Vault, scanning images for vulnerabilities, and enabling monitoring and threat detection with Azure Defender.”
