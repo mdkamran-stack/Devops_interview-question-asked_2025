@@ -20,6 +20,6 @@ Tools & Services used:
 
 Stages in in CI/CD Pipeline.
 
-Build > Dev > QA > Stage > Prod
------------------  -------------
-Lower Env          Upper ENV
+| Build | Dev | QA | Stage | Prod |
+|-------|-----|----|-------|------|
+| Lower Env | → | → | Upper ENV | → |
