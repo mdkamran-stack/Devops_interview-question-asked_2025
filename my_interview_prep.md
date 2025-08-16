@@ -23,3 +23,7 @@ Stages in in CI/CD Pipeline.
 | Build | Dev | QA | Stage | Prod |
 |-------|-----|----|-------|------|
 | Lower Env | → | → | Upper ENV | → |
+
+##Question: What is Azure App service.  
+
+Azure App Service is a fully managed PaaS that lets you build, deploy, and scale web apps and APIs quickly without managing infrastructure, with built-in CI/CD, scaling, and security.
