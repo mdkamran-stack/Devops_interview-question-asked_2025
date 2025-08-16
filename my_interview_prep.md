@@ -10,13 +10,13 @@ For CD, We used AzurePipeline to deploy first to a staging slot of the azure App
 We integrated approval gates in Azure DevOps Env, so production deployment required sign-off from the product owner it cant deployed until unless approval not granted.
 if needed we could instantly roll back by swapping slot back.
 
-Tools & Services used:
-. Azure Repos for source code.
-. Azure Pipeline (yaml) for build & release automation.
-. SonarQube for static code analysis.
-. AzureArtifact for artifact storage and package management.
-. Terrfaorm for infra as Code.
-. Azure App Service and AKS for hosting application.
+###  Tools & Services used:  
+. Azure Repos for source code.  
+. Azure Pipeline (yaml) for build & release automation.  
+. SonarQube for static code analysis.  
+. AzureArtifact for artifact storage and package management.  
+. Terrfaorm for infra as Code.  
+. Azure App Service and AKS for hosting application.  
 
 Stages in in CI/CD Pipeline.
 
