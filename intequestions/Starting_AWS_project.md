@@ -17,71 +17,82 @@ While creating user
 
 login to ec2 instance
 
-## Docker installations:
+# Docker installations & Kubectl and terraform sciprt in one short
 
-Install Docker on Ubuntu 24.04 (EC2)
-Step 1: Update system  
-sudo apt update && sudo apt upgrade -y  
+```bash
+#!/bin/bash
+set -e
 
-Step 2: Install required packages  
-sudo apt install -y ca-certificates curl gnupg lsb-release  
+echo "🚀 Starting setup on Ubuntu 24.04 LTS..."
 
-Step 3: Add Docker’s official GPG key  
-sudo install -m 0755 -d /etc/apt/keyrings  
-curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /etc/apt/keyrings/docker.gpg  
+#######################################
+# 1. Remove old installations
+#######################################
+echo "🧹 Removing old Docker, Terraform, and kubectl..."
+sudo apt-get remove -y docker docker.io docker-doc docker-compose podman-docker containerd runc || true
+sudo apt-get purge -y terraform kubectl || true
+sudo snap remove kubectl || true
+sudo rm -f /snap/bin/kubectl
+hash -r || true
 
-sudo chmod a+r /etc/apt/keyrings/docker.gpg  
+#######################################
+# 2. Install Docker
+#######################################
+echo "📦 Installing Docker..."
+sudo apt-get update -y
+sudo apt-get install -y ca-certificates curl gnupg lsb-release
 
-Step 4: Setup Docker repository  
+sudo install -m 0755 -d /etc/apt/keyrings
+curl -fsSL https://download.docker.com/linux/ubuntu/gpg | \
+    sudo gpg --dearmor -o /etc/apt/keyrings/docker.gpg
+
 echo \
   "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.gpg] \
   https://download.docker.com/linux/ubuntu \
   $(lsb_release -cs) stable" | \
-  sudo tee /etc/apt/sources.list.d/docker.list > /dev/null  
+  sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
 
-Step 5: Install Docker Engine  
-sudo apt update  
-sudo apt install -y docker-ce docker-ce-cli containerd.io     docker-buildx-plugin docker-compose-plugin  
+sudo apt-get update -y
+sudo apt-get install -y docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
 
-Step 6: Start and enable Docker  
-sudo systemctl start docker  
-sudo systemctl enable docker  
+#######################################
+# 3. Install kubectl (v1.30 stable)
+#######################################
+echo "☸️ Installing kubectl..."
+curl -fsSL https://pkgs.k8s.io/core:/stable:/v1.30/deb/Release.key | \
+    sudo gpg --dearmor -o /etc/apt/keyrings/kubernetes-apt-keyring.gpg
 
-Step 7: Verify installation  
-docker --version  
+echo "deb [signed-by=/etc/apt/keyrings/kubernetes-apt-keyring.gpg] \
+  https://pkgs.k8s.io/core:/stable:/v1.30/deb/ /" | \
+  sudo tee /etc/apt/sources.list.d/kubernetes.list > /dev/null
 
-## Install kubectl on Ubuntu 24.04  
-Step 1: Update packages  
-sudo apt update  
+sudo apt-get update -y
+sudo apt-get install -y kubectl
 
-Step 2: Download the latest stable release of kubectl
-curl -LO "https://dl.k8s.io/release/$(curl -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl"  
+# Ensure correct kubectl path
+sudo rm -f /snap/bin/kubectl
+hash -r
 
-Step 3: Make it executable & move to PATH  
-chmod +x kubectl  
-sudo mv kubectl /usr/local/bin/  
+#######################################
+# 4. Install Terraform
+#######################################
+echo "🌍 Installing Terraform..."
+curl -fsSL https://apt.releases.hashicorp.com/gpg | \
+    sudo gpg --dearmor -o /etc/apt/keyrings/hashicorp-archive-keyring.gpg
 
-Step 4: Verify installation  
-kubectl version --client  
+echo "deb [signed-by=/etc/apt/keyrings/hashicorp-archive-keyring.gpg] \
+  https://apt.releases.hashicorp.com $(lsb_release -cs) main" | \
+  sudo tee /etc/apt/sources.list.d/hashicorp.list > /dev/null
 
-You should see something like:  
+sudo apt-get update -y
+sudo apt-get install -y terraform
 
-Client Version: v1.30.x  
+#######################################
+# 5. Verify versions
+#######################################
+echo "✅ Versions installed:"
+docker --version
+kubectl version --client
+terraform version
 
-## Install Terraform on Ubuntu 24.04 
-
-Step 1: Update and install required packages    
-sudo apt update && sudo apt install -y gnupg software-properties-common curl  
-
-Step 2: Add HashiCorp GPG key  
-curl -fsSL https://apt.releases.hashicorp.com/gpg | sudo gpg --dearmor -o /usr/share/keyrings/hashicorp-archive-keyring.gpg  
-
-Step 3: Add HashiCorp repository  
-echo "deb [signed-by=/usr/share/keyrings/hashicorp-archive-keyring.gpg] https://apt.releases.hashicorp.com $(lsb_release -cs) main" | sudo tee /etc/apt/sources.list.d/hashicorp.list  
-
-Step 4: Install Terraform  
-sudo apt update  
-sudo apt install -y terraform   
-
-Step 5: Verify installation  
-terraform -version  
+```
