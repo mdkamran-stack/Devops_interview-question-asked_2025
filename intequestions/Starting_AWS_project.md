@@ -55,6 +55,13 @@ echo \
 sudo apt-get update -y
 sudo apt-get install -y docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
 
+# Add ubuntu user to docker group
+echo "👤 Adding 'ubuntu' user to docker group..."
+sudo usermod -aG docker ubuntu
+newgrp docker <<EONG
+echo "🔄 Switched to docker group inside script"
+EONG
+
 #######################################
 # 3. Install kubectl (v1.30 stable)
 #######################################
