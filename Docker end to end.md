@@ -15,12 +15,7 @@ A container is a runtime instance of an image.
 
 ## Dockerfile commands/Instructions
 
-
-1. FROM  >> copy instruction is used to copy files and directory from host machine to docker image.
-
-2. ADD >> additional feature like exteracting tar ball and copyin url if user want to extract file recommended to use ADD .
-
-3. Option for persistent storage in docker:
+### Option for persistent storage in docker:
 
 there is 2 option 1 . Volume  & 2 Bind mount 
 
@@ -34,9 +29,11 @@ Docker file is text file that uses to assemble docker image , docker image is cu
 
 There are couple of instructions 
 
-## 1: FROM >> Docker file starts with from instruction it will create base image layer after that each instruction will add further layer.
+## 1: FROM >> copy instruction is used to copy files and directory from host machine to docker image.
 
 ## 2: COPY : which copy a file from a host m/c to Image.
+
+## ADD >> additional feature like exteracting tar ball and copyin url if user want to extract file recommended to use ADD .
 
 ## 3: RUN : it is used to run a cmd inside an image
 
