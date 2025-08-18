@@ -29,15 +29,18 @@ Docker file is text file that uses to assemble docker image , docker image is cu
 
 There are couple of instructions 
 
-## 1: FROM >> copy instruction is used to copy files and directory from host machine to docker image.
+## Docker file is text file is uses instruction to build docker image, it is custom image we can build accourding to our need.
+
+## 1: FROM >> it is first insrction which cretae base image layer after that each instruction add further layers.
 
 ## 2: COPY : which copy a file from a host m/c to Image.
-
-## ADD >> additional feature like exteracting tar ball and copyin url if user want to extract file recommended to use ADD .
 
 ## 3: RUN : it is used to run a cmd inside an image
 
 ## 4: ENV it set the evironemtal variable that can be used inside docker file.
 
 ## 5: CMD it specify what command runs when the container starts Just the the "ENTRYPOINT" to do the same job.
+
+## Diff b/w add and copy >> both add and copy instruction servers for same purpose copy a file but as per official recommendation to use copy instaed of add coz its more transparent and starightforward the copy inst is used to copy a file or directoy from our host m/c into docker image.
+## ADD instruction has additonal capabilities such as extracting tar ball & cpying remote URL:
 
