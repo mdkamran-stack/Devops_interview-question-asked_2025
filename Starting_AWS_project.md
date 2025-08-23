@@ -138,13 +138,16 @@ go --version
 
 sudo apt install golang-go
 
-go build -o product-catalog >> its creating a build -o stands dest.
+go build -o product-catalog >> its creating a build & download dependencies -o stands dest.
 
 ls -ltr 
 
 ./product-catalog
 
 ```
+## As a first step we create docker file
+## 2: build docker image
+## 3: we will containerize it.
 
 ## containerized of first micro-service -product catalog
 
@@ -174,16 +177,24 @@ COPY ./products/ ./products/
 
 COPY --from=builder /usr/src/app/product-catalog/ ./
 
-ENV PRODUCT_CATALOG_PORT 8088 
+ENV PRODUCT_CATALOG_PORT=8088 
 ENTRYPOINT [ "./product-catalog" ]
 
 ```
 Now we have to build
 
 ```bash
-docker build -t github acc name/product-catalog:v1 .
-
+docker build -t github acc kamran112/product-catalog:v1 .
 docker images |grep kamran
+docker run kamran112/product-catalog:v1
+
+We follows developers documents reg ENV variable & version and follows the documents
+
+start the daemon 
+install the dependecies
+complitaion 
+Build dir where executable & jar file put 
+
 
 ```
 ## Containerization of AD microservice.java
@@ -269,9 +280,12 @@ ENV AD_PORT 9099
 ENTRYPOINT ["./build/install/opentelemetry-demo-ad/bin/Ad"]
 
 
-docker build -t kamra/adservice:v1 .
+docker build -t kamran112/adservice:v1 .
 
 docker run kamran/adservice:v1
+
+We have containerized java microservice and GO microservice as well.
+
 
 ```
 
@@ -388,7 +402,7 @@ docker compose up -d ## running in BG
 
  1: Provider > Its telling where to create resource aws/azure  
  2: Resource > Says which resource want to create eg: EC2,S3 bucket. 
- 3: Varible block > basically pass varibales to actual terrafom file.  
+ 3: Varible file > basically pass varibales to actual terrafom file.  
  4: output.tf > what output you want to see if its successful.  
 
 
@@ -419,6 +433,7 @@ resource "aws_dynamodb_table" "basic-dynamodb-table" {
 }
   
 ```
+## In organization if anyone want to provison any resources first we will check respective module if its there then we will invoke the module from main.tf.
 
 ## VPC and EKS Cluster part-1
 
@@ -427,6 +442,12 @@ vpc >> should associate private sbnet should be connected with NAT Gateway attac
 for public subnet should be connected to  IGW to access from internet 
 
 To assicate public subnet we need "ROute table" will be associated with NAT Gateway as well as IGW and then associate the private n public subnet with route table.
+
+step 1: create private subnet 
+step2: create NAT gateway
+step3: Route table will be connected to NAT gateway then both subnet & Route table will be associte.
+
+
 
 These concept in aws Vermalla video refer
 
@@ -439,17 +460,19 @@ modules are reusable  thats why in module they invoke and ececuted in their code
 1: i am role >> cluster
 2: i am role >> Node
 
+## This is for k8s controlplane component.  
 1: i am cluster
-2: policy
-3: eks cluster
-4: i am role node
-5: policy attach to i am role
+2: policy attached the policy with IAM role
+3: eks cluster which will complete the control plane.  
+## This is for k8s data plane component.
+4: i am role for  node
+5: create a policy attach to i am role
 6: Node gorup attach it to EKS cluster
 
 
 # In interview they ask where is your module stored?
 
-As devops engineer we have a centralize location within organization where we store all the module like EKS , VPC , we souce that module to particaular line
+As devops engineer we have a centralize location within organization where we store all the module like EKS , VPC , we souce invoke that module using this particular line
 
 Eg: moulde "vpc" {
   source = "./modules/vpc"
@@ -476,9 +499,17 @@ sudo ./aws/install --bin-dir /usr/local/bin --install-dir /usr/local/aws-cli --u
 
 aws eks update-kubeconfig --region us-west-2 --name my-eks-cluster  
 
-kubectl config view
-kubectl config current-context
-kubectl get nodes
+kubectl config view >> to list the cluster
+kubectl config current-context >> To switch to desired cluster
+kubectl get nodes  >> Get nodes i am connect to EKS cluster
+aws eks update-kubeconfig --region us-west-2 --name my-eks-cluster >> To add cluster in qube config
+
+kubectl config view >> see the EKS cluster.
+
+kubectl config current-context >> show my current context
+
+kubectl sa >> service account
+kubectl get sa -n kube-system
 
 ```
 
@@ -493,15 +524,15 @@ kubectl get sa -n kube-system
 
 service acc of k8s Should be assigned with cluster role via binding resource.
 
-Basically we will create a cluster role and defining permission on it then using binding to service account to role.
+Basically we will create a cluster role and defining permission on it then using role binding or clsuter roel binding to service account to role.
 
 ## Kubernetes Deployment
 
-deployment is resposible for Healing and scaling.  
+deployment is resposible for Healing and scaling in k8s.
 
 ## Kubernetes services. 
 
-Service is responsible for service discovery  
+Service is responsible for service discovery & its reconize using lables & selectors.
 
 ## Deploying the project on kubernetes PART-1
 
@@ -529,6 +560,11 @@ ports
 env  are provided by developer
 volume
 
+## 3 types of service 
+1 Nodeport >> Network within VPC 
+2 cluster IP >> Only within cluster access.
+3 Loadbalancer >> API talk to ccm anyboday can talk to it.
+
 # Deploying the project on kubernetes PART-3
 
 ```bash
@@ -549,12 +585,36 @@ kubectl get pods
 
 kubectl get svc
 
-kubectl get svc |grep frontendproxy
+ kubectl get svc |grep frontendproxy
+ kubectl edit svc opentelemetry-demo-frontendproxy
+In last we have to change the cluster ip to LoadBalancer so we will access the application. (its is not a good approcah)
+
+ kubectl get svc opentelemetry-demo-frontendproxy
+
 ```
 
 kubectl edit svc svc name  ## in the last change cluster ip to LoadBalancer wait 5 mins for reflect.
 
 we deploy kubernetes cluster using LoadBalancer service type
+
+## Interview Question what is different b/w loadbalancer service tyoe and Ingress
+
+If it is http & i want to make it HTTPS then we have to add certificate manually so there is no keeping track of it so its lack of declarative approach.
+f5 LB Ngix no one is supporting k8S.
+
+IT is cost in-effective approach for each n evry service we have to create LB 
+
+CCM is only create ALB load balancer lack of felxibility.
+
+How abt doing on cluster that doesnt have CCM component.
+
+Ingress is good approach it can be define declarative LB can be updated and modified.
+
+Cost-effective One LB can send route req to 100s of microservice typically hostbased or pathbase routing it is also very cost effective.
+
+## anyotherways to advantage of using service of LB.
+only one advantage very easy to configure goto service & change type to service type LB, Helm chart all can be reduced.
+
 
 LB >> API >> CCM >> AWS >> LB & lb connect to LB
 Last LB attached to service LB anyone can access from external.
@@ -566,6 +626,9 @@ ccm cloud control manager
 3> ALB > You will be tied to the Alb load balancer itself. (lack of flexibility)
 
 4> CCM how about doing it on a cluster that does not have Cloud control manager or CM component load balancer? Service type will not work.
+
+## Interview Ques: When do you create Inress
+Only service that needs external access is fronted proxy will create ingress resource Everythin else we dont need ingress resouce we only create service & deployment for frontend For Frontend Proxy we create Service deployment and Ingress as well.
 
 ## Ingress > So first advantage of using ingress it can be defined in declarative approach.
 
@@ -600,22 +663,40 @@ Now we will proceed how to create ALB controller & by suing ingress how to acces
 ## Deploy the ALB ingress controller.
 
 ```
-kubectl version  
+eksctl version  
+
+Installation of eksctl
+------------------
+curl -sSLO "https://github.com/eksctl-io/eksctl/releases/latest/download/eksctl_$(uname -s)_amd64.tar.gz"
+  
+  tar -xvzf eksctl_$(uname -s)_amd64.tar.gz
+
+sudo mv eksctl /usr/local/bin
+
+eksctl version
+
+kubectl config current-context >> To check i am connectd to cluster
+
 kubectl config current-context  
 ```
-Interview QUES: How can a pod within a EKS cluster perform an activity with resp to resource outside of kubernetes cluster?
+## Interview QUES: How can a pod within a EKS cluster perform an activity with resp to resource outside of EKS cluster?
 
 Every pod has a service account We will create IAM role & assign policy with reqd permission to IAM role as an step we will connect service ACC with IAM role through
 IAM OIDC provider.
-```
+
+```bash
+Setup ALB add on.
 export cluster_name=my-eks-cluster
+
 oidc_id=$(aws eks describe-cluster --name $cluster_name --query "cluster.identity.oidc.issuer" --output text | cut -d '/' -f 5)  
+
 echo $oidc_id  
 ```
 
 Now we will associtae iam oidc to cluster
-```
-eksctl utils associates-iam-oidc-provider --cluster $cluster_name --approve 
+
+```bash
+eksctl utils associate-iam-oidc-provider --cluster $cluster_name --approve 
 ```
 Download IAM policy
 
@@ -680,15 +761,12 @@ helm repo update eks
 Install
 
 ```
-helm install aws-load-balancer-controller eks/aws-load-balancer-controller \            
-  -n kube-system \
-  --set clusterName=my-eks-cluster
-  --set serviceAccount.create=false \
-  --set serviceAccount.name=aws-load-balancer-controller \
-  --set region=  ## provide region
-  --set vpcId= ## undere eks cluster go to VPC Ntworking info & copy.
+helm install aws-load-balancer-controller eks/aws-load-balancer-controller -n kube-system --set clusterName=my-eks-cluster --set serviceAccount.create=false --set serviceAccount.name=aws-load-balancer-controller --set region=us-west-2 --set vpcId=291515988309
 ```
-
+```bash
+command to check logs in kube-system
+kubectl logs aws-load-balancer-controller-5476bcb474-c2h2w -n kube-system
+```
 Verify that the deployments are running.
 
 ```
@@ -704,6 +782,8 @@ kubectl logs pod id
 
 cd ultimate project
 cd frontendproxy/
+
+Inress.yaml for fronted proxy 
 
 vi ingress.yaml
 ```
@@ -731,7 +811,15 @@ spec:
 ```
 kubectl apply -f ingress.yaml
 
+if somehow address not showing then we have to troubleshoot.
+
 kubectl get ing
+
+kubectl get pods -n kube-system
+
+kubectl logs Loadbalanser name -n kube-system
+
+
 
 vi /etc/hosts
 
@@ -763,100 +851,308 @@ we can check by whatsmydns.net
 
 # CI/CD
 
+CI GItHub action
+
+On Every pull request happen Once code checkout then automatically CI ran ci pipeline ran Unit test and then Static code analysis happen and ran build & create docker image & scan the docker image push newly created image and update the k8s manifeat. once CI passed developer create a PR 
+CD : Using Argo CD & deploy new image to k8S cluster.
+
 CI operate build integration
 CD operates Delivery
 
-## Github Action is CI orchestrator that is provided by Github.
+## What is Github Action 
+Github Action is CI orchestrator that is provided by Github.
 
-If we have source code in github repo we have to create a folder .github & workflows
-& within .github we need to place yaml file which will instruct Github action what needs to be run
+If we have source code in github repo we have to create a folder .github & workflows & within .github we need to place yaml file which will instruct Github action what needs to be run
 
-This yaml file provide all the instructions what needs to be done, Github provide Action this action provide module, like action provide cloning a repository no need to git use git clone , simillary for docker login we no need to write docker login
-or push cmd simillary for java , Go , all thie we write in yaml file is the github action that why it is called github action CI,coz github provide plugin/module which wil place yaml file within the workflow we will write action
+This yaml file provide all the instructions what needs to be done, Github provide Action this action provide module, like action provide cloning a repository no need to git use git clone , simillary for docker login we no need to write docker login or push cmd simillary for java , Go , all thie we write in yaml file is the github action that why it is called github action CI,coz github provide plugin/module which wil place yaml file within the workflow we will write action
 
 
-CI file:
+CI file: Always start as below
 
 Name: product
 on : pull/push
 jobs: build 
-runs: ubnut-latest
+runs on : ubnut-latest
 steps checkout
-build 
+- build
+- unit test
+
+
+#
+# Gitub Action Implementing CI for a microservice
+
+# CI for product catalog Service
+
+name: product-catalog-ci
+
+on: 
+    pull_request:
+        branches:
+        - main
+
+jobs:
+    build:
+        runs-on: ubuntu-latest ## we can put self-hosted runner as well.
+
+        steps:
+        - name: checkout code
+          uses: actions/checkout@v4
+
+        - name: Setup Go 1.22
+          uses: actions/setup-go@v2
+          with:
+            go-version: 1.22
+        
+        - name: Build
+          run: |
+            cd src/product-catalog
+            go mod download
+            go build -o product-catalog-service main.go
+
+        - name: unit tests
+          run: |
+            cd src/product-catalog
+            go test ./...
+    
+    code-quality:
+        runs-on: ubuntu-latest
 
+        steps:
+        - name: checkout code
+          uses: actions/checkout@v4
+        
+        - name: Setup Go 1.22
+          uses: actions/setup-go@v2
+          with:
+           go-version: 1.22
+        
+        - name: Run golangci-lint
+          uses: golangci/golangci-lint-action@v6
+          with:
+            version: v1.55.2
+            run: golangci-lint run
+            working-directory: src/product-catalog
 
+    docker:
+        runs-on: ubuntu-latest
 
+        needs: build
 
+        steps:
+        - name: checkout code
+          uses: actions/checkout@v4
 
+        - name: Install Docker
+          uses: docker/setup-buildx-action@v1
+        
+        - name: Login to Docker
+          uses: docker/login-action@v3
+          with:
+            username: ${{ secrets.DOCKER_USERNAME }} ## for that we need secrets in github proj sett secret & action Repository n secret.
 
+            password: ${{ secrets.DOCKER_TOKEN }}
+            Under Docker hub acc settings personel access token & place that on Action secret value under github. with name Docker_Token
 
+        - name: Docker Push
+          uses: docker/build-push-action@v6
+          with:
+            context: src/product-catalog
+            file: src/product-catalog/Dockerfile
+            push: true
+            tags: ${{ secrets.DOCKER_USERNAME }}/product-catalog:${{github.run_id}}
 
+    
+    updatek8s:
+        runs-on: ubuntu-latest
 
+        needs: docker  ## This job is dependent on above job 
 
+        steps:
+        - name: checkout code
+          uses: actions/checkout@v4
+          with:
+            token: ${{ secrets.GITHUB_TOKEN }} ## grant the access my personel access token. goto user sett dev sett personal access token classic new token.
 
+        - name: Update tag in kubernetes deployment manifest
+          run: | 
+               sed -i "s|image: .*|image: ${{ secrets.DOCKER_USERNAME }}/product-catalog:${{github.run_id}}|" kubernetes/productcatalog/deploy.yaml
+        
+        - name: Commit and push changes
+          run: |
+            git config --global user.email "abhishek@gmail.com"
+            git config --global user.name "Abhishek Veeramalla"
+            git add kubernetes/productcatalog/deploy.yaml
+            git commit -m "[CI]: Update product catalog image tag"
+            git push origin HEAD:main -f
+            
 
 
+## What kind of static code you dela with .
 
+we deal with developers not using functions created a function but not invoking function or using deprecated modules so static check failed.
 
 
+# CD Intro GitOps using argo CD
 
+-------------------------
 
+In CI part we have seen 
 
+GitHub Action  we have multiple stages for continuous integartion
+----------------------------------------------------------------
+we see Build >> Unit test >> docker image creation & push >> Finally updates k8s manifest .
 
+# CD picks up this k8s manifest updated verison & deploy on k8s cluster.
 
+CD tool we used GitOps is an approach where k8s manifest which got updated by CI stage stored in version control system, CD Argo CD read this changes and deploy them to target platform k8s.
 
+1: Automatic deployment:
 
+Gitops pick changes from version control system and deploy into target system.
 
+2: Reconciliation: if someone change in cluster from v2 to v1 Argocd continously monitoring and it will change to previous state, because in Gitops version contolr is source of truth if ci updates a particular new version from v1 to v2 only then Argo CD pickup this version and deploy to k8s, state is maintain by Argo deploy in existing version in vcs.
 
+## CD PART 
 
+1 install ARGOCD 
 
+2 kubectl get pods -n argocd
 
+kubectl get svc -n argocd  ## argocd server is user interface of argocd
 
+kubectl edit svc argocd-server -n argocd ## service type LoadBalancer
 
+kubectl get secret -n argocd  ## wll see argocd secret 
 
+kubectl edit secret argocd-initial-admin-secret -n argocd  ## copy passwd
 
+it is base 64 encode we have to decode it
 
+echo passwd == |base64 --decode  ## now we can login to argocd
 
+Now we'll configuring argocd
 
+create application 
 
+Sync policy should be Automatic so it will automatically detect ny changed in git repo & deploy to clsuter by default it take 180 sec to pickup new image & deploy to cluster.
+argocd is capavle to deploy HELM chart deploy plane manifest
 
+Put the path where reside our deploy.yaml as well service.yaml 
 
+Set the cluster as per desired deployment.  & apply now it will picking up deployment.
 
 
 
 
+# About Project in Interview .
 
+Hi my name kamran in my current org , where organization has E-commerce application 
+and this E-commerece application is multi micro service architecture because there are more tha 100 micro services there are multiple development teams is responsible for certain microservices probaly 3-4 microservices, as a devops engineer my role is to work closely with two development teams so my project is basically to work with both of thise devlopment team and implement DevOps or constantly improve the devops practices for both devlopment teams and as a part of that i work on CI,CD of taht project.
+I work on writing Terraform infra as code for them and work on k8s implementation.
+Constantly improving the existing scripts.
+So this is my project where I work for the development teams.
+i work with payments and cart devlopment teams
+I am responsible for DevOps implementation of those microservices 
 
+E-commerce site they sells pharma.
 
+# Day to day activities:
 
+ I work for two development
 
+teams where I closely attend their meetings and I work with them in agile methodology, where these development teams plan activities during the sprints, or they plan activities for the entire quarter,and I closely involved with them during that meetings, so that I understand the roadmap of those development
+teams for the coming quarter.
+And with that, I can also estimate the amount of work that is going to come to me, and I would plan my activities accordingly.
+some time team requests me to create some infrastructure because I am the one who developed and manage infrastructure as code for those development teams.
+One of the recent activity that I worked on was to set up ECS cluster within VPC, and I set that up in the module structure so that going ahead, either other DevOps teams or someone who is joining my team or someone who is going to work along with me, can also use those Terraform modules.
+Along with that, I get a lot of requests related to Kubernetes deployments.
+---------------------------------
+I have requests to set up GitOps practices for the development teams,
+related to AWS.
+And there are some frequent activities like git management where we have multiple git repositories. So I set up webhooks for that.
+I manage the git repositories with respect to branching.
+I make sure the branching strategy is up to date.
+So these are some of the day to day activities that I work on.
+On top of this, 
+You can say I help the developers to containerize their microservices.
+Some of the developers are very new.
+There are junior developers, so I also help them with writing Docker files.
+If you want to add one more point, which puts a lot of weightage, talk about documentation.
+So you can say as a DevOps engineer, I also document the best practices, for example, how to containerize
+with the best practices like Distroless images.
+And I share this documentation across the teams so that any team which does not have the DevOps engineer they can follow the documents.
 
 
+# What challenges that you have faced in your day to day life.
 
+When I joined this organization, the development teams were creating infrastructure changes manually. Some people were doing it through Terraform CLI.
 
+Fortunately, there was one particular microservice for which they started creating infrastructure using Terraform.
 
+So what I have done, I have taken up that microservice where Infrastructure was implemented, but it was lacking remote back end, and it was also lacking the state locking implementation, because of which the developers were confused.
 
+Sometimes the Terraform state was not updated because they lacked the knowledge of state locking.
 
+They were facing issues while running Terraform.
 
+So again, I did a proof of concept to show how to set up remote backend and state locking, and eventually
+I transitioned the entire infrastructure, some of which was in AWS CLI, some of which was in AWS CloudFormation templates to terraform.
 
+Now, all of the projects or all of the microservices infrastructure is created through Terraform.
+=======================================
+And right now I am working on modularization of Terraform because the infrastructure is huge.
 
+I have already implemented 80% of modularization where VPC module, EC module, all of this is implemented.
 
 
+# Issues faced during LB INgress provision same thing we can frame during interview
 
+“One of the most challenging issues I recently resolved involved provisioning an AWS Application Load Balancer through the AWS Load Balancer Controller in EKS. Everything looked correct — IAM roles, subnet tags, controller deployment — but the ALB simply wouldn’t appear. I dug into the controller logs and found repeated errors about subnet discovery and security group authorization. The key error was: ‘InvalidGroup.NotFound: You have specified two resources that belong to different networks.’ That told me the controller was trying to authorize traffic between security groups in different VPCs — which AWS doesn’t allow.
 
+I validated this by inspecting the VPC IDs of both security groups, and sure enough, they were mismatched. To fix it, I created a new security group in the correct VPC, opened port 80 for public access, and explicitly assigned it to the Ingress using annotations. I also ensured the controller was using IRSA for IAM authentication, patched the ServiceAccount, and restarted the controller. Once everything aligned — VPC, SG, IAM, and annotations — the ALB provisioned successfully and traffic flowed as expected.
 
+This experience reinforced how critical it is to trace cloud resource relationships across layers — IAM, networking, and Kubernetes manifests — and how controller logs can be your best friend. It also showed my ability to stay focused through multi-hour debugging and deliver a clean, production-ready soluti
 
+## steps followed
 
+🛠️ How You Fixed It
+✅ 1. Created a New Security Group in the Correct VPC
+You created sg-00143fa7ec576ee35 in vpc-0bbe799d063d0395f, which is the VPC your EKS cluster and subnets live in.
 
+✅ 2. Opened Port 80 for Public Access
+You authorized inbound traffic on port 80 to allow ALB access:
 
+bash
+aws ec2 authorize-security-group-ingress \
+  --group-id sg-00143fa7ec576ee35 \
+  --protocol tcp \
+  --port 80 \
+  --cidr 0.0.0.0/0
+✅ 3. Explicitly Assigned the Correct SG to Your Ingress
+You added this annotation to your Ingress manifest:
 
+yaml
+alb.ingress.kubernetes.io/security-groups: sg-00143fa7ec576ee35
+This forced the controller to use the correct SG from the correct VPC.
 
+✅ 4. Restarted the Controller and Monitored Logs
+You restarted the controller to pick up the changes:
 
+bash
+kubectl rollout restart deployment aws-load-balancer-controller -n kube-system
+Then monitored logs to confirm successful ALB provisioning.
 
+✅ Final Result
+Your Ingress now shows a valid ALB DNS name:
 
+Code
+ADDRESS: k8s-default-frontend-xxxxxxxxxx.us-west-2.elb.amazonaws.com
+Which means:
 
+Subnet discovery succeeded
 
+IAM permissions via IRSA worked
 
+Security group configuration was resolved
 
-
-
+ALB is live and routing traffic
