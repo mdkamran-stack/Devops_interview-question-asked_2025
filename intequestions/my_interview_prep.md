@@ -58,3 +58,44 @@ that is our HELM chart , as soon as this github repository is updated with new i
 # Jenkins Pipeline for Java based application using Maven, SonarQube, Argo CD, Helm and Kubernetes
 
 ![Screenshot 2023-03-28 at 9 38 09 PM](https://user-images.githubusercontent.com/43399466/228301952-abc02ca2-9942-4a67-8293-f76647b6f9d8.png)
+
+
+## what is pom.xml
+Pom.xml is responsible for getting dependencies runtime and uilding the application.
+
+## credentials we have to put in pipeline
+
+docker cred and github cred as well inside jekins.
+
+steps: manage jenkins manage credentials add github username & password.
+
+dockerhub username & dockerhub cred password.
+
+for github we have to put ID and secrets, under devlopersetting we have create personel access token & same token we have to put in pipeline as well.
+
+
+Then we have to verify argocd operator should be running.
+kubectl get pods -n operators
+
+once ci done it update image and  create new  build number.
+
+
+for cd 
+
+kubectl get svc
+kubectl edit svc ## changed type  to nodeport
+
+In Argo-cd 
+ Create application  pass the nam eof application & sync auto & repository url & path of deployment file
+
+ At last provide the cluster name where we have deploy 
+ Argocd automatically fetch and deploy & syncing.
+
+ last verify
+ kubectl get deploy
+ kubectl get pods 
+
+ =========
+ # Explain your project.
+
+I worked in concentrix where i support multiple devlopment team some of payments carts transaction application is written in java so i support them as devops engineer helping them creating of CI/CD piepline deploying an application through ci/cd through EKS, creating resouces for the on AWS through TF managing configuration through ansible.
