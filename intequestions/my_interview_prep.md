@@ -38,3 +38,5 @@ We dealt with developers not using the funtion cretaed a function but not invoki
 
 in the last stage 
  needs: [build, docker, code-qupwality] It says that if all 3 phases passed then trigger our next stage.
+
+ Hi kamran
