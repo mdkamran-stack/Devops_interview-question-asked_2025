@@ -39,12 +39,16 @@ We dealt with developers not using the funtion cretaed a function but not invoki
 in the last stage 
  needs: [build, docker, code-qupwality] It says that if all 3 phases passed then trigger our next stage.
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> e3b2b56 (modified added)
  ==============================================AWS Roles and Repsonsibilities=========================
  ## Cab you explain the CICD process in your current project ? or can you talk about any cicd process taht you have implemented.
 
  In our organization we used Github as source code repository when any devopers commit the code into source code repository a jenkins pipeline is automatic triggered as part of first step jenkins pipeline pulls the code from source code repository &
  once the code is pulled and checked out the next step building this code we use maven as part of this process once maven build the application the next think we check the code quality we verify static code analysis we verify application software is secure or not after that we used tools App scan this is used for security testing SAST & DAST after that we promote this application to dev env using ARGO-CD & k8s.
- ARGO-cd is looks for k8s manifest in git repository when ever there is change once the new image is updated argocd will look for the new tag in the image using HELM chart it would deploy to the new version of an application onto the k8s cluster.
+ ARGO-cd is looks for k8s manifest in git repository when ever there is change once the new image is updated argocd will look for the new tag in the image using HELM chart it would deploy to the new version of an application onto the target k8s cluster.
 
 Q: Can you explain the CICD process in your current project ? or Can you talk about any CICD process that you have implemented ?
 
@@ -250,4 +254,11 @@ Below is for python use docker to build an image.
             }
         }
     }
+<<<<<<< HEAD
 }
+=======
+ Hi kamran
+>>>>>>> 54af11a (modified)
+=======
+}
+>>>>>>> e3b2b56 (modified added)
