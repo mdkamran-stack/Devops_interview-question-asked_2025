@@ -72,30 +72,120 @@ steps:
     SecretsFilter: '*'
     RunAsPreJob: true
 ```  
-## Question 3 If is prod deploy failing how troubeshoot.  
+## How to Troubleshoot a Failed Prod Deployment in Kubernetes
 
-### 1 Check pipeline Logs
-  . identify which stage failed (build, test,deploy)  
-  . Looks for specific error message and failed task.  
-### 2 Verify service connections  
-  . Ensure Azure service connection is valid and cred haven't expired.
-### 3 Validate deployment artifacts.  
-  .  check if build artifacts are generated and match expected version.  
-  . confirm integrity of container images or packages.  
-### 4 check infrastucture readiness  
-  . validate target env availability (App Service , AKS , VM).  
-  . verify network connectivity and firewall rules.  
-### 5 Review secrets and configurations.  
-  . Ensure environment variables, secrets and conf file are corrected for pod.  
-### 6 check deployment strategies.  
-   . if using Blud-Green /canary, verify routing and rollback points.  
-### 7 Use azure monitoring & App insights.  
-    . check logs, metrics, and alert to identify and rollback issues.  
-### 8 Rollback if Needed  
-     . Use last successful build or inrastructure snapshort to restore service.  
-### 💡 Quick 10-sec interview answer:
+🔹 1. Check the Deployment / Rollout
 
-“I’d start by checking the Azure DevOps pipeline logs to find the failing step, then verify service connections, artifacts, and production configurations. I’d also check Azure Monitor/App Insights for runtime errors. If I can’t resolve quickly, I’d rollback to the last working deployment and then debug in a safe environment.”
+See if your Deployment is rolling out correctly:
+
+kubectl get deployments -n <namespace>
+kubectl rollout status deployment/<deployment-name> -n <namespace>
+
+If rollout is stuck or failed → Pods are not becoming Ready.
+
+🔹 2. Inspect the Pods
+kubectl get pods -n <namespace>
+
+
+Look for states like:
+
+CrashLoopBackOff → app is crashing
+
+ImagePullBackOff → image issue (wrong tag, no ECR login, IAM permission)
+
+Pending → no nodes to schedule (resources exhausted or taints)
+
+Error → app itself failing
+
+Get detailed info:
+
+kubectl describe pod <pod-name> -n <namespace>
+
+
+Focus on Events at the bottom:
+
+Image not found?
+
+Liveness/readiness probe failing?
+
+Insufficient resources?
+
+🔹 3. Check Logs
+
+For app-level failures:
+
+kubectl logs <pod-name> -n <namespace>
+kubectl logs <pod-name> -c <container-name> -n <namespace>
+
+
+If multiple replicas:
+
+kubectl logs -f deployment/<deployment-name> -n <namespace>
+
+🔹 4. Verify ConfigMaps & Secrets
+
+If your app depends on configs:
+
+kubectl describe configmap <name> -n <namespace>
+kubectl describe secret <name> -n <namespace>
+
+
+Missing/typo in env var?
+
+Wrong mount path?
+
+Secrets not base64-encoded?
+
+🔹 5. Check Service & Networking
+
+Is the Service exposing Pods correctly?
+
+kubectl get svc -n <namespace>
+kubectl describe svc <service-name> -n <namespace>
+
+
+If using Ingress / LoadBalancer, verify:
+
+kubectl get ingress -n <namespace>
+
+
+Use kubectl port-forward to test connectivity:
+
+kubectl port-forward svc/<service-name> 8080:80 -n <namespace>
+curl localhost:8080
+
+🔹 6. Resource Issues
+
+If Pods are Pending:
+
+kubectl describe node
+
+
+Check for:
+
+CPU/memory limits exceeded
+
+Pod requests > available resources
+
+Node taints not tolerated
+
+🔹 7. Roll Back (if needed)
+
+If new deployment is broken:
+
+kubectl rollout undo deployment/<deployment-name> -n <namespace>
+
+🔹 8. Cluster-level Checks
+
+Events (recent failures in namespace):
+
+kubectl get events --sort-by='.lastTimestamp' -n <namespace>
+
+
+Cluster health (nodes, API, etc.):
+
+kubectl get nodes
+kubectl cluster-info
 
 ## ques 4 : how did you check Health of conatiner configuration in k8s.  
 
