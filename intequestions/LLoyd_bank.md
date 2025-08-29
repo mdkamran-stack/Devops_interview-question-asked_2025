@@ -32,14 +32,64 @@ a. minRelicas /maxRelicas -> range for scaling
 b. metrics -> scaling cond ( e.g, CPU usage > 50 %)  
 c. works with metrics-server in cluster  
 
-## Question 2: "Secrets across environments" in Azure DevOps / Kubernetes context.
-Let’s break it down simply for interview prep.  
+## How to Manage Secrets Across Environments in Kubernetes (AWS)
+✅ 1. Use External Secret Managers
+Instead of storing secrets directly in Kubernetes, use centralized tools like:
 
-When we deploy app across Dev, QA , Stage , Prod , we often need different secret (DB passwords, API keys, connection strings )  
-we should never hardcoded  
+AWS Secrets Manager
 
+AWS Systems Manager Parameter Store
 
-```  
+External Secrets Operator (ESO) to sync secrets into Kubernetes2
+
+These tools allow:
+
+Centralized secret storage
+
+Fine-grained IAM access control
+
+Automatic rotation and auditing
+
+⚙️ 2. Integrate with Kubernetes via CSI Driver or ESO
+Use the Secrets Store CSI Driver with AWS Secrets and Configuration Provider (ASCP) to mount secrets directly into pods. Or use External Secrets Operator to fetch secrets from AWS and inject them into Kubernetes as native secrets.
+
+Example flow:
+
+Define a SecretStore CRD with AWS credentials
+
+Create an ExternalSecret that maps AWS secrets to Kubernetes secrets
+
+ESO syncs and updates secrets automatically
+
+## 🧠 3. Environment-Specific Secret Mapping
+Use naming conventions or labels to separate secrets per environment:
+
+yaml
+externalSecret:
+  name: db-credentials
+  secretStoreRef:
+    name: aws-prod-store
+  data:
+    - remoteRef:
+        key: prod/db/password
+      secretKey: password
+For dev/staging, use different keys or stores:
+
+dev/db/password
+
+staging/db/password
+
+## 🔒 4. Secure Access with IAM Roles
+Use IAM Roles for Service Accounts (IRSA) to ensure only specific pods can access specific secrets. This enforces least privilege and isolates environments.
+
+## 🔄 5. Enable Secret Rotation
+AWS Secrets Manager supports automatic rotation. Combine this with ESO or CSI Driver’s rotation reconciler to keep secrets fresh inside Kubernetes.
+
+## 📊 6. Audit and Monitor
+Use AWS CloudTrail to track secret access
+
+Monitor Kubernetes secret usage with logging tools like Falco or Audit Logs 
+
 ## How to Troubleshoot a Failed Prod Deployment in Kubernetes
 
 A: When a production deployment fails, I follow a structured approach:
