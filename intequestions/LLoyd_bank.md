@@ -1,58 +1,21 @@
 # LLyods bank asked questions.
+
 ## How do you ensure the security and compliance of your CI/CD pipelines in aws
 
-## 🔐 Security & Compliance in AWS CI/CD Pipelines
-✅ 1. Shift Left with DevSecOps
-Integrate security early in the pipeline (code → build → deploy)
+I secure CI/CD pipelines by integrating DevSecOps practices:
 
-Use pre-commit hooks, IDE plugins, and static code analysis to catch issues before code enters the pipeline
+Use IAM roles and least privilege access
 
-## 🔒 2. Secure Source Control
-Use AWS CodeCommit or GitHub Enterprise with private repos
+Store secrets in AWS Secrets Manager
 
-Enforce least privilege IAM policies for repo access
+Scan code and images for vulnerabilities
 
-Enable MFA and audit access logs via CloudTrail
+Enforce policies with tools like OPA or Sentinel
 
-## 🧠 3. Secrets Management
-Store credentials in AWS Secrets Manager or Parameter Store
+Implement approval gates and audit logging
 
-Inject secrets securely into build environments using IAM roles
+Monitor pipeline activity with CloudTrail
 
-Avoid hardcoding secrets in code or pipeline configs
-
-## 🛡️ 4. Policy-as-Code & Compliance Enforcement
-Use CloudFormation Guard, OPA/Gatekeeper, or Terraform Sentinel to enforce compliance rules
-
-Validate infrastructure against CIS benchmarks, PCI-DSS, or SOC 2 requirements
-
-Automate evidence collection with AWS Audit Manager
-
-## 🔍 5. Vulnerability Scanning
-Run SAST (Static Analysis) and DAST (Dynamic Analysis) tools during build
-
-Scan container images with Amazon Inspector, Trivy, or Snyk
-
-Fail builds if critical vulnerabilities are found
-
-## 📦 6. Secure Artifact & Image Handling
-Use Amazon ECR with image scanning and lifecycle policies
-
-Sign and verify images before deployment
-
-Restrict image sources to trusted registries
-
-## 🔄 7. Controlled Deployments
-Use AWS CodePipeline, CodeBuild, and CodeDeploy with IAM roles
-
-Implement approval gates before production deployments
-
-Use blue/green or canary strategies to reduce blast radius
-
-## 📊 8. Monitoring & Auditing
-Enable CloudTrail, CloudWatch Logs, and GuardDuty
-
-Track pipeline activity and detect anomalies
 ##  How Pod autoscale.
 
 HPA in kubernetes automatically adjust the number of pod replicas in a deployment, replica set, or stateful set based on cpu utilization, memory, or custom metrics.
