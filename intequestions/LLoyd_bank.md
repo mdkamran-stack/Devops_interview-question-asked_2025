@@ -38,154 +38,65 @@ Let’s break it down simply for interview prep.
 When we deploy app across Dev, QA , Stage , Prod , we often need different secret (DB passwords, API keys, connection strings )  
 we should never hardcoded  
 
-## Best Practices.
 
-1 Use Azure Key Vault  
- . store sceret for each environment in seprate key vault instances or naming convention (e.g, db-password-dev , db-password-prd).  
- . create key vault Service connections in azure devops for each environment.  
- . Link key vault to a pipeline using AzureKeyvault@2 task.  
- 
- 2. use variable Group in Azure Devops   
-  . Create variable group for each environment, like them to key vault or manually add secrets.  
-  . Lock variable as sceret so they are masked in logs.  
-
- 3. USe K8s secrets (for AKS)  
-    . create seprate secrets per namespace/environment:  
-    ``` bash
-    kubectl create secret generic db-secret --from-literal=DB_PASSWORD=pass123 -n dev
-    ```  
-    . Referenced them in elm chart or manifests.  
-  4. RBAC and Access Policies  
-    . Use least privilege - Dev secret accessible to dev team, prod secrets locked down.  
-    . Enable audit log on key vault.  
-
-    ## Azure DevOps YAML Example with Key Vault  
-```yaml
-variables:
-- group: DevSecrets
-
-steps:
-- task: AzureKeyVault@2
-  inputs:
-    azureSubscription: 'MyServiceConnection'
-    KeyVaultName: 'my-dev-kv'
-    SecretsFilter: '*'
-    RunAsPreJob: true
 ```  
 ## How to Troubleshoot a Failed Prod Deployment in Kubernetes
 
-🔹 1. Check the Deployment / Rollout
+A: When a production deployment fails, I follow a structured approach:
 
-See if your Deployment is rolling out correctly:
+## 1. Check Deployment Status
+bash
+`kubectl rollout status deployment/<name>`
+`kubectl describe deployment <name>`
+This shows rollout progress and any events like image pull errors or failed probes.
 
-kubectl get deployments -n <namespace>
-kubectl rollout status deployment/<deployment-name> -n <namespace>
+## 2. Inspect Pod Health
+```bash
+kubectl get pods
+kubectl describe pod <pod-name>
+kubectl logs <pod-name> -c <container-name>
+```
+Look for:
 
-If rollout is stuck or failed → Pods are not becoming Ready.
+## CrashLoopBackOff: app crash or misconfig
 
-🔹 2. Inspect the Pods
-kubectl get pods -n <namespace>
+## ImagePullBackOff: bad image tag or registry access
 
+## Pending: scheduling issues or resource limits
 
-Look for states like:
+## 3. Validate Configuration
+Check environment variables, secrets, and configMaps
 
-CrashLoopBackOff → app is crashing
+Ensure correct resource requests/limits
 
-ImagePullBackOff → image issue (wrong tag, no ECR login, IAM permission)
+Confirm volume mounts and PVC bindings
 
-Pending → no nodes to schedule (resources exhausted or taints)
+## 4. Check Networking
+Verify service selectors match pod labels
 
-Error → app itself failing
+Test DNS resolution inside pods
 
-Get detailed info:
+Confirm Ingress rules and controller status
 
-kubectl describe pod <pod-name> -n <namespace>
+## 5. Roll Back if Needed
+   ```bash
+kubectl rollout undo deployment/<name>
+Quickly restores the last working version.
+```
+## 6. Monitor and Alert
+Use Prometheus/Grafana or CloudWatch for metrics
 
+Check alerting systems for anomalies
 
-Focus on Events at the bottom:
+Review audit logs for recent changes
 
-Image not found?
+Bonus: In AWS, I also check:
 
-Liveness/readiness probe failing?
+EKS node health and autoscaling
 
-Insufficient resources?
+IAM roles and IRSA bindings
 
-🔹 3. Check Logs
-
-For app-level failures:
-
-kubectl logs <pod-name> -n <namespace>
-kubectl logs <pod-name> -c <container-name> -n <namespace>
-
-
-If multiple replicas:
-
-kubectl logs -f deployment/<deployment-name> -n <namespace>
-
-🔹 4. Verify ConfigMaps & Secrets
-
-If your app depends on configs:
-
-kubectl describe configmap <name> -n <namespace>
-kubectl describe secret <name> -n <namespace>
-
-
-Missing/typo in env var?
-
-Wrong mount path?
-
-Secrets not base64-encoded?
-
-🔹 5. Check Service & Networking
-
-Is the Service exposing Pods correctly?
-
-kubectl get svc -n <namespace>
-kubectl describe svc <service-name> -n <namespace>
-
-
-If using Ingress / LoadBalancer, verify:
-
-kubectl get ingress -n <namespace>
-
-
-Use kubectl port-forward to test connectivity:
-
-kubectl port-forward svc/<service-name> 8080:80 -n <namespace>
-curl localhost:8080
-
-🔹 6. Resource Issues
-
-If Pods are Pending:
-
-kubectl describe node
-
-
-Check for:
-
-CPU/memory limits exceeded
-
-Pod requests > available resources
-
-Node taints not tolerated
-
-🔹 7. Roll Back (if needed)
-
-If new deployment is broken:
-
-kubectl rollout undo deployment/<deployment-name> -n <namespace>
-
-🔹 8. Cluster-level Checks
-
-Events (recent failures in namespace):
-
-kubectl get events --sort-by='.lastTimestamp' -n <namespace>
-
-
-Cluster health (nodes, API, etc.):
-
-kubectl get nodes
-kubectl cluster-info
+Load balancer status and target group health
 
 ## ques 4 : how did you check Health of conatiner configuration in k8s.  
 
