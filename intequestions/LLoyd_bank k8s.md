@@ -34,61 +34,25 @@ c. works with metrics-server in cluster
 
 ## How to Troubleshoot a Failed Prod Deployment in Kubernetes
 
-A: When a production deployment fails, I follow a structured approach:
+To troubleshoot a failed production deployment in Kubernetes: check the Deployment and rollout status, inspect Pod states and describe events, review container logs, verify ConfigMaps and Secrets, ensure Services and networking are correct, check node resources, and roll back the deployment if necessary.” ✅
 
-## 1. Check Deployment Status
-bash
-`kubectl rollout status deployment/<name>`
-`kubectl describe deployment <name>`
-This shows rollout progress and any events like image pull errors or failed probes.
+You can also keep a quick stepwise checklist in mind:
 
-## 2. Inspect Pod Health
-```bash
-kubectl get pods
-kubectl describe pod <pod-name>
-kubectl logs <pod-name> -c <container-name>
-```
-Look for:
+kubectl get deployments -n <namespace> → check rollout status
 
-## CrashLoopBackOff: app crash or misconfig
+kubectl get pods -n <namespace> → check Pod states
 
-## ImagePullBackOff: bad image tag or registry access
+kubectl describe pod <pod-name> -n <namespace> → check events
 
-## Pending: scheduling issues or resource limits
+kubectl logs <pod-name> → inspect logs
 
-## 3. Validate Configuration
-Check environment variables, secrets, and configMaps
+Verify ConfigMaps & Secrets
 
-Ensure correct resource requests/limits
+Check Services, Ingress, networking
 
-Confirm volume mounts and PVC bindings
+Check node resources (kubectl describe node)
 
-## 4. Check Networking
-Verify service selectors match pod labels
-
-Test DNS resolution inside pods
-
-Confirm Ingress rules and controller status
-
-## 5. Roll Back if Needed
-   ```bash
-kubectl rollout undo deployment/<name>
-Quickly restores the last working version.
-```
-## 6. Monitor and Alert
-Use Prometheus/Grafana or CloudWatch for metrics
-
-Check alerting systems for anomalies
-
-Review audit logs for recent changes
-
-Bonus: In AWS, I also check:
-
-EKS node health and autoscaling
-
-IAM roles and IRSA bindings
-
-Load balancer status and target group health
+Roll back if needed (kubectl rollout undo deployment/<deployment-name>)
 
 ## ques 4 : how did you check Health of conatiner configuration in k8s.  
 
