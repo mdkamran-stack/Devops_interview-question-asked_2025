@@ -4,9 +4,9 @@
 
 I secure CI/CD pipelines by integrating DevSecOps practices:
 
-1: "Use IAM roles and least privilege access" >> Assign the EC2 instance an IAM Role with minimal ECR + EKS deploy permissions.
+1**Use IAM roles and least privilege access** Assign the EC2 instance an IAM Role with minimal ECR + EKS deploy permissions.
 
-Store secrets in AWS Secrets Manager >> Store sensitive credentials like DB passwords, API keys, or tokens in AWS Secrets Manager, which securely encrypts them with KMS, rotates them automatically, and allows controlled access via IAM policies instead of hardcoding in code or pipelines
+2**Store secrets in AWS Secrets Manager** store sensitive credentials like DB passwords, API keys, or tokens in AWS Secrets Manager, which securely encrypts them with KMS, rotates them automatically, and allows controlled access via IAM policies instead of hardcoding in code or pipelines
 
 Scan code and images for vulnerabilities >> Continuously rescan images in your registry (not just at build time).
 
