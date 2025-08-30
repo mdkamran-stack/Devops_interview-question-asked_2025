@@ -1,21 +1,5 @@
 # LLyods bank asked questions.
 
-## How do you ensure the security and compliance of your CI/CD pipelines in aws
-
-I secure CI/CD pipelines by integrating DevSecOps practices:
-
-**1: Use IAM roles and least privilege access** Assign the EC2 instance an IAM Role with minimal ECR + EKS deploy permissions.
-
-**2: Store secrets in AWS Secrets Manager** store sensitive credentials like DB passwords, API keys, or tokens in AWS Secrets Manager, which securely encrypts them with KMS, rotates them automatically, and allows controlled access via IAM policies instead of hardcoding in code or pipelines
-
-**3 Scan code and images for vulnerabilities** Continuously rescan images in your registry (not just at build time).
-
-**4 Enforce policies with tools like Sentinel** Using Sentinel, you can enforce compliance/security as part of your CI/CD pipelines by defining policies as code.  
-
-**5 Implement approval gates and audit logging** Implement approval gates by requiring manual checks before production deploys, and enable audit logging (via CloudWatch or CI/CD logs) to track who approved.
-
-**6 Monitor pipeline activity with Cloud watch** Monitor pipeline activity using centralized logging and monitoring tools like AWS CloudWatch, CI/CD audit logs to track builds, deployments, failures, and security events in real time.
-
 ##  How Pod autoscale.
 
 HPA in kubernetes automatically adjust the number of pod replicas in a deployment, replica set, or stateful set based on cpu utilization, memory, or custom metrics.
@@ -47,64 +31,6 @@ spec:
 a. minRelicas /maxRelicas -> range for scaling  
 b. metrics -> scaling cond ( e.g, CPU usage > 50 %)  
 c. works with metrics-server in cluster  
-
-## How to Manage Secrets Across Environments in Kubernetes (AWS)
-✅ 1. Use External Secret Managers
-Instead of storing secrets directly in Kubernetes, use centralized tools like:
-
-AWS Secrets Manager
-
-AWS Systems Manager Parameter Store
-
-External Secrets Operator (ESO) to sync secrets into Kubernetes2
-
-These tools allow:
-
-Centralized secret storage
-
-Fine-grained IAM access control
-
-Automatic rotation and auditing
-
-⚙️ 2. Integrate with Kubernetes via CSI Driver or ESO
-Use the Secrets Store CSI Driver with AWS Secrets and Configuration Provider (ASCP) to mount secrets directly into pods. Or use External Secrets Operator to fetch secrets from AWS and inject them into Kubernetes as native secrets.
-
-Example flow:
-
-Define a SecretStore CRD with AWS credentials
-
-Create an ExternalSecret that maps AWS secrets to Kubernetes secrets
-
-ESO syncs and updates secrets automatically
-
-## 🧠 3. Environment-Specific Secret Mapping
-Use naming conventions or labels to separate secrets per environment:
-
-yaml
-externalSecret:
-  name: db-credentials
-  secretStoreRef:
-    name: aws-prod-store
-  data:
-    - remoteRef:
-        key: prod/db/password
-      secretKey: password
-For dev/staging, use different keys or stores:
-
-dev/db/password
-
-staging/db/password
-
-## 🔒 4. Secure Access with IAM Roles
-Use IAM Roles for Service Accounts (IRSA) to ensure only specific pods can access specific secrets. This enforces least privilege and isolates environments.
-
-## 🔄 5. Enable Secret Rotation
-AWS Secrets Manager supports automatic rotation. Combine this with ESO or CSI Driver’s rotation reconciler to keep secrets fresh inside Kubernetes.
-
-## 📊 6. Audit and Monitor
-Use AWS CloudTrail to track secret access
-
-Monitor Kubernetes secret usage with logging tools like Falco or Audit Logs 
 
 ## How to Troubleshoot a Failed Prod Deployment in Kubernetes
 
