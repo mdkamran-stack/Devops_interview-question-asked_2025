@@ -10,7 +10,7 @@ Store secrets in AWS Secrets Manager
 
 Scan code and images for vulnerabilities
 
-Enforce policies with tools like OPA or Sentinel
+Enforce policies with tools like Sentinel >> Using Sentinel, you can enforce compliance/security as part of your CI/CD pipelines by defining policies as code.  
 
 Implement approval gates and audit logging
 
