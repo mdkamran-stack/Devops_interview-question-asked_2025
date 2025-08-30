@@ -18,6 +18,35 @@ I secure CI/CD pipelines by integrating DevSecOps practices:
 
 **6 Monitor pipeline activity with Cloud watch** Monitor pipeline activity using centralized logging and monitoring tools like AWS CloudWatch, CI/CD audit logs to track builds, deployments, failures, and security events in real time.
 
+## We have 100 of pipeline in jenkins how the data of all these pipeline is managed by jenkins.
+
+When we run jenkins pipeline a new workspace is created in jenkins server, it is an independent directory dedicated to each jenkins project or pipeline. 
+
+## what are 2 type of pipeline in jenkins?
+
+In jenkins 2 types of pipeline is cripted pipeline & declarative pipeline.
+
+Scripted pipelines are Groovy-based and flexible but complex, while Declarative pipelines use a structured syntax (pipeline {}) that’s simpler, more readable, and recommended.
+
+## what are best practices for managing jenkins pipeline.
+
+Best practices include using declarative Jenkinsfiles in Git, modular shared libraries, least privilege credentials, clear stages, fail-fast, approval gates, and proper secrets management.  
+
+## After install jenkins what are initial steps to secure jenkins?
+
+By enabling security manage_jenkins configure Global security for authentication autherization & restrice public access.  
+
+## what are the some common jenkins pipeline errors & how do you debug this.
+
+Common error like synctax error missing credentials & plugin issue. By verifying console O/P and checking syntax in jenkins file.
+
+## what would be the added benefits of cloning.
+
+Saves time by reusing existing configuration reducing errors Easy modification of job.
+
+## what is jenkins build artifacts.
+
+In Jenkins, build artifacts are the output files from a build (like JARs, WARs, reports) that can be archived and used for deployment or analysis.
 
 ## How to Manage Secrets Across Environments in Kubernetes (AWS) for interview purpose in short
 
@@ -171,6 +200,24 @@ A: Using the CLI,
 A: In Jenkins, JNLP is used to allow agents (also known as "slave nodes") to be launched and managed remotely by the Jenkins master instance. This allows Jenkins to distribute build tasks to multiple agents, providing scalability and improving performance.
 
    When a Jenkins agent is launched using JNLP, it connects to the Jenkins master and receives build tasks, which it then executes. The results of the build are then sent back to the master and displayed in the Jenkins user interface.
+
+ ## Explain about jenkins file.
+
+ Jenkins file is text file it conatins the steps of pipeline for build test & deploy.
+
+ ## what is parameter in jenkins.
+
+ Parameter is special kind of variable , while working with jenkins jobs we often need to pass some parameter to the code being exuted when we trigger jobs.  
+
+ ## below are parameter in jenkins  
+
+  1 Boolean  2 choice 3 Credentials 4 file 5 string 6 password  
+
+  ## Where is jenkins working directory.
+
+  Jenkins working directory under JENKINS_HOME directory its is root directory of jenkins where jenkins installed jenkins uses to perform build & archives.
+
+ 
 
 ## Q: What are some of the common plugins that you use in Jenkins ?
 
