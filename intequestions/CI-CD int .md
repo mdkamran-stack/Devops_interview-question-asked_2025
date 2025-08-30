@@ -14,3 +14,8 @@ I secure CI/CD pipelines by integrating DevSecOps practices:
 
 **6 Monitor pipeline activity with Cloud watch** Monitor pipeline activity using centralized logging and monitoring tools like AWS CloudWatch, CI/CD audit logs to track builds, deployments, failures, and security events in real time.
 
+
+## How to Manage Secrets Across Environments in Kubernetes (AWS) for interview purpose in short
+
+In Kubernetes on AWS, manage secrets per environment using AWS Secrets Manager, inject them into pods via Kubernetes Secrets or IAM Roles for Service Accounts (IRSA), and avoid hardcoding credentials, ensuring least privilege access and automated rotation
+
