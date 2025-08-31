@@ -20,6 +20,8 @@ Docker file is text file which uses intruction to assemble docker images, we can
  
 WORKDIR  sets the working directory inside the container where commands will run.  
 
+ENRTPOINT VS CMD: CMD when you want a default command that users can override. Use ENTRYPOINT when you want a fixed command, and let users only supply arguments.
+
 ## Can you write a real-world multi-stage Dockerfile for a Node.js app?
 
  Stage 1: build  
