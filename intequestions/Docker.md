@@ -16,7 +16,7 @@ Docker file is text file which uses intruction to assemble docker images, we can
 2 COPy : is used to copy afile from host machine to docker image.  
 3 RUN : it is used to run cmd inside the image.  
 4 ENV: it sets the ENV varible that can be used inside the docker file.  
-5 CMD : it specify what cmd start when conatiner starts, just like cmd we can use ENTRY point to do same job.  
+5 CMD : it specify what command start when conatiner starts, just like cmd we can use ENTRY point to do same job.  
  
 WORKDIR  sets the working directory inside the container where commands will run.  
 
