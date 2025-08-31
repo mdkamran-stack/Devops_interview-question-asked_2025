@@ -1,8 +1,8 @@
 ## Diff b/w copy vs add ?
 
-Copy is used to copy a file or dicrectory from host machine to docker image.
-ADD instructions i used for extracting tar ball and copying remote url
-Recommedned copy
+Copy is used to copy a file or dicrectory from host machine to docker image.  
+ADD instructions i used for extracting tar ball and copying remote url  
+Recommedned copy  
 
 ## what is persistent volume in docker.
 
@@ -10,15 +10,15 @@ Recommedned copy
 2 Bind mount a file & dir from a host machine is mounted into a container.
 
 ## What is docker file & its instructions.
-Docker file is text file which uses intruction to assemble docker images, we can custom acc to our need.
+Docker file is text file which uses intruction to assemble docker images, we can custom acc to our need.  
 
-1 FROM: docker file is starts with from it is first inst whic create base image layer, after that each inst is create further layer.
-2 COPy : is used to copy afile from host machine to docker image.
-3 RUN : it is used to run cmd inside the image.
-4 ENV: it sets the ENV varible that can be used inside the docker file.
-5 CMD : it specify what cmd start when conatiner starts, just like cmd we can use ENTRY point to do same job.
+1 FROM: docker file is starts with from it is first inst whic create base image layer, after that each inst is create further layer.  
+2 COPy : is used to copy afile from host machine to docker image.  
+3 RUN : it is used to run cmd inside the image.  
+4 ENV: it sets the ENV varible that can be used inside the docker file.  
+5 CMD : it specify what cmd start when conatiner starts, just like cmd we can use ENTRY point to do same job.  
  
-WORKDIR  sets the working directory inside the container where commands will run.
+WORKDIR  sets the working directory inside the container where commands will run.  
 
 ## Can you write a real-world multi-stage Dockerfile for a Node.js app?
 
