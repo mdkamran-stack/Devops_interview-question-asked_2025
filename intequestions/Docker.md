@@ -22,20 +22,20 @@ WORKDIR  sets the working directory inside the container where commands will run
 
 ## Can you write a real-world multi-stage Dockerfile for a Node.js app?
 
- Stage 1: build
+ Stage 1: build  
 
-FROM node:18 
-WORKDIR /app
-COPY package*.json ./
-RUN npm ci
-
-Stage 2 : production
-FROM node:18-slim
+FROM node:18   
 WORKDIR /app  
-COPY --from=build /app/dist ./dist
-COPY package*.json ./
-RUN npm ci--only=production
-CMD ["node", "dist/index.js"]  
+COPY package*.json ./  
+RUN npm ci  
+
+Stage 2 : production  
+FROM node:18-slim  
+WORKDIR /app    
+COPY --from=build /app/dist ./dist  
+COPY package*.json ./  
+RUN npm ci--only=production  
+CMD ["node", "dist/index.js"]    
 
 This separates the build and runtime environments, reducing image size and surface area
 
