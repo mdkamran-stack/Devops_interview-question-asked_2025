@@ -54,7 +54,7 @@ c. works with metrics-server in cluster
 
 ## How to Troubleshoot a Failed Prod Deployment in Kubernetes
 
-To troubleshoot a failed production deployment in Kubernetes: check the Deployment and rollout status, inspect Pod states and describe events, review container logs, verify ConfigMaps and Secrets, ensure Services and networking are correct, check node resources, and roll back the deployment if necessary.” ✅
+To troubleshoot a failed prod deployment in Kubernetes, check rollout status, pod/events, logs, configs/secrets, services/networking, node resources, and roll back if needed.” ✅
 
 You can also keep a quick stepwise checklist in mind:
 
