@@ -5,6 +5,25 @@
 HPA in kubernetes automatically adjust the number of pod replicas in a deployment, replica set, or stateful set based on cpu utilization, memory, or custom metrics.
 This ensures the application scales up under high load and scale down during low usage, optimizing cost and performance.
 
+## Kubernetes architectures.
+
+Every k8s cluster has Master and worker node.  
+
+Master node having 4 components.     1 API server      2 ETCD      3 scheduler     4 control manager  
+Worker Node having 3 components      1 Kubeproxy       2 Kubelet   3 container run time  
+
+API server : Authenticate the request and get the data Eg: kubectl get pods run in background.  
+
+Scheduler : Schedule your pod on node based on CPU & memory requiremets that we have specify.  
+
+Control manager : Manages all the diffrent controller like replication controoler deployment controller job controller & node controller.  
+
+Kubelet : it is reponsible to communicate state of pod running on node back to API server.  
+
+Kubeproxy: is responsible for intercommunication of pod.  
+
+CRT: is nothing but container run time S/W like docker crio containerd.  
+
 ## Basic HPA Example (YAML)
 ```yml
 apiVersion: autoscaling/v2
