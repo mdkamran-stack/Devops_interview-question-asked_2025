@@ -2,8 +2,7 @@
 
 ##  How Pod autoscale.
 
-HPA in kubernetes automatically adjust the number of pod replicas in a deployment, replica set, or stateful set based on cpu utilization, memory, or custom metrics.
-This ensures the application scales up under high load and scale down during low usage, optimizing cost and performance.
+Pod autoscaling in Kubernetes is done using the Horizontal Pod Autoscaler (HPA), which scales Pods based on CPU, memory, or custom metrics.
 
 ## Kubernetes architectures.
 
