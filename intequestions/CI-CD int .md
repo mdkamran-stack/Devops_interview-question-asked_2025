@@ -88,18 +88,12 @@ A: In the current project we use the following tools orchestrated with Jenkins t
 
 ## Q: What are the different ways to trigger jenkins pipelines ?
 
-A: This can be done in multiple ways,
-   To briefly explain about the different options,
-   ```
-     - Poll SCM: Jenkins can periodically check the repository for changes and automatically build if changes are detected. 
-                 This can be configured in the "Build Triggers" section of a job.
-                 
-     - Build Triggers: Jenkins can be configured to use the Git plugin, which allows you to specify a Git repository and branch to build. 
-                 The plugin can be configured to automatically build when changes are pushed to the repository.
-                 
-     - Webhooks: A webhook can be created in GitHub to notify Jenkins when changes are pushed to the repository. 
-                 Jenkins can then automatically build the updated code. This can be set up in the "Build Triggers" section of a job and in the GitHub repository settings.
-   ```
+Poll SCM: Jenkins periodically checks the repo for changes and triggers a build if detected.  
+
+Build Triggers: Jenkins Git plugin can auto-build specific branches when changes occur.  
+
+Webhooks: GitHub webhooks notify Jenkins on code push to trigger builds instantly.    
+
 ## Q: How to backup Jenkins ?
 
 A: Backing up Jenkins is a very easy process, there are multiple default and configured files and folders in Jenkins that you might want to backup.
