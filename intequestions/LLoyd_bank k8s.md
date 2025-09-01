@@ -47,11 +47,6 @@ spec:
         averageUtilization: 50
 ```
 
-## Explanation:
-a. minRelicas /maxRelicas -> range for scaling  
-b. metrics -> scaling cond ( e.g, CPU usage > 50 %)  
-c. works with metrics-server in cluster  
-
 ## How to Troubleshoot a Failed Prod Deployment in Kubernetes
 
 To troubleshoot a failed prod deployment in Kubernetes, check rollout status, pod/events, logs, configs/secrets, services/networking, node resources, and roll back if needed.” ✅
@@ -76,10 +71,9 @@ Roll back if needed (kubectl rollout undo deployment/<deployment-name>)
 
 ## ques 4 : how did you check Health of conatiner configuration in k8s.  
 
-### Types of Health checks.  
-#### 1. Liveness Probe: Ensure if the container is alive , if fails , k8s restart the conatiner.  
-#### 2. Readiness Probe : checks if the container is ready ti accepts, if it fails, traffic is not sent to it.  
-#### 3. Startup Probe : Ensures slow-starting apps get enough time before k8s starts liveness checks.  
+I check container health in Kubernetes using liveness, readiness, and startup probes defined in the Pod spec.”
+
+
  ```yaml
 
 apiVersion: v1
@@ -109,11 +103,7 @@ spec:
 ### How it works  
 . LivenessProbe -> if /health fails repetadely, pod is restarting.   
 . readinessProbe -> if /ready  fails, pod stays running but is removed the service load balancer.   
-. Startup Probe -> (Optional) Prevents liveness from killing slow-starting apps.  
- 
- 💡 Quick Interview Answer:
-
-“In Kubernetes, I configure liveness, readiness, and startup probes in the pod spec. Liveness ensures the container is restarted if unresponsive, readiness ensures it only gets traffic when ready, and startup helps with slow initializations. This keeps the application stable and reliable.”  
+. Startup Probe -> (Optional) Prevents liveness from killing slow-starting apps.   
 
 ## Difference between secrets vs configmap.
 
