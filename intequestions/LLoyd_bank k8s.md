@@ -14,6 +14,8 @@ Worker Node having 3 components      1 Kubeproxy           2 Kubelet        3 co
 
 API server : Authenticate the request and get the data Eg: kubectl get pods run in background.  
 
+ETCD: is brain of k8s cluster stores all meta data of all the resources.
+
 Scheduler : Schedule your pod on node based on CPU & memory requiremets that we have specify.  
 
 Control manager : Manages all the diffrent controller like replication controoler deployment controller job controller & node controller.  
