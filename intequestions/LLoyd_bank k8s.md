@@ -174,3 +174,15 @@ spec:
 💡 Quick 15-sec answer for interviews:
 
 “I secure AKS clusters by enforcing RBAC, network policies, and pod security standards, integrating with Azure AD, storing secrets in Key Vault, scanning images for vulnerabilities, and enabling monitoring and threat detection with Azure Defender.”
+
+ ## Prod Kubernetes cluster is unstable — pods aren’t pulling images, some are evicted. What’s your approach?
+
+Start by inspecting pod status using kubectl describe pod. If images aren’t pulling, check image name, tag, and registry permissions. For evicted pods, check node pressure (disk/memory) with kubectl describe node. Prevent issues by enforcing resource limits, setting up monitoring, and implementing PodDisruptionBudgets.
+
+## How do you control pod-to-pod communication in Kubernetes?
+
+Use Kubernetes NetworkPolicies. These define rules based on pod selectors, namespaces, and ports. Ensure your cluster uses a network plugin that supports them, such as Calico
+
+## How would you do blue-green deployments in Kubernetes?
+
+Deploy two versions of the application (blue and green) and switch traffic between them using a Kubernetes Service. You can use Ingress or service label selectors to change which pods receive traffic. For gradual rollouts, tools like Argo Rollouts or Istio are recommended.
