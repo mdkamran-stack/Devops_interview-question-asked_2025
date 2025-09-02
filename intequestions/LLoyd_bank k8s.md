@@ -4,6 +4,10 @@
 
 Pod autoscaling in Kubernetes is done using the Horizontal Pod Autoscaler (HPA), which scales Pods based on CPU, memory, or custom metrics.
 
+## Can you explain what is virtualization and containerization? Why do we need containerization?
+
+Virtualization runs full VMs with separate OS, while containerization packages apps with dependencies in lightweight, portable containers that are faster, scalable, and consistent across environments
+
 ## Kubernetes architectures.
 
 Every k8s cluster has Master and worker node.  
