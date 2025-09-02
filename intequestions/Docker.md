@@ -45,5 +45,7 @@ This separates the build and runtime environments, reducing image size and surfa
 
 Use docker logs <container_id> to view logs. Run docker inspect to get the exit code and details. Check for memory limits, incorrect entrypoints, missing files, or permission issues. In Kubernetes, also use kubectl describe pod and kubectl logs.
 
+## How do you troubleshoot failed Docker image push to registry? 
+Answer: Check registry credentials → Validate image name/tag → Ensure repository exists → Retry with correct login. 
 
 
