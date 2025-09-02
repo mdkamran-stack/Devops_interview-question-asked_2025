@@ -223,3 +223,35 @@ Use Kubernetes NetworkPolicies. These define rules based on pod selectors, names
 ## How would you do blue-green deployments in Kubernetes?
 
 Deploy two versions of the application (blue and green) and switch traffic between them using a Kubernetes Service. You can use Ingress or service label selectors to change which pods receive traffic. For gradual rollouts, tools like Argo Rollouts or Istio are recommended.
+
+## What are the different services we have in Kubernetes  
+
+## ClusterIP (default)
+
+Exposes the service internally within the cluster.
+
+Use case: Pod-to-Pod communication.
+
+## NodePort
+
+Exposes the service on a static port on each node.
+
+External traffic can access the service via NodeIP:NodePort.
+
+## LoadBalancer
+
+Provisioned when using a cloud provider.
+
+Exposes the service externally through a cloud load balancer.
+
+## ExternalName
+
+Maps the service to a DNS name external to the cluster.
+
+Useful for connecting to external services.
+
+## Headless Service
+
+Service without a cluster IP (clusterIP: None).
+
+Often used with StatefulSets for direct Pod communication
