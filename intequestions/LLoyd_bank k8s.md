@@ -46,6 +46,9 @@ spec:
         type: Utilization
         averageUtilization: 50
 ```
+  ## How are you fetching the secrets that are required inside the Kubernetes cluster?  
+
+ We usually fetch secrets through external secret managers like AWS Secrets Manager or HashiCorp Vault using the External Secrets Operator. The operator syncs the external secrets into Kubernetes Secrets, which my pods consume via environment variables or mounted volumes. In EKS, I often use IRSA so pods can securely fetch secrets directly without hardcoding credentials.”
 
 ## How to Troubleshoot a Failed Prod Deployment in Kubernetes
 
