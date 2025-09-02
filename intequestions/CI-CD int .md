@@ -28,6 +28,18 @@ In jenkins 2 types of pipeline is cripted pipeline & declarative pipeline.
 
 Scripted pipelines are Groovy-based and flexible but complex, while Declarative pipelines use a structured syntax (pipeline {}) that’s simpler, more readable, and recommended.
 
+## How do you debug a Jenkins job stuck on “Waiting for Executor”? 
+
+Answer: No free agents → Increase executors → Add agent nodes → Use Kubernetes dynamic agents. 
+
+## How do you implement auto-scaling for Jenkins agents? 
+
+Answer: Integrate Jenkins with Kubernetes plugin → Agents spin up as pods on demand → Auto-terminate after job completion.
+
+## How do you implement CI/CD for microservices? 
+
+Answer: Use separate pipelines per microservice → Containerize each → Deploy to Kubernetes via Helm/ArgoCD → Centralized monitoring. 
+
 ## what are best practices for managing jenkins pipeline.
 
 Best practices include using declarative Jenkinsfiles in Git, modular shared libraries, least privilege credentials, clear stages, fail-fast, approval gates, and proper secrets management.  
