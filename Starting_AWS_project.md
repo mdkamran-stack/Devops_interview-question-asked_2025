@@ -855,8 +855,9 @@ we can check by whatsmydns.net
 
 CI GItHub action
 
-On Every pull request happen Once code checkout then automatically CI ran ci pipeline ran Unit test and then Static code analysis happen and ran build &
-create docker image & scan the docker image push newly created image and update the k8s manifeat. once CI passed developer create a PR 
+On Every pull request happen Once code checkout then automatically CI ran ci pipeline ran Unit test and then Static code
+analysis happen and ran build &create docker image & scan the docker image push newly created image and update the k8s manifeat.
+once CI passed developer create a PR 
 CD : Using Argo CD & deploy new image to k8S cluster.
 
 CI operate build integration
