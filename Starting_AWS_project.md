@@ -628,7 +628,8 @@ ccm cloud control manager
 4> CCM how about doing it on a cluster that does not have Cloud control manager or CM component load balancer? Service type will not work.
 
 ## Interview Ques: When do you create Inress
-Only service that needs external access is fronted proxy will create ingress resource Everythin else we dont need ingress resouce we only create service & deployment for frontend For Frontend Proxy we create Service deployment and Ingress as well.
+Only service that needs external access is fronted proxy will create ingress resource Everythin else we dont need ingress resouce we only create 
+service & deployment for frontend For Frontend Proxy we create Service deployment and Ingress as well.
 
 ## Ingress > So first advantage of using ingress it can be defined in declarative approach.
 
@@ -853,7 +854,8 @@ we can check by whatsmydns.net
 
 CI GItHub action
 
-On Every pull request happen Once code checkout then automatically CI ran ci pipeline ran Unit test and then Static code analysis happen and ran build & create docker image & scan the docker image push newly created image and update the k8s manifeat. once CI passed developer create a PR 
+On Every pull request happen Once code checkout then automatically CI ran ci pipeline ran Unit test and then Static code analysis happen and ran build &
+create docker image & scan the docker image push newly created image and update the k8s manifeat. once CI passed developer create a PR 
 CD : Using Argo CD & deploy new image to k8S cluster.
 
 CI operate build integration
@@ -864,7 +866,9 @@ Github Action is CI orchestrator that is provided by Github.
 
 If we have source code in github repo we have to create a folder .github & workflows & within .github we need to place yaml file which will instruct Github action what needs to be run
 
-This yaml file provide all the instructions what needs to be done, Github provide Action this action provide module, like action provide cloning a repository no need to git use git clone , simillary for docker login we no need to write docker login or push cmd simillary for java , Go , all thie we write in yaml file is the github action that why it is called github action CI,coz github provide plugin/module which wil place yaml file within the workflow we will write action
+This yaml file provide all the instructions what needs to be done, Github provide Action this action provide module, like action provide cloning a repository no need to git use git clone ,
+simillary for docker login we no need to write docker login or push cmd simillary for java , Go , all thie we write in yaml file is the github action that why it is called github action
+CI,coz github provide plugin/module which wil place yaml file within the workflow we will write action
 
 
 CI file: Always start as below
@@ -1010,7 +1014,8 @@ CD tool we used GitOps is an approach where k8s manifest which got updated by CI
 
 Gitops pick changes from version control system and deploy into target system.
 
-2: Reconciliation: if someone change in cluster from v2 to v1 Argocd continously monitoring and it will change to previous state, because in Gitops version contolr is source of truth if ci updates a particular new version from v1 to v2 only then Argo CD pickup this version and deploy to k8s, state is maintain by Argo deploy in existing version in vcs.
+2: Reconciliation: if someone change in cluster from v2 to v1 Argocd continously monitoring and it will change to previous state, because in Gitops version contolr is source of truth
+if ci updates a particular new version from v1 to v2 only then Argo CD pickup this version and deploy to k8s, state is maintain by Argo deploy in existing version in vcs.
 
 ## CD PART 
 
@@ -1047,7 +1052,10 @@ Set the cluster as per desired deployment.  & apply now it will picking up deplo
 # About Project in Interview .
 
 Hi my name kamran in my current org , where organization has E-commerce application 
-and this E-commerece application is multi micro service architecture because there are more tha 100 micro services there are multiple development teams is responsible for certain microservices probaly 3-4 microservices, as a devops engineer my role is to work closely with two development teams so my project is basically to work with both of thise devlopment team and implement DevOps or constantly improve the devops practices for both devlopment teams and as a part of that i work on CI,CD of taht project.
+and this E-commerece application is multi micro service architecture because there are more tha 100 micro services there are multiple
+ development teams is responsible for certain microservices probaly 3-4 microservices, as a devops engineer my role is to work closely
+with two development teams so my project is basically to work with both of thise devlopment team and implement DevOps or constantly
+improve the devops practices for both devlopment teams and as a part of that i work on CI,CD of taht project.
 I work on writing Terraform infra as code for them and work on k8s implementation.
 Constantly improving the existing scripts.
 So this is my project where I work for the development teams.
@@ -1060,11 +1068,13 @@ E-commerce site they sells pharma.
 
  I work for two development
 
-teams where I closely attend their meetings and I work with them in agile methodology, where these development teams plan activities during the sprints, or they plan activities for the entire quarter,and I closely involved with them during that meetings, so that I understand the roadmap of those development
+teams where I closely attend their meetings and I work with them in agile methodology, where these development teams plan activities during the sprints,
+or they plan activities for the entire quarter,and I closely involved with them during that meetings, so that I understand the roadmap of those development
 teams for the coming quarter.
 And with that, I can also estimate the amount of work that is going to come to me, and I would plan my activities accordingly.
 some time team requests me to create some infrastructure because I am the one who developed and manage infrastructure as code for those development teams.
-One of the recent activity that I worked on was to set up ECS cluster within VPC, and I set that up in the module structure so that going ahead, either other DevOps teams or someone who is joining my team or someone who is going to work along with me, can also use those Terraform modules.
+One of the recent activity that I worked on was to set up ECS cluster within VPC, and I set that up in the module structure so that going ahead, either
+other DevOps teams or someone who is joining my team or someone who is going to work along with me, can also use those Terraform modules.
 Along with that, I get a lot of requests related to Kubernetes deployments.
 ---------------------------------
 I have requests to set up GitOps practices for the development teams,
@@ -1089,7 +1099,8 @@ When I joined this organization, the development teams were creating infrastruct
 
 Fortunately, there was one particular microservice for which they started creating infrastructure using Terraform.
 
-So what I have done, I have taken up that microservice where Infrastructure was implemented, but it was lacking remote back end, and it was also lacking the state locking implementation, because of which the developers were confused.
+So what I have done, I have taken up that microservice where Infrastructure was implemented, but it was lacking remote back end, and it
+ was also lacking the state locking implementation, because of which the developers were confused.
 
 Sometimes the Terraform state was not updated because they lacked the knowledge of state locking.
 
@@ -1107,7 +1118,10 @@ I have already implemented 80% of modularization where VPC module, EC module, al
 
 # Issues faced during LB INgress provision same thing we can frame during interview
 
-“One of the most challenging issues I recently resolved involved provisioning an AWS Application Load Balancer through the AWS Load Balancer Controller in EKS. Everything looked correct — IAM roles, subnet tags, controller deployment — but the ALB simply wouldn’t appear. I dug into the controller logs and found repeated errors about subnet discovery and security group authorization. The key error was: ‘InvalidGroup.NotFound: You have specified two resources that belong to different networks.’ That told me the controller was trying to authorize traffic between security groups in different VPCs — which AWS doesn’t allow.
+“One of the most challenging issues I recently resolved involved provisioning an AWS Application Load Balancer through the AWS Load Balancer Controller in EKS.
+ Everything looked correct — IAM roles, subnet tags, controller deployment — but the ALB simply wouldn’t appear. I dug into the controller logs and found repeated
+ errors about subnet discovery and security group authorization. The key error was: ‘InvalidGroup.NotFound: You have specified two resources that belong to different networks.’
+That told me the controller was trying to authorize traffic between security groups in different VPCs — which AWS doesn’t allow.
 
 I validated this by inspecting the VPC IDs of both security groups, and sure enough, they were mismatched. To fix it, I created a new security group in the correct VPC, opened port 80 for public access, and explicitly assigned it to the Ingress using annotations. I also ensured the controller was using IRSA for IAM authentication, patched the ServiceAccount, and restarted the controller. Once everything aligned — VPC, SG, IAM, and annotations — the ALB provisioned successfully and traffic flowed as expected.
 
