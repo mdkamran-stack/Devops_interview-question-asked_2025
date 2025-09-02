@@ -452,7 +452,8 @@ step3: Route table will be connected to NAT gateway then both subnet & Route tab
 These concept in aws Vermalla video refer
 
 ## if we want to make reusable then we have use variable.  
-modules are reusable  thats why in module they invoke and ececuted in their code,the module invoked by main.tf if someone in us they will use, we start writing code by resources block.
+modules are reusable  thats why in module they invoke and ececuted in their code,the module invoked by main.tf if someone in us they will use, 
+we start writing code by resources block.
 
 
 # VPC & EKS cluster part2:
@@ -864,10 +865,13 @@ CD operates Delivery
 ## What is Github Action 
 Github Action is CI orchestrator that is provided by Github.
 
-If we have source code in github repo we have to create a folder .github & workflows & within .github we need to place yaml file which will instruct Github action what needs to be run
+If we have source code in github repo we have to create a folder .github & workflows & within .github we need to place yaml file
+which will instruct Github action what needs to be run
 
-This yaml file provide all the instructions what needs to be done, Github provide Action this action provide module, like action provide cloning a repository no need to git use git clone ,
-simillary for docker login we no need to write docker login or push cmd simillary for java , Go , all thie we write in yaml file is the github action that why it is called github action
+This yaml file provide all the instructions what needs to be done, Github provide Action this action provide module, like
+action provide cloning a repository no need to git use git clone ,
+simillary for docker login we no need to write docker login or push cmd simillary for java , Go , all thie we write in yaml
+file is the github action that why it is called github action
 CI,coz github provide plugin/module which wil place yaml file within the workflow we will write action
 
 
