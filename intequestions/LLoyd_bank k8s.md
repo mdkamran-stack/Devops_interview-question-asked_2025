@@ -69,6 +69,14 @@ Check node resources (kubectl describe node)
 
 Roll back if needed (kubectl rollout undo deployment/<deployment-name>)
 
+## How do you handle Kubernetes pod scheduling failures?  
+
+Answer: Run kubectl describe pod → Check taints/tolerations → Check node resources → Add tolerations or scale nodes. 
+
+## How do you enforce least privilege in Kubernetes?  
+
+Answer: Use RBAC roles → Bind only necessary permissions → Restrict cluster admin → Enable PodSecurityPolicies/OPA. 
+
 ## ques 4 : how did you check Health of conatiner configuration in k8s.  
 
 I check container health in Kubernetes using liveness, readiness, and startup probes defined in the Pod spec.”
