@@ -25,30 +25,42 @@ Kubeproxy: is responsible for intercommunication of pod.
 
 CRT: is nothing but container run time S/W like docker crio containerd.  
 
-## Basic HPA Example (YAML)
-```yml
-apiVersion: autoscaling/v2
-kind: HorizontalPodAutoscaler
-metadata:
-  name: myapp-hpa
-spec:
-  scaleTargetRef:
-    apiVersion: apps/v1
-    kind: Deployment
-    name: myapp-deployment
-  minReplicas: 2
-  maxReplicas: 5
-  metrics:
-  - type: Resource
-    resource:
-      name: cpu
-      target:
-        type: Utilization
-        averageUtilization: 50
-```
+
   ## How are you fetching the secrets that are required inside the Kubernetes cluster?  
 
  We usually fetch secrets through external secret managers like AWS Secrets Manager or HashiCorp Vault using the External Secrets Operator. The operator syncs the external secrets into Kubernetes Secrets, which my pods consume via environment variables or mounted volumes. In EKS, I often use IRSA so pods can securely fetch secrets directly without hardcoding credentials.”
+
+ ## How are you going to fetch it from the application?  
+
+ The application fetches secrets through environment variables or mounted files from Kubernetes Secrets, which are synced from external secret managers if needed.
+
+ ## There is something called Kubernetes upgrade control plane and other things. What is that difference?
+
+ “In Kubernetes, the control plane manages the cluster components like the API server, scheduler, controller manager, and etcd. Upgrading the control plane updates these master components. Worker node upgrades, on the other hand, update the nodes where workloads run. So ‘control plane upgrade’ affects cluster management, while ‘node upgrade’ affects the application runtime environmen.  
+
+ ## What are the things you'll consider before doing the upgrade?
+
+ Before upgrading Kubernetes, I consider compatibility of workloads and add-ons, backup of etcd and cluster state, version support (control plane vs nodes), testing in a staging environment, maintenance windows to avoid downtime, and a rollback plan in case the upgrade fails.  
+
+ ## Where are you going to check these things?
+
+ check these things in the official Kubernetes release notes for version compatibility, cloud provider documentation (like AWS EKS or Azure AKS) for supported upgrade paths, cluster add-on versions (like CNI, CoreDNS), and existing workloads using kubectl and monitoring dashboards to ensure readiness.  
+
+##  You have 160 applications which are there inside the cluster. You cannot go for each deployment to check the logs or to describe. What is that one place you will check config secrets and other volume mounts and other things? How many applications are there in your cluster?
+
+For many applications, I check centralized resources like kubectl get all --all-namespaces, secrets, config maps, and volumes, or use dashboards like Lens/Octant to get an overview, and count applications via kubectl get deployments --all-namespaces.  
+
+## What are the types of volume mounts you have and what is the difference?
+
+Volumes differ by purpose: EmptyDir is ephemeral, HostPath is node-specific, PV/PVC is persistent, ConfigMap/Secret store configs, Projected combines sources, and CSI integrates external storage.  
+
+## What is the difference between persistent volumes and ephemeral volumes?
+
+Persistent volumes outlive Pods for durable storage, while ephemeral volumes exist only for a Pod’s lifetime for temporary data.  
+
+## How will you integrate it with the cluster so that Grafana will be able to fetch the logs and it will show in the dashboards?
+
+Prometheus scrapes cluster metrics, Grafana is configured as its data source, and dashboards visualize metrics; for logs, tools like Loki can be integrated similarly.
 
 ## How to Troubleshoot a Failed Prod Deployment in Kubernetes
 
