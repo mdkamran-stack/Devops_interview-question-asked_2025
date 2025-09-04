@@ -26,7 +26,23 @@ Along with that, I get a lot of requests related to Kubernetes deployments.
 
 ## Tell me abt you CI/CD process that you have implemented.
 
-In our organization we have Github as source code repository if any developers commit a code in source code repository jenkins pipeline will automatically triggered using Webhook as a first stage it will start pulling the code from source code repository once the code is pulled and checkedout next step building this code we use Maven as a part of this process once maven build the application, then we will check the code quality by using staticu code analysis will check application is secure or not after that we use toll App scan this is used for SAT & DAST after that we promote this Application to dev Env using ARGOCD & k8s Argco-cd is looking for k8s manifest in git repository whenever there is change once the new image is updated Argocd will look for new tag in the image using HELM chart it would deploy to new version of an application into target k8s cluster.
+In our organization we have Github as source code repository if any developers commit a code in source code repository jenkins pipeline will automatically triggered using Webhook as a first stage it will start pulling the code from source code repository once the code is pulled and checkedout next step building this code we use Maven as a part of this process once maven build the application, then we will check the code quality by using staticu code analysis will check application is secure or not after that we use toll App scan this is used for SAT & DAST after that we promote this Application to dev Env using ARGOCD & k8s Argco-cd is looking for k8s manifest in git repository whenever there is change once the new image is updated Argocd will look for new tag in the image using HELM chart it would deploy to new version of an application into target k8s cluster.  
+
+## Q: Can you explain the CICD process in your current project ? or Can you talk about any CICD process that you have implemented ?
+
+A: In the current project we use the following tools orchestrated with Jenkins to achieve CICD.
+   - Maven, Sonar, AppScan, ArgoCD, and Kubernetes
+   
+   Coming to the implementation, the entire process takes place in 8 steps
+   
+    1. Code Commit: Developers commit code changes to a Git repository hosted on GitHub.
+    2. Jenkins Build: Jenkins is triggered to build the code using Maven. Maven builds the code and runs unit tests.
+    3. Code Analysis: Sonar is used to perform static code analysis to identify any code quality issues, security vulnerabilities, and bugs.
+    4. Security Scan: AppScan is used to perform a security scan on the application to identify any security vulnerabilities.
+    5. Deploy to Dev Environment: If the build and scans pass, Jenkins deploys the code to a development environment managed by Kubernetes.
+    6. Continuous Deployment: ArgoCD is used to manage continuous deployment. ArgoCD watches the Git repository and automatically deploys new changes to the development environment as soon as they are committed.
+    7. Promote to Production: When the code is ready for production, it is manually promoted using ArgoCD to the production environment.
+    8. Monitoring: The application is monitored for performance and availability using Kubernetes tools and other monitoring tools.
 
 ## How do you ensure the security and compliance of your CI/CD pipelines in aws
 
@@ -106,23 +122,6 @@ We dealt with developers not using the funtion cretaed a function but not invoki
 
 in the last stage 
  needs: [build, docker, code-qupwality] It says that if all 3 phases passed then trigger our next stage.
-
-## Q: Can you explain the CICD process in your current project ? or Can you talk about any CICD process that you have implemented ?
-
-A: In the current project we use the following tools orchestrated with Jenkins to achieve CICD.
-   - Maven, Sonar, AppScan, ArgoCD, and Kubernetes
-   
-   Coming to the implementation, the entire process takes place in 8 steps
-    
-    1. Code Commit: Developers commit code changes to a Git repository hosted on GitHub.
-    2. Jenkins Build: Jenkins is triggered to build the code using Maven. Maven builds the code and runs unit tests.
-    3. Code Analysis: Sonar is used to perform static code analysis to identify any code quality issues, security vulnerabilities, and bugs.
-    4. Security Scan: AppScan is used to perform a security scan on the application to identify any security vulnerabilities.
-    5. Deploy to Dev Environment: If the build and scans pass, Jenkins deploys the code to a development environment managed by Kubernetes.
-    6. Continuous Deployment: ArgoCD is used to manage continuous deployment. ArgoCD watches the Git repository and automatically deploys new changes to the development environment as soon as they are committed.
-    7. Promote to Production: When the code is ready for production, it is manually promoted using ArgoCD to the production environment.
-    8. Monitoring: The application is monitored for performance and availability using Kubernetes tools and other monitoring tools.
-   
 
 ## Q: What are the different ways to trigger jenkins pipelines ?
 
