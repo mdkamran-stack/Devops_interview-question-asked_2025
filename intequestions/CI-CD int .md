@@ -40,7 +40,8 @@ A: In the current project we use the following tools orchestrated with Jenkins t
     3. Code Analysis: Sonar is used to perform static code analysis to identify any code quality issues, security vulnerabilities, and bugs.
     4. Security Scan: AppScan is used to perform a security scan on the application to identify any security vulnerabilities.
     5. Deploy to Dev Environment: If the build and scans pass, Jenkins deploys the code to a development environment managed by Kubernetes.
-    6. Continuous Deployment: ArgoCD is used to manage continuous deployment. ArgoCD watches the Git repository and automatically deploys new changes to the development environment as soon as they are committed.
+    6. Continuous Deployment: ArgoCD is used to manage continuous deployment. ArgoCD watches the Git repository and automatically deploys
+    new changes to the development environment as soon as they are committed.
     7. Promote to Production: When the code is ready for production, it is manually promoted using ArgoCD to the production environment.
     8. Monitoring: The application is monitored for performance and availability using Kubernetes tools and other monitoring tools.
 
