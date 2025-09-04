@@ -1,3 +1,29 @@
+## About Project in Interview .
+
+Hi my name kamran in my current org , where organization has E-commerce application 
+and this E-commerece application is multi micro service architecture because there are more tha 100 micro services there are multiple
+ development teams is responsible for certain microservices probaly 3-4 microservices, as a devops engineer my role is to work closely
+with two development teams so my project is basically to work with both of thise devlopment team and implement DevOps or constantly
+improve the devops practices for both devlopment teams and as a part of that i work on CI,CD of taht project.
+I work on writing Terraform infra as code for them and work on k8s implementation.
+Constantly improving the existing scripts.
+So this is my project where I work for the development teams.
+i work with payments and cart devlopment teams
+I am responsible for DevOps implementation of those microservices 
+
+E-commerce site they sells pharma.
+
+## Day to day activities:
+
+ I work for two development teams where I closely attend their meetings and I work with them in agile methodology, where these development teams plan activities during the sprints,
+or they plan activities for the entire quarter,and I closely involved with them during that meetings, so that I understand the roadmap of those development
+teams for the coming quarter.
+And with that, I can also estimate the amount of work that is going to come to me, and I would plan my activities accordingly.
+some time team requests me to create some infrastructure because I am the one who developed and manage infrastructure as code for those development teams.
+One of the recent activity that I worked on was to set up ECS cluster within VPC, and I set that up in the module structure so that going ahead, either
+other DevOps teams or someone who is joining my team or someone who is going to work along with me, can also use those Terraform modules.
+Along with that, I get a lot of requests related to Kubernetes deployments.
+
 ## Tell me abt you CI/CD process that you have implemented.
 
 In our organization we have Github as source code repository if any developers commit a code in source code repository jenkins pipeline will automatically triggered using Webhook as a first stage it will start pulling the code from source code repository once the code is pulled and checkedout next step building this code we use Maven as a part of this process once maven build the application, then we will check the code quality by using staticu code analysis will check application is secure or not after that we use toll App scan this is used for SAT & DAST after that we promote this Application to dev Env using ARGOCD & k8s Argco-cd is looking for k8s manifest in git repository whenever there is change once the new image is updated Argocd will look for new tag in the image using HELM chart it would deploy to new version of an application into target k8s cluster.
