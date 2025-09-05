@@ -1,6 +1,6 @@
 ## About Project in Interview .
 
-Hi my name kamran in my current org , where organization has E-commerce application 
+Hi my name kamran in my current org concentrix and client were regenron where organization has E-commerce application 
 and this E-commerece application is multi micro service architecture because there are more tha 100 micro services there are multiple
  development teams is responsible for certain microservices probaly 3-4 microservices, as a devops engineer my role is to work closely
 with two development teams so my project is basically to work with both of thise devlopment team and implement DevOps or constantly
