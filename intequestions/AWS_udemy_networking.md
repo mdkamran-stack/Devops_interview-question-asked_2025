@@ -45,5 +45,9 @@ ALB is used path based routing  http: /foo and http:/bar
 
 Global accelarator access from  nearest location as per geograpical location.
 
+## Route53
+
+Route 53 is AWS’s DNS service that connects domain names to resources like EC2, S3, or Load Balancers.
+
 
 
