@@ -23,6 +23,27 @@ A transit gateway (TGW) is a network transit hub that interconnects attachments 
 
 ## what is vpc end point 
 
-VPC Endpoints allow private, secure access to AWS services from within a VPC without using the internet, reducing risk and cost
+VPC Endpoints allow private, secure access to AWS services from within a VPC without using the internet, reducing risk and cost.  
+
+## what vpc flowlog.
+
+VPC Flow Logs record metadata about IP traffic going in and out of a VPC, subnet, or ENI, and are mainly used for security analysis and troubleshooting connectivity issues.  
+
+To Create VPC flow first will create vpc and 2 create private n public subnet 3 Creation if IGW associate it 4 creat route tb. 
+
+ENI id elastcic network interface is capturing the logs.  
+
+## N/W LB vs APP LB 
+
+network LB is works on layer4 it is work on tcp/udp protocol N/W is used when we have very high traffic coming to application want to server millions of request with low latency  pointting to http:..nlb-url  point to landing page of app
+
+ALB is used path based routing  http: /foo and http:/bar
+
+## AWS Global accelarator.
+
+## if any subnet we will attach IGW it will be public subnet.private subnet NEVER attach IGW.  
+
+Global accelarator access from  nearest location as per geograpical location.
+
 
 
