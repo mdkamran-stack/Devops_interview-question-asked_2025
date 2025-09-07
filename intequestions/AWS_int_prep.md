@@ -1,9 +1,12 @@
 ## what is different bw a name vs cname records.
 
-The A record points a name to a specific IP. If you want blog.dnsimple.com to point to the server 185.31.17.133 you’ll configure:
+## A (Address Record) – Maps a domain name to an IPv4 address.
 
 blog.dnsimple.com.     A        185.31.17.133
 
-CNAME Record (Canonical Name Record)
+## CNAME Record (Canonical Name Record) Alias record that maps one domain to another.
 
 Purpose: Maps a domain/subdomain → another domain name (not an IP)   EG:  app.example.com → myapp-alb-1234.elb.amazonaws.com
+
+## NS record is responsible for resoving our domain.  
+
