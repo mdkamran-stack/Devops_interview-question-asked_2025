@@ -1,6 +1,6 @@
 ## what is different bw a name vs cname records.
 
-## A (Address Record) – Maps a domain name to an IPv4 address.
+## A (Address Record) – Maps a domain name to an IPv4 address. eg:ec2 instance , lambda
 
 blog.dnsimple.com.     A        185.31.17.133
 
