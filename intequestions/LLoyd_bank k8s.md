@@ -50,6 +50,10 @@ CRT: is nothing but container run time S/W like docker crio containerd.
 
  check these things in the official Kubernetes release notes for version compatibility, cloud provider documentation (like AWS EKS or Azure AKS) for supported upgrade paths, cluster add-on versions (like CNI, CoreDNS), and existing workloads using kubectl and monitoring dashboards to ensure readiness.  
 
+ ## How does kubelet handle node pressure? What happens when the disk fills?
+
+ “Kubelet handles node pressure by monitoring resource thresholds and evicting low-priority pods when disk, memory, or inode usage gets critical—starting with cleanup and escalating to eviction if needed.
+
 ##  You have 160 applications which are there inside the cluster. You cannot go for each deployment to check the logs or to describe. What is that one place you will check config secrets and other volume mounts and other things? How many applications are there in your cluster?
 
 For many applications, I check centralized resources like kubectl get all --all-namespaces, secrets, config maps, and volumes, or use dashboards like Lens/Octant to get an overview, and count applications via kubectl get deployments --all-namespaces.  
