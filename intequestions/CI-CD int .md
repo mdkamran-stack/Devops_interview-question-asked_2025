@@ -59,7 +59,26 @@ I secure CI/CD pipelines by integrating DevSecOps practices:
 
 **5 Implement approval gates and audit logging** Implement approval gates by requiring manual checks before production deploys, and enable audit logging (via CloudWatch or CI/CD logs) to track who approved.
 
-**6 Monitor pipeline activity with Cloud watch** Monitor pipeline activity using centralized logging and monitoring tools like AWS CloudWatch, CI/CD audit logs to track builds, deployments, failures, and security events in real time.
+**6 Monitor pipeline activity with Cloud watch** 
+Monitor pipeline activity using centralized logging and monitoring tools like AWS CloudWatch, CI/CD audit logs to track builds, deployments, failures, and security events in real time.
+
+## What is the difference between rebase and merge? Which one do you prefer in CI/CD workflows?
+
+In CI/CD workflows, I prefer rebase for feature branches to keep history clean and avoid merge clutter. However, for merging into the main branch, I often use merge (via pull requests) because it preserves history and avoids rewriting commits others may depend on. A common workflow is to rebase locally for cleanup and then merge via PR into main
+
+## How do you implement approval gates in a Jenkins pipeline (e.g., manual approval before production)?
+
+In Jenkins, I implement approval gates using the input step in a declarative pipeline, which pauses execution and requires manual approval before moving to production. For stricter controls, I combine this with RBAC so only authorized users can approve. In enterprise setups, I also integrate Jenkins with external systems like ServiceNow or Slack for approval workflows.
+
+## Have you handled parallel execution in a pipeline? How and why?
+
+Yes, I’ve implemented parallel execution in Jenkins pipelines using the parallel directive. For example, I run unit tests, integration tests, and security scans at the same time, which significantly reduces pipeline runtime and provides faster feedback to developers. I prefer it in CI/CD because it optimizes resources and shortens release cycles
+
+## How do you pass parameters between stages in a Jenkins declarative pipeline?
+
+In Jenkins declarative pipelines, I usually pass values between stages using environment variables (env.VAR) or global Groovy variables inside script {}. If I need to pass artifacts, I use stash/unstash. For user inputs or re-runs, I rely on build parameters. This ensures data flows smoothly between pipeline stages without breaking the declarative syntax
+
+In Jenkins, stash is used to temporarily save files from one stage, and unstash is used to retrieve them in another stage.
 
 ## We have 100 of pipeline in jenkins how the data of all these pipeline is managed by jenkins.
 
@@ -134,84 +153,32 @@ Webhooks: GitHub webhooks notify Jenkins on code push to trigger builds instantl
 
 ## Q: How to backup Jenkins ?
 
-A: Backing up Jenkins is a very easy process, there are multiple default and configured files and folders in Jenkins that you might want to backup.
-```  
-  - Configuration: The `~/.jenkins` folder. You can use a tool like rsync to backup the entire directory to another location.
-  
-    - Plugins: Backup the plugins installed in Jenkins by copying the plugins directory located in JENKINS_HOME/plugins to another location.
-    
-    - Jobs: Backup the Jenkins jobs by copying the jobs directory located in JENKINS_HOME/jobs to another location.
-    
-    - User Content: If you have added any custom content, such as build artifacts, scripts, or job configurations, to the Jenkins environment, make sure to backup those as well.
-    
-    - Database Backup: If you are using a database to store information such as build results, you will need to backup the database separately. This typically involves using a database backup tool, such as mysqldump for MySQL, to export the data to another location.
-```
-One can schedule the backups to occur regularly, such as daily or weekly, to ensure that you always have a recent copy of your Jenkins environment available. You can use tools such as cron or Windows Task Scheduler to automate the backup process.
+To back up Jenkins, I back up the $JENKINS_HOME directory, which contains jobs, plugins, configs, and credentials. This can be done manually, automated with cron jobs, or using plugins like ThinBackup. In cloud setups, I use S3 sync or persistent volume snapshots for backup. Restoration simply involves restoring $JENKINS_HOME on a fresh Jenkins installation
 
 ## Q: How do you store/secure/handle secrets in Jenkins ?
 
-A: Again, there are multiple ways to achieve this, 
-   Let me give you a brief explanation of all the posible options.
-```  
-   - Credentials Plugin: Jenkins provides a credentials plugin that can be used to store secrets such as passwords, API keys, and certificates. The secrets are encrypted and stored securely within Jenkins, and can be easily retrieved in build scripts or used in other plugins.
-   
-   - Environment Variables: Secrets can be stored as environment variables in Jenkins and referenced in build scripts. However, this method is less secure because environment variables are visible in the build logs.
-   
-   - Hashicorp Vault: Jenkins can be integrated with Hashicorp Vault, which is a secure secrets management tool. Vault can be used to store and manage sensitive information, and Jenkins can retrieve the secrets as needed for builds.
-   
-   - Third-party Secret Management Tools: Jenkins can also be integrated with third-party secret management tools such as AWS Secrets Manager, Google Cloud Key Management Service, and Azure Key Vault.
-```
+In Jenkins, I store secrets in the Credentials Store (encrypted at rest), inject them at runtime with withCredentials, and for better security integrate with Vault or AWS Secrets Manager. I also enforce RBAC and rotation policies
 
-## Q: What is latest version of Jenkins or which version of Jenkins are you using ?
+## What is latest version of Jenkins or which version of Jenkins are you using ?
 
 ## 2.516.2 
 
+## How do you trigger a pipeline based on a Git tag push instead of a branch commit?
+
+To trigger on tags, we configure the pipeline trigger for tags instead of branches. For example, in GitHub Actions we use on: push: tags, in GitLab only: tags, and in Jenkins use when { buildingTag() }.
+
 ## Q: What is shared modules in Jenkins ?
 
-A: Shared modules in Jenkins refer to a collection of reusable code and resources that can be shared across multiple Jenkins jobs. This allows for easier maintenance, reduced duplication, and improved consistency across multiple build processes.
-   For example, shared modules can be used in cases like:
-```
-        - Libraries: Custom Java libraries, shell scripts, and other resources that can be reused across multiple jobs.
-        
-        - Jenkinsfile: A shared Jenkinsfile can be used to define the build process for multiple jobs, reducing duplication and making it easier to manage the build process for multiple projects.
-        
-        - Plugins: Common plugins can be installed once as a shared module and reused across multiple jobs, reducing the overhead of managing plugins on individual jobs.
-        
-        - Global Variables: Shared global variables can be defined and used across multiple jobs, making it easier to manage common build parameters such as version numbers, artifact repositories, and environment variables.
-```
+Shared modules in Jenkins are Shared Libraries — centralized Groovy code stored in Git, which can be imported into pipelines to reuse common steps like build, test, and deploy across multiple projects
 
 ## Q: can you use Jenkins to build applications with multiple programming languages using different agents in different stages ?
 
-A: Yes, Jenkins can be used to build applications with multiple programming languages by using different build agents in different stages of the build process.
-
-Jenkins supports multiple build agents, which can be used to run build jobs on different platforms and with different configurations. By using different agents in different stages of the build process, you can build applications with multiple programming languages and ensure that the appropriate tools and libraries are available for each language.
-
-For example, you can use one agent for compiling Java code and another agent for building a Node.js application. The agents can be configured to use different operating systems, different versions of programming languages, and different libraries and tools.
-
-Jenkins also provides a wide range of plugins that can be used to support multiple programming languages and build tools, making it easy to integrate different parts of the build process and manage the dependencies required for each stage.
-
-Overall, Jenkins is a flexible and powerful tool that can be used to build applications with multiple programming languages and support different stages of the build process.
+Yes, Jenkins supports multi-language builds by using different agents per stage. For example, I can run a Java build on a Maven agent, 
+a Node.js build on a Node agent, and a Python build on another agent — all in one pipeline.
 
 ## Q: How to setup auto-scaling group for Jenkins in AWS ?
 
-A: Here is a high-level overview of how to set up an autoscaling group for Jenkins in Amazon Web Services (AWS):
-```
-    - Launch EC2 instances: Create an Amazon Elastic Compute Cloud (EC2) instance with the desired configuration and install Jenkins on it. This instance will be used as the base image for the autoscaling group.
-    
-    - Create Launch Configuration: Create a launch configuration in AWS Auto Scaling that specifies the EC2 instance type, the base image (created in step 1), and any additional configuration settings such as storage, security groups, and key pairs.
-    
-    - Create Autoscaling Group: Create an autoscaling group in AWS Auto Scaling and specify the launch configuration created in step 2. Also, specify the desired number of instances, the minimum number of instances, and the maximum number of instances for the autoscaling group.
-    
-    - Configure Scaling Policy: Configure a scaling policy for the autoscaling group to determine when new instances should be added or removed from the group. This can be based on the average CPU utilization of the instances or other performance metrics.
-    
-    - Load Balancer: Create a load balancer in Amazon Elastic Load Balancer (ELB) and configure it to forward traffic to the autoscaling group.
-    
-    - Connect to Jenkins: Connect to the Jenkins instance using the load balancer endpoint or the public IP address of one of the instances in the autoscaling group.
-    
-    - Monitoring: Monitor the instances in the autoscaling group using Amazon CloudWatch to ensure that they are healthy and that the autoscaling policy is functioning as expected.
-
- By using an autoscaling group for Jenkins, you can ensure that you have the appropriate number of instances available to handle the load on your build processes, and that new instances can be added or removed automatically as needed. This helps to ensure the reliability and scalability of your Jenkins environment.
-```
+To set up Jenkins with Auto Scaling in AWS, I create a Launch Template with Jenkins installed via user data, then attach it to an Auto Scaling Group behind an ALB. For persistence, I mount Jenkins home on EFS. Usually, the master stays fixed, and the Auto Scaling Group is used for Jenkins agents
 
 ## Q: How to add a new worker node in Jenkins ?
 
@@ -229,9 +196,7 @@ A: Using the CLI,
 
 ## Q: What is JNLP and why is it used in Jenkins ?
 
-A: In Jenkins, JNLP is used to allow agents (also known as "slave nodes") to be launched and managed remotely by the Jenkins master instance. This allows Jenkins to distribute build tasks to multiple agents, providing scalability and improving performance.
-
-   When a Jenkins agent is launched using JNLP, it connects to the Jenkins master and receives build tasks, which it then executes. The results of the build are then sent back to the master and displayed in the Jenkins user interface.
+JNLP (Java Network Launch Protocol) in Jenkins is used for agents to connect back to the master. It’s mainly used when the master cannot directly reach the agent (e.g., due to firewalls or private networks). The agent pulls the connection using a JNLP token, which makes it secure and firewall-friendly.
 
  ## Explain about jenkins file.
 
@@ -248,8 +213,6 @@ A: In Jenkins, JNLP is used to allow agents (also known as "slave nodes") to be 
   ## Where is jenkins working directory.
 
   Jenkins working directory under JENKINS_HOME directory its is root directory of jenkins where jenkins installed jenkins uses to perform build & archives.
-
- 
 
 ## Q: What are some of the common plugins that you use in Jenkins ?
 
