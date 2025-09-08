@@ -47,7 +47,36 @@ Global accelarator access from  nearest location as per geograpical location.
 
 ## Route53
 
-Route 53 is AWS’s DNS service that connects domain names to resources like EC2, S3, or Load Balancers.
+Route 53 is AWS’s DNS service that connects domain names to resources like EC2, S3, or Load Balancers. 
+
+## to configure loadbalncer with route53.
+
+<img width="849" height="377" alt="image" src="https://github.com/user-attachments/assets/494a4256-4b32-4ba5-ac0d-d8409c7b09a9" />
+
+
+Once user is trying to access url: example.com it going to ggole domain finding NS for our route 53 request come to route 53 hosted zone once req enter hosted zone it goes to LB & LB forward req to EC2 instances.  
+
+## Private subnet doesnt have internet access keep in mind.
+
+## Target group is logical grouping of EC2 instances so that our LB can choose this particular group to forward the request.
+
+Once we able to fetch our url then we have to setup from linking LB to EC2 instance .
+but we need to create a record so our route 53 will redicrect to LB and LB redicrt to ec2 , after creating A record it will pointg to ec2 instance 
+
+## Weighted routing we will be putting the percentage the share traffic load on multiple LB like suppose 2 LB then percentage we will define like 50 -50 or as per need.
+
+for creating 2nd LB we have to create vpc route table IGW and target group and APP LB n security GB add sg to LB Finally we have to create weighted routing for percentage of load and putting A record point to LB  weight is 0-256 we will putting 127 so it will become 50 %
+
+## Geolocation Routing .
+We will create geolocation A record eg 1 from sweadan 2 nvergenia whatever location we select it will server for those location  
+
+## Failover routing 
+suppose if we have primary and secondary LB if anyone fails it will server from another one 
+
+## Route53 is global resource it doesnt belong to any region or any vpc. 
+
+
+
 
 
 
