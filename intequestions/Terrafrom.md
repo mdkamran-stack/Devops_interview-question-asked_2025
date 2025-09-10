@@ -12,5 +12,39 @@ Infrastructure as Code (Terraform)
 
 ## What happens if someone manually changes infra outside of Terraform? How do you detect and fix it?
 
-Terraform detects manual infra changes during terraform plan as drift. We can either revert them with terraform apply or update 
-code to reflect the change, but the best practice is to restrict manual changes and use automated drift detection.
+Run terraform plan → it compares state file vs actual infra and shows differences.
+If manual change is unwanted → Run terraform apply → Terraform reverts infra to match code.
+n
+## Accidently deleted the state file.
+Always store state file in a remote backend eg.S3 with Dynamodb and then eanble versioning.
+
+## how do you handle terraform state file corruption?
+If the state file is corrupted, I first restore from the backup or remote backend version. If that fails, I use terraform import to
+rebuild state from existing resources
+
+## Two people running terraform apply at the same time 
+Enable state locking so you dont overwrite.
+
+## how do you manage secrest in terraform without hardcoding
+
+We have Integrate with AWS Secrets Manager, SSM Parameter Store ,Terraform fetched secrets dynamically at runtime.
+
+## Terraform apply fails hilfway?
+Use terrfaorm plan first and then run terrfaorm apply -refresh=true to sync the state.
+
+## AWS API rate limit errors.
+Configure retries in your provider and stagger deployment to avoid hitting limit.
+
+## Infrastructure drift (code vs actual cloud state)
+run terrafrom plan regulary 
+
+## Resource removed from code but still exist in cloud 
+Use terrfarom destroy -target 
+
+## Hitting AWS quota limits.
+Keep an eye on quotas and request increase before scaling events.
+
+## lost access to remote backend 
+Document access procedure and keep secure backups of state file.
+
+
