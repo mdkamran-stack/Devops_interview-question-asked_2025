@@ -4,3 +4,4 @@
 ## We have 100 of pipeline in jenkins how the data of all these pipeline is managed by jenkins.
  ## what are 2 type of pipeline in jenkins?
  ## How do you implement auto-scaling for Jenkins agents?
+ ## How do you ensure the security and compliance of your CI/CD pipelines in aws
