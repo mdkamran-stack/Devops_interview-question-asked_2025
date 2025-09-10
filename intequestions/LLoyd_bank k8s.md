@@ -72,9 +72,7 @@ Prometheus scrapes cluster metrics, Grafana is configured as its data source, an
 
 ## How to Troubleshoot a Failed Prod Deployment in Kubernetes
 
-To troubleshoot a failed prod deployment in Kubernetes, check rollout status, pod/events, logs, configs/secrets, services/networking, node resources, and roll back if needed.” ✅
-
-You can also keep a quick stepwise checklist in mind:
+To troubleshoot a failed prod deployment in Kubernetes, check rollout status, pod/events, logs, configs/secrets, services/networking, node resources, and roll back if needed.” 
 
 kubectl get deployments -n <namespace> → check rollout status
 
@@ -99,6 +97,14 @@ Answer: Run kubectl describe pod → Check taints/tolerations → Check node res
 ## How do you enforce least privilege in Kubernetes?  
 
 Answer: Use RBAC roles → Bind only necessary permissions → Restrict cluster admin → Enable PodSecurityPolicies/OPA. 
+
+## Prometheus and grafana installations what is difference? 
+
+Prometheus Prometheus is a time-series monitoring and alerting system, while Grafana is a visualization and dashboarding tool that can use Prometheus (and others) as a data source.
+
+**Architecture of prometheus**
+Prometheus scrapes metrics from target server, stores them in a time-series DB, queries with PromQL, integrates with Grafana for dashboards, and uses Alertmanager for notifications.”
+
 
 ## ques 4 : how did you check Health of conatiner configuration in k8s.  
 
