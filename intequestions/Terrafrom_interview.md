@@ -14,7 +14,10 @@ Infrastructure as Code (Terraform)
 
 Run terraform plan → it compares state file vs actual infra and shows differences.
 If manual change is unwanted → Run terraform apply → Terraform reverts infra to match code.
-n
+
+## how do you implement cross account resource provisioning using terraform
+For cross-account provisioning, I usually configure Terraform to assume IAM roles in the target accounts. I use multiple provider blocks with aliases, and sometimes remote state data sources to share outputs between accounts.
+
 ## Accidently deleted the state file.
 Always store state file in a remote backend eg.S3 with Dynamodb and then eanble versioning.
 
