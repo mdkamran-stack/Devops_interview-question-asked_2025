@@ -42,6 +42,14 @@ CRT: is nothing but container run time S/W like docker crio containerd.
 
  “In Kubernetes, the control plane manages the cluster components like the API server, scheduler, controller manager, and etcd. Upgrading the control plane updates these master components. Worker node upgrades, on the other hand, update the nodes where workloads run. So ‘control plane upgrade’ affects cluster management, while ‘node upgrade’ affects the application runtime environmen.  
 
+ ## What is difference between deployment and statefulset in kubernetes?
+
+ Deployment is for stateless apps with identical pods, while StatefulSet is for stateful apps that need stable identity, ordered scaling, and persistent storage.
+
+ ## what is stateful and stateless
+
+Stateless apps don’t retain data between requests and are easy to scale, while stateful apps maintain data/session and need persistence with stable identity.
+
  ## What are the things you'll consider before doing the upgrade?
 
  Before upgrading Kubernetes, I consider compatibility of workloads and add-ons, backup of etcd and cluster state, version support (control plane vs nodes), testing in a staging environment, maintenance windows to avoid downtime, and a rollback plan in case the upgrade fails.  
@@ -226,7 +234,7 @@ spec:
 
 Start by inspecting pod status using kubectl describe pod. If images aren’t pulling, check image name, tag, and registry permissions. For evicted pods, check node pressure (disk/memory) with kubectl describe node. Prevent issues by enforcing resource limits, setting up monitoring, and implementing PodDisruptionBudgets.
 
-## How do you control pod-to-pod communication in Kubernetes?
+## How do you iplement network policyto restrict pod-to-pod communication in Kubernetes?
 
 Use Kubernetes NetworkPolicies. These define rules based on pod selectors, namespaces, and ports. Ensure your cluster uses a network plugin that supports them, such as Calico
 
