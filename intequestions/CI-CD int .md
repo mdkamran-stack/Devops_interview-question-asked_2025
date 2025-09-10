@@ -15,14 +15,7 @@ E-commerce site they sells pharma.
 
 ## Day to day activities:
 
- I work for two development teams where I closely attend their meetings and I work with them in agile methodology, where these development teams plan activities during the sprints,
-or they plan activities for the entire quarter,and I closely involved with them during that meetings, so that I understand the roadmap of those development
-teams for the coming quarter.
-And with that, I can also estimate the amount of work that is going to come to me, and I would plan my activities accordingly.
-some time team requests me to create some infrastructure because I am the one who developed and manage infrastructure as code for those development teams.
-One of the recent activity that I worked on was to set up ECS cluster within VPC, and I set that up in the module structure so that going ahead, either
-other DevOps teams or someone who is joining my team or someone who is going to work along with me, can also use those Terraform modules.
-Along with that, I get a lot of requests related to Kubernetes deployments.
+As a DevOps Engineer in an Agile environment, I start by checking monitoring dashboards and CI/CD pipelines, then join daily stand-ups to align with sprint goals. During the day, I focus on backlog items such as infrastructure automation, deployments, and pipeline improvements. I also collaborate closely with developers to resolve issues and frequently handle Kubernetes deployment requests. I usually wrap up by documenting my work and updating Jira to keep the sprint on track.
 
 ## Tell me abt you CI/CD process that you have implemented.
 
