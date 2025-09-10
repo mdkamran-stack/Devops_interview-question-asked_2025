@@ -86,9 +86,9 @@ When we run jenkins pipeline a new workspace is created in jenkins server, it is
 
 ## what are 2 type of pipeline in jenkins?
 
-In jenkins 2 types of pipeline is cripted pipeline & declarative pipeline.
+1 **Declarative Pipeline** – A simplified, structured syntax (pipeline { ... }) designed to make pipeline creation easier and more readable.
 
-Scripted pipelines are Groovy-based and flexible but complex, while Declarative pipelines use a structured syntax (pipeline {}) that’s simpler, more readable, and recommended.
+2 **Scripted Pipeline** – Uses Groovy scripting, more flexible and powerful but complex.
 
 ## How do you debug a Jenkins job stuck on “Waiting for Executor”? 
 
