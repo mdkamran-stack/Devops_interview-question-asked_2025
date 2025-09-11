@@ -12,7 +12,11 @@ blog.dnsimple.com.     A        185.31.17.133
 
 Purpose: Maps a domain/subdomain → another domain name (not an IP)   EG:  app.example.com → myapp-alb-1234.elb.amazonaws.com
 
-## NS record is responsible for resoving our domain.  
+**NS record is responsible for resoving our domain.**  
+
+## How do you ensure that your infrastructure is scalable and can handle unexpected traffic spikes?
+
+in one project our e-commerce app faced traffic spikes during sales. We used Kubernetes HPA to scale Pods based on CPU/memory and AWS ALB to distribute traffic. We also cached frequent queries in Redis. This allowed the system to handle a 3x spike in traffic smoothly without downtime.
 
 ## EBS vs EFS vs FSx. walk through use cases and tradeoffs.
 
