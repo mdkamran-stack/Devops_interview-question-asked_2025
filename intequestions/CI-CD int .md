@@ -86,6 +86,10 @@ I secure CI/CD pipelines by integrating DevSecOps practices:
 **6 Monitor pipeline activity with Cloud watch** 
 Monitor pipeline activity using centralized logging and monitoring tools like AWS CloudWatch, CI/CD audit logs to track builds, deployments, failures, and security events in real time.
 
+## How do you keep your infrastructure and application code in sync?
+
+I keep infrastructure and application code in sync by using Infrastructure as Code with Git-based workflows, so both are version-controlled, reviewed, and deployed together through CI/CD pipelines.
+
 ## What is the difference between rebase and merge? Which one do you prefer in CI/CD workflows?
 
 In CI/CD workflows, I prefer rebase for feature branches to keep history clean and avoid merge clutter. However, for merging into the main branch, I often use merge (via pull requests) because it preserves history and avoids rewriting commits others may depend on. A common workflow is to rebase locally for cleanup and then merge via PR into main
