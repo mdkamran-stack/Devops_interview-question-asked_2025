@@ -157,6 +157,7 @@ A ConfigMap stores non-sensitive configuration data in plain text, while a Secre
 ## Ques: In Kubernetes, How the auto-healing mechanism automatically detects and recovers from failed workloads without manual intervention.  
 
 ### How Auto Healing works.  
+Kubernetes has a built-in self-healing mechanism. It continuously monitors Pods using controllers and health probes. If a Pod crashes, fails a liveness check, or a node goes down, Kubernetes automatically restarts the container or reschedules the Pod on a healthy node to maintain the desired state. This happens without any manual intervention, ensuring application availability and resilience
 
 1  **Liveness Probes**  
  . If a container becomes unresponsive or unhealthy, the **liveness Probe** triggers at restart.  
