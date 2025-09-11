@@ -116,25 +116,23 @@ Persistent volumes outlive Pods for durable storage, while ephemeral volumes exi
 
 Prometheus scrapes cluster metrics, Grafana is configured as its data source, and dashboards visualize metrics; for logs, tools like Loki can be integrated similarly.
 
+ ## Can you describe a time when you had to troubleshoot a production issue and how you resolved it?
+
+ **Situation:**
+
+“In one of my previous projects, a critical production service started experiencing intermittent outages during peak traffic hours. Users were reporting slow responses and timeouts.”
+
+**Task:**
+
+“As the on-call DevOps engineer, my task was to quickly identify the root cause, restore service stability, and prevent recurrence.”
+
+**Action:**
+
+“I checked application and system logs, then used Kubernetes kubectl describe and monitoring dashboards (Prometheus & Grafana) to analyze metrics. I discovered that Pods were hitting CPU limits, causing them to restart frequently. To resolve it, I temporarily scaled the replicas to handle the spike and increased the resource limits. Later, I worked with the team to optimize the application code and set up Kubernetes Horizontal Pod Autoscaler so scaling became automatic.”
+
 ## How to Troubleshoot a Failed Prod Deployment in Kubernetes
 
-To troubleshoot a failed prod deployment in Kubernetes, check rollout status, pod/events, logs, configs/secrets, services/networking, node resources, and roll back if needed.” 
-
-kubectl get deployments -n <namespace> → check rollout status
-
-kubectl get pods -n <namespace> → check Pod states
-
-kubectl describe pod <pod-name> -n <namespace> → check events
-
-kubectl logs <pod-name> → inspect logs
-
-Verify ConfigMaps & Secrets
-
-Check Services, Ingress, networking
-
-Check node resources (kubectl describe node)
-
-Roll back if needed (kubectl rollout undo deployment/<deployment-name>)
+To troubleshoot a failed production deployment in Kubernetes, I start by checking the Deployment and Pod status with kubectl describe. Then I review Pod logs, events, and resource usage to identify errors like image pull failures, CrashLoopBackOff, or config issues. I also check networking and dependencies. If the issue is critical, I roll back using kubectl rollout undo. This systematic approach helps quickly isolate and fix the problem while minimizing downtime
 
 ## How do you handle Kubernetes pod scheduling failures?  
 
@@ -154,35 +152,8 @@ Prometheus scrapes metrics from target server, stores them in a time-series DB, 
 
 ## ques 4 : how did you check Health of conatiner configuration in k8s.  
 
-I check container health in Kubernetes using liveness, readiness, and startup probes defined in the Pod spec.”
+I check container health in Kubernetes using liveness, readiness, and startup probes defined in the Pod spec and verify their status with kubectl describe pod and logs.
 
-
- ```yaml
-
-apiVersion: v1
-kind: Pod
-metadata:
-  name: myapp-pod
-spec:
-  containers:
-  - name: myapp
-    image: myapp:latest
-    ports:
-    - containerPort: 8080
-    livenessProbe:
-      httpGet:
-        path: /health
-        port: 8080
-      initialDelaySeconds: 10
-      periodSeconds: 5
-    readinessProbe:
-      httpGet:
-        path: /ready
-        port: 8080
-      initialDelaySeconds: 5
-      periodSeconds: 5
-
-```
 ### How it works  
 . LivenessProbe -> if /health fails repetadely, pod is restarting.   
 . readinessProbe -> if /ready  fails, pod stays running but is removed the service load balancer.   
