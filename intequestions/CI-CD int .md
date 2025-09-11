@@ -38,6 +38,37 @@ A: In the current project we use the following tools orchestrated with Jenkins t
     7. Promote to Production: When the code is ready for production, it is manually promoted using ArgoCD to the production environment.
     8. Monitoring: The application is monitored for performance and availability using Kubernetes tools and other monitoring tools.
 
+
+## Reduced build and deployment times by20% by optimizing CI/CDpipelines.
+
+Earlier, our builds were slow, taking about 5 minutes. I analyzed the CI/CD pipeline and found redundant steps and lack of caching. I implemented parallel builds, introduced dependency caching, and automated deployment scripts. These optimizations reduced build and deployment times by 20%, which allowed faster feedback, quicker releases, and improved developer productivity.
+
+Key Points to Cover
+
+Builds and deployments were slow, causing delays in delivery.
+
+Your Responsibility (Task)
+
+You were expected to improve pipeline efficiency without compromising quality.
+
+Show that you took ownership of fixing the bottlenecks.
+
+Actions Taken (What You Did)
+
+Parallelization: Running tests/build steps in parallel instead of sequential.
+
+Caching: Using Docker layer caching, dependency caching (Maven, npm, pip, etc.).
+
+Optimized builds: Removed unnecessary steps, modularized jobs.
+
+Infrastructure: Used auto-scaling agents/runners for faster builds.
+
+Automation: Introduced Infrastructure as Code (IaC) or deployment scripts.
+
+20% faster builds/deployments (e.g., from 5 min to 3 min).
+
+Improved team productivity and release frequency.
+
 ## How do you ensure the security and compliance of your CI/CD pipelines in aws
 
 I secure CI/CD pipelines by integrating DevSecOps practices:
