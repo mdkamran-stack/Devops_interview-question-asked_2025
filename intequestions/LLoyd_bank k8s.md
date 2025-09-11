@@ -197,11 +197,6 @@ spec:
           initialDelaySeconds: 10
           periodSeconds: 5
 ```
-💡 Quick Interview Answer:  
- 
- "K8s auto-heals workloads by restarting unhealthy containers using liveness probes, rescheduling pods to healthy nodes if a node fails and maintaining the desired replica count via **ReplicaSets**. This ensures minimal downtime without manual intervention."
-
-## Question :  
 ### What are key factors to secure kubernetes cluster.
 
 1 **API Server & Access Control**  
