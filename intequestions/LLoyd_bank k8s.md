@@ -32,7 +32,7 @@ CRT: is nothing but container run time S/W like docker crio containerd.
 
   ## How are you fetching the secrets that are required inside the Kubernetes cluster?  
 
- We usually fetch secrets through external secret managers like AWS Secrets Manager or HashiCorp Vault using the External Secrets Operator. The operator syncs the external secrets into Kubernetes Secrets, which my pods consume via environment variables or mounted volumes. In EKS, I often use IRSA so pods can securely fetch secrets directly without hardcoding credentials.”
+ We usually fetch secrets through external secret managers like AWS Secrets Manager The operator syncs the external secrets into Kubernetes Secrets, which my pods consume via environment variables or mounted volumes. In EKS, I often use IRSA so pods can securely fetch secrets directly without hardcoding credentials.”
 
  ## How are you going to fetch it from the application?  
 
