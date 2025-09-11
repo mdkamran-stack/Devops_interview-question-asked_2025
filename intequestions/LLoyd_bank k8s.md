@@ -3,6 +3,8 @@
 ## What is Kubernetes?
 👉 “An orchestration platform for automating container deployment and scaling.”
 
+## what is cluster
+A cluster is the collection of nodes where Kubernetes runs apps.
 ## What is a Pod?
 👉 “The smallest deployable unit, running one or more containers.”
 
