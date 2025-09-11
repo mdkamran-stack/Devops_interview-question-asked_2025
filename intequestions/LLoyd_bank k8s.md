@@ -1,9 +1,43 @@
 # LLyods bank asked questions.
 
+## What is Kubernetes?
+👉 “An orchestration platform for automating container deployment and scaling.”
+
+## What is a Pod?
+👉 “The smallest deployable unit, running one or more containers.”
+
+## What is the role of etcd in Kubernetes?
+
+etcd is Kubernetes’ key-value store that persistently stores all cluster state and configuration data
+
+## How do Ingress and Ingress controllers work?
+“Ingress is a Kubernetes resource that defines HTTP/HTTPS routing rules to services, while the Ingress Controller (like NGINX or Traefik) enforces those rules by managing the actual load balancer or reverse proxy
+
+## What is the difference between Ingress and a LoadBalancer Service?
+
+LoadBalancer exposes one Service; Ingress routes to many Services.
+
+## How would you secure communication between Pods in Kubernetes?
+I secure Pod-to-Pod communication using NetworkPolicies to restrict traffic, mTLS for encryption/authentication, and RBAC with Secrets to control access to sensitive data
+
 ##  How Pod autoscale.
 
 Pod autoscaling in Kubernetes is done using the Horizontal Pod Autoscaler (HPA), which scales Pods based on CPU, memory, or custom metrics.
 
+## How do you upgrade a Kubernetes cluster with minimal downtime?
+
+“To upgrade a Kubernetes cluster with minimal downtime, I perform a rolling upgrade of control plane components first, then upgrade worker nodes one by one, ensuring workloads remain available throughout the process.
+
+## What is a PersistentVolume (PV) and PersistentVolumeClaim (PVC)?
+
+A PersistentVolume (PV) is a cluster resource representing storage, and a PersistentVolumeClaim (PVC) is a user request for storage,
+
+## How do you handle zero-downtime deployments?
+
+I handle zero-downtime deployments in Kubernetes using rolling updates, blue-green, or canary deployments, ensuring old Pods remain available until new ones are ready and traffic is safely switched.
+
+## What is RBAC (Role-Based Access Control) in Kubernetes?
+RBAC in Kubernetes controls access to resources by assigning roles to users or service accounts, defining what actions they can perform on which resources.
 ## Can you explain what is virtualization and containerization? Why do we need containerization?
 
 Virtualization runs full VMs with separate OS, while containerization packages apps with dependencies in lightweight, portable containers that are faster, scalable, and consistent across environments
@@ -34,6 +68,8 @@ CRT: is nothing but container run time S/W like docker crio containerd.
 
  We usually fetch secrets through external secret managers like AWS Secrets Manager The operator syncs the external secrets into Kubernetes Secrets, which my pods consume via environment variables or mounted volumes. In EKS, I often use IRSA so pods can securely fetch secrets directly without hardcoding credentials.”
 
+## How does Service discovery work in Kubernetes?
+Kubernetes uses DNS to map Service names to stable IPs
  ## How are you going to fetch it from the application?  
 
  The application fetches secrets through environment variables or mounted files from Kubernetes Secrets, which are synced from external secret managers if needed.
