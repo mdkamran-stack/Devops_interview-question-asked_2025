@@ -3,3 +3,4 @@
     What is Git cherry-pick?
     What is Git stash?
     How do you resolve the merge conflicts in Git?
+    What is git rebase
