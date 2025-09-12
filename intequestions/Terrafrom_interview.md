@@ -50,4 +50,15 @@ Keep an eye on quotas and request increase before scaling events.
 ## lost access to remote backend 
 Document access procedure and keep secure backups of state file.
 
+1) What is the difference between 𝐭𝐞𝐫𝐫𝐚𝐟𝐨𝐫𝐦 𝐢𝐦𝐩𝐨𝐫𝐭 and 𝐭𝐞𝐫𝐫𝐚𝐟𝐨𝐫𝐦 𝐭𝐚𝐢𝐧𝐭?
+2) How do you manage secrets in Terraform without hardcoding them?
+3) What’s the difference between 𝐜𝐨𝐮𝐧𝐭 and 𝐟𝐨𝐫_𝐞𝐚𝐜𝐡? Give a real-world use case.
+4) How do you handle drift detection in Terraform?
+5) What is a Terraform remote backend, and why is it important?
+6) How do you manage multiple environments (dev, staging, prod) in Terraform?
+7) Difference between 𝐥𝐨𝐜𝐚𝐥-𝐞𝐱𝐞𝐜 and 𝐫𝐞𝐦𝐨𝐭𝐞-𝐞𝐱𝐞𝐜 provisioners.
+8) How do you safely roll back infrastructure changes after a failed deployment?
+9) Explain 𝐭𝐞𝐫𝐫𝐚𝐟𝐨𝐫𝐦 𝐫𝐞𝐟𝐫𝐞𝐬𝐡 vs 𝐭𝐞𝐫𝐫𝐚𝐟𝐨𝐫𝐦 𝐩𝐥𝐚𝐧.
+10) How do you write reusable Terraform modules?
+
 
