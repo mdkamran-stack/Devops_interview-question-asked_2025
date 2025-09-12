@@ -1,3 +1,6 @@
+Below services must have clear understanding check KR NEtwork video 
+1: EC2   2: S3   3: IAM   4: RDS   5: LAMBDa  6: cloudwatch    7: VPC 
+
 ## Bash one-liner: Delete all .tmp files older than 15 days in /var/log
 
 find /var/log -type f -name "*.tmp" -mtime +15 -exec rm -f {} \;
