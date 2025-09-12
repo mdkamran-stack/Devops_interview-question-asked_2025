@@ -17,6 +17,8 @@ E-commerce site they sells pharma.
 
 As a DevOps Engineer in an Agile environment, I start by checking monitoring dashboards and CI/CD pipelines, then join daily stand-ups to align with sprint goals. During the day, I focus on backlog items such as infrastructure automation, deployments, and pipeline improvements. I also collaborate closely with developers to resolve issues and frequently handle Kubernetes deployment requests. I usually wrap up by documenting my work and updating Jira to keep the sprint on track.
 
+Agile is a software development methodology that focuses on iterative development, collaboration, flexibility, and delivering working software in small, frequent increments.
+
 ## Tell me abt you CI/CD process that you have implemented.
 
 In our organization we have Github as source code repository if any developers commit a code in source code repository jenkins pipeline will automatically triggered using Webhook as a first stage it will start pulling the code from source code repository once the code is pulled and checkedout next step building this code we use Maven as a part of this process once maven build the application, then we will check the code quality by using staticu code analysis will check application is secure or not after that we use toll App scan this is used for SAT & DAST after that we promote this Application to dev Env using ARGOCD & k8s Argco-cd is looking for k8s manifest in git repository whenever there is change once the new image is updated Argocd will look for new tag in the image using HELM chart it would deploy to new version of an application into target k8s cluster.  
