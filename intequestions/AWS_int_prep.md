@@ -1,5 +1,5 @@
-Below services must have clear understanding check KR NEtwork video 
-1: EC2   2: S3   3: IAM   4: RDS   5: LAMBDa  6: cloudwatch    7: VPC 
+Below services must have clear understanding check KR NEtwork video   
+1: EC2  - run apps   2: S3 -sore file    3: IAM - manage access   4: RDS  - databases    5: LAMBDA - run code without server   6: cloudwatch  -Monitor     7: VPC - Network setup  
 
 ## Bash one-liner: Delete all .tmp files older than 15 days in /var/log
 
