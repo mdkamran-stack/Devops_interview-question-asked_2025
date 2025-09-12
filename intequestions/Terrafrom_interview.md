@@ -1,3 +1,6 @@
+Okay, code to deploy I'll give simple task only virtual machine in Azure it includes provider.tf, main.tf, locals.tf, and variables.tf. If you don't know about these files, just let me know. Can you share the screen?
+
+
 Infrastructure as Code (Terraform)
     What all different commands do you have in Terraform?
     How do I roll back in Terraform? Suppose I lost the infrastructure.
