@@ -19,7 +19,55 @@ TF tries to ensure that the deployed infra is based on the desired state.
 
 ## dependency lock file : TF dependency lock file allows us to lock spaecific version of the provider.
 
+## How recommended folder Structure Looks like.
 
+1: Main terrafomr configuration file.  
+2: variable.tf file that defines all the variables.  
+3: terraform.tfvarsd file that defines values to all the variables.  
+
+**Point**
+if file name is terraform.tfvars > Terraform will automaticaly load values from it.  
+if file name is different like prod.tfvars > you have to explicitly define the file durint plan / apply operation.  
+
+## VAriable Defination Preedence ( It will take the values with higher precedence )
+
+Terraform loads varibale in the following orders with later sources taking precedence over earlier ones.  
+
+1. Environment variable
+2. The terraform.tfvars file, if present
+3. The terraform.tfvars.json file if present
+4. Any *.auto.tfvars or *.auto.tfvars.json files, processed in lexical order of their filename.
+5. Any -var and -var-file options on the command line.
+   **exmaple**
+
+   ENV varibale of TF_VAR_instance_type = "t2.micro"
+   value in terraform.tfvars = "t2.large"
+
+**Final result = "t2.large"** Always it will take higher value.  
+Explicitly we can define terrform plan -var="instance_type=m5.large"  >> It will take m5.large we can define any value as it is.  
+
+# Terraform Data Types
+
+## Primitive Types
+- **string** → Sequence of characters  
+- **number** → Integer or floating-point number  
+- **bool** → Boolean value (`true` or `false`)  
+
+## Collection Types
+- **list** → Ordered sequence of values of the same type  
+- **map** → Key-value pairs  
+- **set** → Unordered collection of unique values  
+
+## Structural Types
+- **object** → Group of named attributes with specific types  
+- **tuple** → Ordered sequence of values with potentially different types  
+
+
+
+
+
+
+7. 
 
 
 
