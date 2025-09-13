@@ -170,5 +170,50 @@ resource "aws_instance" "myec2" {
     instance_type = var.environment == "production" && var.region == "us-east-1" ? "m5.large" : "t2.micro"
 }
 ```
+# Function in Terraform
+Terraform has wide variety of functions available to achieve different set of use-cases.  
+1: Numberic      functions abs, ceil, floor   
+2: String        concat, replace,split,
+3: collection Functions >> elements , jeys , lenght,merge , sort
+4: Filesystem Functions: >> file, filebase64, dirname  
+
+Terraform doesn't support use-defined-functions & so only the funtions built in to the language are availabe for use.  
+
+https://developer.hashicorp.com/terraform/language/functions 
+
+# Locals VS Variables.
+
+Variable value can be defined in wide variety of places like terraform.tfvars, ENV Variables, CLI and so on.  
+
+Locals are more of a priavte resources. you have to redirect modify the code..  
+
+Locals are used when you want to avoid repeting the same expression multiple times.  
+
+Important point to note.
+
+Locals values are often refereed to as just "locals"  
+locals values are created by a locals block (prulas), but you reference them as attributes on an object named local (singular)  
+
+## Data Sources.
+
+Data sources allow Terraform to use /fetch information defined outside of Terraform .
+
+### data-source-03.tf IT will fetched the data from AWS account 
+```sh
+provider "aws" {
+    region = "us-east-1"
+}
+
+data "aws_instances" "example" {}
+```
+
+
+
+
+
+
+
+
+
 
 
