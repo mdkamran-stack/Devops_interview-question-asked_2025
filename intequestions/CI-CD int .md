@@ -38,11 +38,10 @@ A: In the current project we use the following tools orchestrated with Jenkins t
     6. Continuous Deployment: ArgoCD is used to manage continuous deployment. ArgoCD watches the Git repository and automatically
     deploys new changes to the development environment as soon as they are committed.
     7. Promote to Production: When the code is ready for production, it is manually promoted using ArgoCD to the production environment.
-    8. Monitoring: The application is monitored for performance and availability using Kubernetes tools and other monitoring tools. 
-   
-
-
-    ## Issues faced during LB INgress provision same thing we can frame during interview (challenges faced in recent project)  
+    8. Monitoring: The application is monitored for performance and availability using Kubernetes tools and other monitoring tools.  
+    
+    
+ ## Issues faced during LB INgress provision same thing we can frame during interview (challenges faced in recent project)  
 
 One of the most challenging issues I recently resolved involved provisioning an AWS Application Load Balancer through the AWS Load Balancer Controller in EKS.
  Everything looked correct — IAM roles, subnet tags, controller deployment — but the ALB simply wouldn’t appear. I dug into the controller logs and found repeated
