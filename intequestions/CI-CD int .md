@@ -40,6 +40,49 @@ A: In the current project we use the following tools orchestrated with Jenkins t
     7. Promote to Production: When the code is ready for production, it is manually promoted using ArgoCD to the production environment.
     8. Monitoring: The application is monitored for performance and availability using Kubernetes tools and other monitoring tools.
 
+    ## Issues faced during LB INgress provision same thing we can frame during interview (challenges faced in recent project)
+
+“One of the most challenging issues I recently resolved involved provisioning an AWS Application Load Balancer through the AWS Load Balancer Controller in EKS.
+ Everything looked correct — IAM roles, subnet tags, controller deployment — but the ALB simply wouldn’t appear. I dug into the controller logs and found repeated
+ errors about subnet discovery and security group authorization. The key error was: ‘InvalidGroup.NotFound: You have specified two resources that belong to different networks.’
+That told me the controller was trying to authorize traffic between security groups in different VPCs — which AWS doesn’t allow.
+
+I validated this by inspecting the VPC IDs of both security groups, and sure enough, they were mismatched. To fix it, I created a new security group in the correct VPC, opened port 80 for public access, and explicitly assigned it to the Ingress using annotations. I also ensured the controller was using IRSA for IAM authentication, patched the ServiceAccount, and restarted the controller. Once everything aligned — VPC, SG, IAM, and annotations — the ALB provisioned successfully and traffic flowed as expected.
+
+This experience reinforced how critical it is to trace cloud resource relationships across layers — IAM, networking, and Kubernetes manifests — and how controller logs can be your best friend. It also showed my ability to stay focused through multi-hour debugging and deliver a clean, production-ready soluti
+
+## steps followed
+
+🛠️ How You Fixed It
+✅ 1. Created a New Security Group in the Correct VPC
+You created sg-00143fa7ec576ee35 in vpc-0bbe799d063d0395f, which is the VPC your EKS cluster and subnets live in.
+
+✅ 2. Opened Port 80 for Public Access
+You authorized inbound traffic on port 80 to allow ALB access:
+
+bash
+aws ec2 authorize-security-group-ingress \
+  --group-id sg-00143fa7ec576ee35 \
+  --protocol tcp \
+  --port 80 \
+  --cidr 0.0.0.0/0
+✅ 3. Explicitly Assigned the Correct SG to Your Ingress
+You added this annotation to your Ingress manifest:
+
+yaml
+alb.ingress.kubernetes.io/security-groups: sg-00143fa7ec576ee35
+This forced the controller to use the correct SG from the correct VPC.
+
+✅ 4. Restarted the Controller and Monitored Logs
+You restarted the controller to pick up the changes:
+
+bash
+kubectl rollout restart deployment aws-load-balancer-controller -n kube-system
+Then monitored logs to confirm successful ALB provisioning.
+
+✅ Final Result
+Your Ingress now shows a valid ALB DNS name:
+
 
 ## Reduced build and deployment times by20% by optimizing CI/CDpipelines.
 
