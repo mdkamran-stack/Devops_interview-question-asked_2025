@@ -49,36 +49,126 @@ Explicitly we can define terrform plan -var="instance_type=m5.large"  >> It will
 # Terraform Data Types
 
 ## Primitive Types
-- **string** → Sequence of characters  
+- **string** → Sequence of characters  "hello"
 - **number** → Integer or floating-point number  
 - **bool** → Boolean value (`true` or `false`)  
 
 ## Collection Types
-- **list** → Ordered sequence of values of the same type  
-- **map** → Key-value pairs  
+- **list** → Ordered sequence of values of the same type  ["us-west-1a","us-wast-1c"]  
+- **map** → Key-value pairs  like{name ="mabel",age =52}  
 - **set** → Unordered collection of unique values  
 
 ## Structural Types
 - **object** → Group of named attributes with specific types  
-- **tuple** → Ordered sequence of values with potentially different types  
+- **tuple** → Ordered sequence of values with potentially different types
+# Introducing Count Arguments  
+
+The Count argument accepts a whole number and create that many instances of the resource.  
+We can create 10 instance at once.  
+
+EG: resource "aws_instacen" "second_ec2"{
+ami = "ami-number"
+instance_type = "t2.miro"
+count =10
+
+```
+resource "aws_instance" "example" {
+  ami           = "ami-0360c520857e3138f" # Amazon Linux 2 AMI
+  instance_type = "t2.micro"
+  subnet_id = "subnet-059d18259e1dfef68"
+  count = 3
+
+  tags = {
+    Name = "payment-system-${count.index + 1}"
+  }
+}
+```
+
+NOw we have to create 3 users.  
+
+resource "aws_iam_user" "this" {  
+name = "payments-user-${count.index}"  
+count = 3  
+}  
+
+variable "users" {  
+type =list 
+default = ["alice", "kamran", "zunair"]  
+}  
+
+resource "aws_iam_user" "that" {
+name = var.users[count.index]  
+count = 3  
+}  
+
+# Conditional Expression.
+
+### Base Code of conditional-expression.tf
+
+```sh
+variable "environment" {
+  default = "development"
+}
+
+resource "aws_instance" "myec2" {
+    ami = "ami-00c39f71452c08778"
+    instance_type = "t2.micro
+}
+```
+
+### Final Code Used In Examples:
+
+```sh
+variable "environment" {
+  default = "production"
+}
+
+resource "aws_instance" "myec2" {
+    ami = "ami-00c39f71452c08778"
+    instance_type = var.environment == "development" ? "t2.micro" :"m5.large" 
+}
+```
+#### Using the NOT EQUALS to Operator !=
+```sh
+variable "environment" {
+  default = "production"
+}
+
+resource "aws_instance" "myec2" {
+    ami = "ami-00c39f71452c08778"
+    instance_type = var.environment != "development" ? "t2.micro" :"m5.large" 
+}
+```
+
+#### Empty Value Based Example
+
+```sh
+variable "environment" {
+  default = "production"
+}
+
+resource "aws_instance" "myec2" {
+    ami = "ami-00c39f71452c08778"
+    instance_type = var.environment != "development" ? "t2.micro" :"m5.large" 
+}
+```
 
 
+### Example with Multipl Variables and Conditional Expressions
 
+```sh
+variable "environment" {
+  default = "production"
+}
 
+variable "region" {
+  default = "ap-south-1"
+}
 
+resource "aws_instance" "myec2" {
+    ami = "ami-00c39f71452c08778"
+    instance_type = var.environment == "production" && var.region == "us-east-1" ? "m5.large" : "t2.micro"
+}
+```
 
-7. 
-
-
-
-
-
-
-
-
-
-
-
-
-## 
 
