@@ -206,6 +206,100 @@ provider "aws" {
 
 data "aws_instances" "example" {}
 ```
+# Data source by using this we can get the latest images and create on any region only we have to change region 
+
+```sh
+ provider "aws" {
+  region     = "ap-south-1"
+  
+}
+
+data "aws_ami" "myimage" {
+  most_recent      = true
+  owners           = ["amazon"]
+
+  filter {
+    name   = "name"
+    values = ["Ubuntu_22.04-x86_64-SQL_2022_Express-*"]
+  }
+}
+
+resource "aws_instance" "web" {
+  ami           = data.aws_ami.myimage.image_id
+   instance_type = "t2.micro"
+  
+  }
+```
+
+## TF has detailed LOG TF_LOG ENV variables.
+
+LOG LEVEL     1: TRACE          2: DEBUG       3: INFO       4: WARN     5:  ERROR
+
+WIndow to set   $env:TF_LOG="INFO"   
+
+$env:TF_LOG_PATH="terraform.txt"
+
+# Terraform Troubleshooting Model 
+There are four types of issues that we coud experience with TF.  
+
+1: Configuration Language   2: State file issue   3: Core Application  4: Provider level issue   
+
+We can check terrfaorm ISSUe Github for bug and issue related stuff  
+
+## Reporting Terraform Bugs  Before bug make sure Error is not related to Conf file not state it is related to code TF we are using.
+
+https://github.com/hashicorp/terraform/issues  
+
+# FMT Command
+
+The TF fmt command is used to rewirte TF configuration files to take care of the overall formatting. 
+
+## Dynamic Block allows us to dynamically construct repetable nested blocks 
+Supported inside resource, data, provider, and provisioner blocks.  
+
+## Now we are creating security group using Dynamic block we can add port in dynamic fashion as per req.
+
+### dynamic-block.tf
+
+```sh
+
+variable "sg_ports" {
+  type        = list(number)
+  description = "list of ingress ports"
+  default     = [8200, 8201,8300, 9200, 9500]
+}
+
+resource "aws_security_group" "dynamicsg" {
+  name        = "dynamic-sg"
+  description = "Ingress for Vault"
+
+  dynamic "ingress" {
+    for_each = var.sg_ports
+    iterator = port
+    content {
+      from_port   = port.value
+      to_port     = port.value
+      protocol    = "tcp"
+      cidr_blocks = ["0.0.0.0/0"]
+    }
+  }
+
+  dynamic "egress" {
+    for_each = var.sg_ports
+    content {
+      from_port   = egress.value
+      to_port     = egress.value
+      protocol    = "tcp"
+      cidr_blocks = ["0.0.0.0/0"]
+    }
+  }
+}
+
+```
+
+
+
+
 
 
 
