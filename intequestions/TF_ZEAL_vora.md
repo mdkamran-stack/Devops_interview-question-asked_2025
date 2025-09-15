@@ -420,6 +420,102 @@ bucket = "deo-s3-bucket"
 }
 ```
 
+## For each
+
+for_each in Terraform is used to create multiple resources from a map or set. It gives us each.key and each.value to uniquely manage resources by name, unlike count which only uses numeric indexes.”
+
+```sh
+variable "user_name" {
+  type = set(string)
+default = ["alice", " kamran", "john"]
+}
+resource "aws_aim_user" this" {
+  for_each = var.user_names
+name = each.value
+}
+```
+## Local EXEC for locally saved 
+It runs commands on the machine where Terraform is executed (your local laptop/CI server), not on the remote resource.
+
+Documentation Referenced:
+
+https://developer.hashicorp.com/terraform/language/resources/provisioners/local-exec
+
+### Base Code:
+```sh
+resource "aws_instance" "myec2" {
+   ami = "ami-04e5276ebb8451442"
+   instance_type = "t2.micro"
+}
+```
+
+## Final Code:
+
+```sh
+resource "aws_instance" "myec2" {
+   ami = "ami-04e5276ebb8451442"
+   instance_type = "t2.micro"
+
+   provisioner "local-exec" {
+    command = "echo ${self.private_ip} >> server_ip.txt"
+   }
+}
+```
+
+## Remote exec
+It lets you run commands or scripts on a remote resource (like an EC2 instance) after it is created.
+
+It connects using SSH (Linux) or WinRM (Windows).
+
+
+### Documentation Referenced:
+
+https://www.terraform.io/language/resources/provisioners/remote-exec
+
+https://www.terraform.io/language/resources/provisioners/connection
+
+https://www.terraform.io/language/functions/file
+
+### Base Code:
+```sh
+resource "aws_instance" "myec2" {
+   ami = "ami-04e5276ebb8451442"
+   instance_type = "t2.micro"
+}
+```
+
+### Final Code:
+
+```sh
+resource "aws_instance" "myec2" {
+   ami = "ami-04e5276ebb8451442"
+   instance_type = "t2.micro"
+   key_name = "terraform-key"
+   vpc_security_group_ids = ["sg-0edf854d7112cfbf4"]
+
+ connection {
+    type     = "ssh"
+    user     = "ec2-user"
+    private_key  = file("./terraform-key.pem")
+    host     = self.public_ip
+  }
+
+ provisioner "remote-exec" {
+    inline = [
+      "sudo yum -y install nginx",
+      "sudo systemctl start nginx",
+    ]
+  }
+}
+```
+
+## Terraform module
+
+TF module allows us to centralize the resource configuration and it makes it easier for multiple projects to re-use the terraform code for projects.  
+
+
+
+
 
 
 
