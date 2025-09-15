@@ -296,14 +296,129 @@ resource "aws_security_group" "dynamicsg" {
 }
 
 ```
+## Terraform validate.
+
+Terraform validat checks a configuration is syntactically valid Eg: arguments, undeclared variables.  
+
+## Points to Notes
+
+**similar kind of functionality was achived using terraform taint command in older version T.F** 
+**for version0.15.2 and later, Hashicorp recommedn using -replace option with terraform apply.**
 
 
+## This snippet is from the Splat Expression Video.
+
+### splat.tf
+
+```sh
+
+provider "aws" {
+  region     = "us-west-2"
+  access_key = "YOUR-ACCESS-KEY"
+  secret_key = "YOUR-SECRET-KEY"
+}
+resource "aws_iam_user" "lb" {
+  name = "iamuser.${count.index}"
+  count = 3
+  path = "/system/"
+}
+
+output "arns" {
+  value = aws_iam_user.lb[*].arn
+}
+```
+
+## Terraform Graph is used for large enterprises.  
+
+## Saving Terraform plan to file.
+
+```sh
+resource "local_file" "kamel_config" {
+  content  = "Hello, World!"
+  filename = "terraform.txt"
+  
+}
+```
+terraform plan -out infra.plan   
+
+**Many organizations require documented proof of planned changes before implementations.**
+**These changes further reviwed and approved, Running apply from plan ensures consistent desired outcome**
+
+## Sometime we have version dependency , we want only specific version .
+
+if our code is compatible with specific versions of terraform , you can use the **required_version** block to add your constraints.  
+```sh
+terraform {
+  required_version = "1.9.1"
+```
+
+## we can use terraform -target option to target specific resources, modules part of opertion( apply/destroy)
+
+### Base Code Used
+
+```sh
+resource "aws_iam_user" "this" {
+  name = "test-aws-user"
+}
+
+resource "aws_security_group" "allow_tls" {
+  name        = "terraform-firewall"
+}
+
+resource "local_file" "foo" {
+  content  = "foo!"
+  filename = "${path.module}/foo.txt"
+}
+```
+
+### Commands used
+
+```sh
+terraform plan -target local_file.foo
+terraform apply -target local_file.foo
+terraform destroy -target local_file.foo
+```
+
+ ## Meta argument 
+ it is used for if someone changes in aws console & i dont want to change this modification how to achive it see below  
+ Meta-arguments in Terraform are special arguments (count, for_each, depends_on, provider, lifecycle, etc.) that control how resources are created, managed, and destroyed, rather than describing the resource itself.  
+
+ Inside the lifecycle block we can use:
+
+create_before_destroy → avoid downtime during replacement.
+
+prevent_destroy → protect critical resources from deletion.
+
+ignore_changes → tell Terraform to skip managing specific attributes.  
+
+ ## below eg we dont want to change tags which is manually updated use ignore with lifecycle .
+
+resource "aws_instance" "myec2" {
+ami = amiid 
+instance_type = "t2.micro"
+
+lifecycle {
+ignore_changes = [tags]
+}
+}
 
 
+## Depends on meta argument 
 
+Depends on first resource should create before creating any resource like **depends on**
 
+```sh
+resource "aws_instance" "myec2" {
+   ami = "ami-0e670eb768a5fc3d4"
+   instance_type = "t2.micro
+   depends_on = [aws_s3_bucket]
+}
 
-
+resource "aws_s3_bucket" "example" {
+bucket = "deo-s3-bucket"
+  
+}
+```
 
 
 
