@@ -56,7 +56,7 @@ Alternative (K8s v1.19+): Create Deployment with Replicas in One Command
 bash
 Copy code
 kubectl create deployment --image=nginx nginx --replicas=4 --dry-run=client -o yaml > nginx-deployment.yam
-
+```
 
 ## LAB service:
 How many services exist in the system? in the current namesapce   kube get svc
