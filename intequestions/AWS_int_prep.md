@@ -17,6 +17,21 @@ Purpose: Maps a domain/subdomain → another domain name (not an IP)   EG:  app.
 
 **NS record is responsible for resoving our domain.**  
 
+## what is vpc
+
+**A VPC is a private, isolated network in AWS where we can securely launch resources, control IP ranges, subnets, routing, and firewall rules, similar to having our own data center inside AWS.**
+
+# Key Features of a VPC
+
+- **Isolation** → Your own private network inside AWS.  
+- **Subnets** → Divide network into public (internet-facing) and private (internal) subnets.  
+- **Route Tables** → Control traffic flow between subnets and internet.  
+- **Internet Gateway (IGW)** → Allows resources in public subnet to connect to the internet.  
+- **NAT Gateway** → Lets private subnet instances reach the internet without being exposed.  
+- **Security Groups & NACLs** → Firewall-like features for controlling inbound and outbound traffic.  
+- **Peering & Transit Gateway** → Connect VPCs with each other securely.  
+
+
 ## How do you ensure that your infrastructure is scalable and can handle unexpected traffic spikes?
 
 in one project our e-commerce app faced traffic spikes during sales. We used Kubernetes HPA to scale Pods based on CPU/memory and AWS ALB to distribute traffic. We also cached frequent queries in Redis. This allowed the system to handle a 3x spike in traffic smoothly without downtime.
