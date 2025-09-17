@@ -11,7 +11,7 @@ after that we will look NAT to provide inernet access to our private subnet
 
 implementation 1 vpc creation 2 sbnet creation public n private with diff datacenter 3 Route table pub & private & then create association with pub route table assocation with public subnet and same for private & then we have to associate public route table to IGQ same for private.
 1 EC2 instance attached with public subnet 
-2 EC2 instance we want to access some package but dont want to expose publically for this well attached public subnet to NAT gateway, it download package from internet but no one can access from internet to this instance , route tobe route to private RT & allocate elastic ip.  
+**2 EC2 instance we want to access some package but dont want to expose publically for this well attached public subnet to NAT gateway, it download package from internet but no one can access from internet to this instance , route tobe route to private RT & allocate elastic ip.**  
 
 ## creating LB 
 for creating loadbalancer we have we need to create taget gruop is logical group to setup LB it create a group of ec2 instances.  
