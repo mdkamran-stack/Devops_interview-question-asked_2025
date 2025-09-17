@@ -69,16 +69,3 @@ kube get deploy && kube describe deploy deployname
 ## To create a service we can refer k8s documentations
 
 vi cretae the service & then kubectl create -f service.yaml
-
-
-
-
-
-
-
-
-
-
-
-
-
