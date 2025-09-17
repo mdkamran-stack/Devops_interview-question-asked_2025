@@ -513,7 +513,153 @@ resource "aws_instance" "myec2" {
 
 TF module allows us to centralize the resource configuration and it makes it easier for multiple projects to re-use the terraform code for projects.  
 
+Directory structure 
 
+kam-modules
+Modules   under moulde we have ec2 and 
+prod 
+dev
+
+kam-modules/
+├── module/
+│ ├── ec2/
+│ │ ├── instance.tf
+│ │ └── variable.tf
+│ │
+│ └── vpc/
+│ ├── networking.tf
+│ └── vars.tf
+|
+├── dev/
+│ ├── main.tf
+│
+├── prod/
+│ ├── main.tf
+
+Instance.tf
+==============
+
+resource "aws_instance" "my_ec2" {
+  count         = var.ec2_count
+  ami           = var.ami_id
+  instance_type = var.instance_type
+  subnet_id     = var.subnet_id
+
+  tags = {
+    Name = "MyEC2-${count.index}"
+  }
+}
+
+varibale.tf
+============
+
+ variable "ec2_count" {
+  type        = number
+  description = "Number of EC2 instances to launch"
+}
+
+variable "ami_id" {
+  type        = string
+  description = "AMI ID for the EC2 instance"
+}
+
+variable "instance_type" {
+  type        = string
+  description = "Instance type for EC2"
+}
+
+variable "subnet_id" {
+  type        = string
+  description = "Subnet ID to launch the EC2 instance"
+}
+
+
+vpc.tf
+===========
+resource "aws_vpc" "main" {
+  cidr_block       = "${var.vpc_cidr}"
+  instance_tenancy = "${var.tenancy}"
+
+  tags = {
+    Name = "main"
+  }
+}
+
+resource "aws_subnet" "main" {
+  vpc_id     = aws_vpc.main.id
+  cidr_block = var.subnet_cidr
+
+  tags = {
+    Name = "Main"
+  }
+}
+
+
+output "vpc_id" {
+  value = aws_vpc.main.id
+}
+
+output "subnet_id" {
+  value = aws_subnet.main.id
+}
+
+vars.tf
+=========
+variable "vpc_cidr" {
+  description = "CIDR block for the VPC"
+}
+
+variable "tenancy" {
+  description = "Tenancy option for VPC"
+}
+
+variable "subnet_cidr" {
+  description = "CIDR block for the subnet"
+}
+
+prod  main.tf
+=================
+provider "aws" {
+    region = "us-east-2"
+  
+}
+
+module "my_vpc" {
+  source      = "../module/vpc"
+  vpc_cidr    = "10.0.0.0/16"
+  tenancy     = "default"
+  subnet_cidr = "10.0.1.0/24"
+}
+
+module "my_ec2" {
+  source        = "../module/ec2"
+  ec2_count     = 2
+  ami_id        = "ami-0cfde0ea8edd312d4"
+  instance_type = "t3.medium"
+  subnet_id     = module.my_vpc.subnet_id
+}
+
+dev main.tf
+==============
+provider "aws" {
+    region = "us-east-1"
+  
+}
+
+module "my_vpc" {
+  source      = "../module/vpc"
+  vpc_cidr    = "192.168.0.0/16"
+  tenancy     = "default"
+  subnet_cidr = "192.168.1.0/24"
+}
+
+module "my_ec2" {
+  source        = "../module/ec2"
+  ec2_count     = 1
+  ami_id        = "ami-0360c520857e3138f"
+  instance_type = "t2.micro"
+  subnet_id     = module.my_vpc.subnet_id
+}
 
 
 
