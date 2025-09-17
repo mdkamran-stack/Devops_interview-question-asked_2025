@@ -58,6 +58,27 @@ Copy code
 kubectl create deployment --image=nginx nginx --replicas=4 --dry-run=client -o yaml > nginx-deployment.yam  
 
 
+## LAB service:
+How many services exist in the system? in the current namesapce   kube get svc
+
+What is the atrgetport configure on the k8s service?  kube describe svc nameof service
+
+What is the image used to create the pods in the deployment?
+kube get deploy && kube describe deploy deployname
+
+## To create a service we can refer k8s documentations
+
+vi cretae the service & then kubectl create -f service.yaml
+
+
+
+
+
+
+
+
+
+
 
 
 
