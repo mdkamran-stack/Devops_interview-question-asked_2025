@@ -65,7 +65,7 @@ COPY ./html/ .
 # Expose port 80 for Nginx
 EXPOSE 80
 ```
-# Start Nginx in foreground (default command from base image)
+## Start Nginx in foreground (default command from base image)
 CMD ["nginx", "-g", "daemon off;"]
 
 docker build -t my-nginx .docker run -d -p 8080:80 my-nginx
