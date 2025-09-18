@@ -30,3 +30,77 @@ for filename in os.listdir(SOURCE_DIR):
             print(f"Backed up: {filename}")
 
 print("Backup completed!")
+
+
+## Build a Java/Maven application Package it into a Docker image Push image to DockerHub Deploy to Kubernetes
+
+pipeline {
+    agent any
+
+    environment {
+        APP_NAME   = "myapp"
+        APP_VERSION = "1.0.${BUILD_NUMBER}"
+        DOCKER_REGISTRY = "docker.io/your-dockerhub-user"
+    }
+
+    stages {
+        stage('Checkout') {
+            steps {
+                git branch: 'main', url: 'https://github.com/org/repo.git'
+            }
+        }
+
+        stage('Build with Maven') {
+            steps {
+                sh 'mvn clean package -DskipTests'
+            }
+        }
+
+        stage('Run Unit Tests') {
+            steps {
+                sh 'mvn test'
+            }
+        }
+
+        stage('Build Docker Image') {
+            steps {
+                script {
+                    sh """
+                    docker build -t $DOCKER_REGISTRY/$APP_NAME:$APP_VERSION .
+                    """
+                }
+            }
+        }
+
+        stage('Push Docker Image') {
+            steps {
+                withCredentials([usernamePassword(credentialsId: 'dockerhub-creds', usernameVariable: 'USER', passwordVariable: 'PASS')]) {
+                    sh """
+                    echo $PASS | docker login -u $USER --password-stdin
+                    docker push $DOCKER_REGISTRY/$APP_NAME:$APP_VERSION
+                    """
+                }
+            }
+        }
+
+        stage('Deploy to Kubernetes') {
+            steps {
+                withKubeConfig(credentialsId: 'k8s-config') {
+                    sh """
+                    kubectl set image deployment/$APP_NAME $APP_NAME=$DOCKER_REGISTRY/$APP_NAME:$APP_VERSION -n dev
+                    kubectl rollout status deployment/$APP_NAME -n dev
+                    """
+                }
+            }
+        }
+    }
+
+    post {
+        success {
+            echo "✅ Build & Deployment Successful: $APP_NAME:$APP_VERSION"
+        }
+        failure {
+            echo "❌ Pipeline Failed. Please check logs."
+        }
+    }
+}
