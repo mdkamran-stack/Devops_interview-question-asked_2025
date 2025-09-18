@@ -48,4 +48,29 @@ Use docker logs <container_id> to view logs. Run docker inspect to get the exit 
 ## How do you troubleshoot failed Docker image push to registry? 
 Answer: Check registry credentials → Validate image name/tag → Ensure repository exists → Retry with correct login. 
 
+## Write a docker file for Nginx
+```sh
+# Use official Nginx image as base
+FROM nginx:latest
+
+# Set working directory inside container
+WORKDIR /usr/share/nginx/html
+
+# Remove default Nginx index page
+RUN rm -rf ./*
+
+# Copy your custom static website files into the container
+COPY ./html/ .
+
+# Expose port 80 for Nginx
+EXPOSE 80
+```
+# Start Nginx in foreground (default command from base image)
+CMD ["nginx", "-g", "daemon off;"]
+
+docker build -t my-nginx .docker run -d -p 8080:80 my-nginx
+
+
+
+
 
