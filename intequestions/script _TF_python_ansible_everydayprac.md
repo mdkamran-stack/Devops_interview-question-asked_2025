@@ -30,6 +30,7 @@ for filename in os.listdir(SOURCE_DIR):
             print(f"Backed up: {filename}")
 
 print("Backup completed!")
+```
 
 
 ## Build a Java/Maven application Package it into a Docker image Push image to DockerHub Deploy to Kubernetes
