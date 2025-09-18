@@ -69,3 +69,13 @@ kube get deploy && kube describe deploy deployname
 ## To create a service we can refer k8s documentations
 
 vi cretae the service & then kubectl create -f service.yaml
+
+## NAme space
+
+Create a POD in the finance namespace.   kubectl run redis --image=redis -n finance  
+
+Which namespace has the blue pod in it?   kubectl get pods --all-namespaces   
+
+
+
+
