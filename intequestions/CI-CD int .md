@@ -86,11 +86,11 @@ Your Ingress now shows a valid ALB DNS name:
 
 ## CI/CD & Build Tools
 
-Q: How do you design/manage a CI/CD pipeline?
+Q: How do you design/manage a CI/CD pipeline?  
 👉 Use Jenkins/Bamboo with modular stages (build → test → package → deploy). Integrate SonarQube + Nexus. Make it fast, automated, and repeatable.
 
-Q: How do you handle build failures?
-👉 Check logs, re-run with debug, fix roo
+Q: How do you handle build failures?  
+Check logs, re-run with debug, fix root cause, notify dev team, prevent recurrence via automation/tests.
 
 
 ## Reduced build and deployment times by20% by optimizing CI/CDpipelines.
