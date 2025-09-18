@@ -288,6 +288,17 @@ JNLP (Java Network Launch Protocol) in Jenkins is used for agents to connect bac
 
   Jenkins working directory under JENKINS_HOME directory its is root directory of jenkins where jenkins installed jenkins uses to perform build & archives.
 
+ ## Release Management
+
+Q: Walk me through a release process.
+👉 Code freeze → Build & test → Store artifact (Nexus) → Deploy QA → CAB approval → Prod deploy (blue-green/canary) → Monitoring → Post-release report.
+
+Q: How do you ensure releases are stable/repeatable?
+👉 Automate pipelines, use immutable artifacts, IaC for envs, integrate tests, approval gates.
+
+Q: Rollback strategy?
+👉 Redeploy last stable artifact, use IaC for infra rollback, blue-green/canary for easy switchback.
+
 ## Q: What are some of the common plugins that you use in Jenkins ?
 
 The common Jenkins plugins I use are Git, Pipeline, Docker, SonarQube, and Slack Notification.
