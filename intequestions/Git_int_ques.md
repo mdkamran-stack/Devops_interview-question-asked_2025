@@ -1,4 +1,4 @@
- Hope you are familiar with the version controlling tools, can you brief about what branching strategy you're following and what is the purpose of using that branching strategy?
+## Hope you are familiar with the version controlling tools, can you brief about what branching strategy you're following and what is the purpose of using that branching strategy?
   
 
 We have created our on branching strategies called trunk based startegies where we have main branch bunch of feature brach rlease and hot fix branch.  
