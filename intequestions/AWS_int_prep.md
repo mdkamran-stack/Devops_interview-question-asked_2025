@@ -81,4 +81,8 @@ S3 PUT from CLI authenticates your request, transfers data securely, and stores 
 
 I implement drift detection by integrating IaC tools like Terraform or CloudFormation with CI/CD pipelines, audit logs, and monitoring platforms to continuously compare desired and actual infrastructure states across environments.
 
+## aws how to create highly available and secure app
+
+We design the app across multiple AZs with an internet-facing ALB and Auto Scaling groups for app servers in private subnets, connect to an RDS Multi-AZ database and use S3 + CloudFront for static assets. Security is enforced with least-privilege IAM roles, Security Groups, TLS via ACM, secrets stored in Secrets Manager, and WAF/GuardDuty for threat detection. We automate provisioning and deployments with Terraform and CI/CD pipelines, use blue/green or canary deployments for safe releases, and ensure observability with CloudWatch, X-Ray, and centralized logging — all together providing high availability, resilience, and strong security posture.
+
 
