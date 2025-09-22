@@ -101,14 +101,6 @@ Key Points to Cover
 
 Builds and deployments were slow, causing delays in delivery.
 
-Your Responsibility (Task)
-
-You were expected to improve pipeline efficiency without compromising quality.
-
-Show that you took ownership of fixing the bottlenecks.
-
-Actions Taken (What You Did)
-
 Parallelization: Running tests/build steps in parallel instead of sequential.
 
 Caching: Using Docker layer caching, dependency caching (Maven, npm, pip, etc.).
