@@ -77,5 +77,11 @@ Create a POD in the finance namespace.   kubectl run redis --image=redis -n fina
 Which namespace has the blue pod in it?   kubectl get pods --all-namespaces   
 
 
+## LAB 49
+Create a service named redis-service to expose the existing redis pod within the cluster on port 6379.  
+
+ kubectl expose pod redis --port=6379 --name=redis-service --type=ClusterIP  
+
+ 
 
 
