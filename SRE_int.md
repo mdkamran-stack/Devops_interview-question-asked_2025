@@ -43,5 +43,23 @@ incident response time decreased significatly as well.
 
 capacity planning ensures infrastructure can handle projected load, use past usage data ,use seasonal trend & growth projection.  
 
+## Grafana vs prometheus.
+
+Grafana is used for dashbaord and Alert its says what is an issue.  
+Prometheus is used for log alert & metrics its basically says why this issues occur.  
+
+## What kind of metrics do you work with. 
+
+We use prometheus as monitoring we use different type of metric we scrape. 
+
+1: Infrastrucure related metrics we use node exporter 
+CPU usage per core , FREE MEMORY , DISK IO LATENCY , NETWORK TRAFFIC.  
+
+2: WE ALSO SCRAPE metric related to kubelet is critical component of k8s 
+container memory usage , container cpu usage , NO.of restart of container. 
+
+3: we also scrape API server of k8s just to undertand state of API server we use kubestate metric to get this info.  
+
+
 
 
