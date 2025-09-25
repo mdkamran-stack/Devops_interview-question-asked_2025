@@ -19,6 +19,15 @@ Then review logs for timeout or exceptions by using APM tools like NEWRelic for 
 looking for backend like DB issue or high traffic Overwhelming or backend service checking recent changes that could have introduce performance, and checking idile time and time request is taking and start checking journey of user request ,
 origin of user latency rolling back if necessary.  
 
+## user report slowness of application how would you approach this? 
+
+1: use top and htop to check server load cpu memory if there is any process is least important i will depriotize the 
+process if not required then killing it.  
+2: checking network lateny using ping or traceroute cmd if its related to this then will implemet CDN.  
+3: Bandwidth using iftop and nload   
+4: Error of log application log may be database talk to upstream server that could be reason  
+5: I will use Netstat if there is too many open connection wil close the conn which is not useful.  
+
 ## You recive an Alert at 3 AM what steps would you take?
   
 First acknowledge the alert to avoid duplications, checking system dashboard and logs To access scope & root cause of problems.  
