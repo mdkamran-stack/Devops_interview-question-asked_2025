@@ -13,10 +13,11 @@ and traces to understand why it went wrong, even for unknown issues.
 
 ## You web application is loading slowly? what steps would you take.
 
-Starts by checking metric latency & ERROR rates.  
+I will start by checking debug mode  checking logs cpu & memory consuptions. 
+Checking the request time (http request duration )  
 Then review logs for timeout or exceptions by using APM tools like NEWRelic for pinpoint whcih function causing delays.  
-looking for backend like DB issue or high traffic Overwhelming at last checking recent changes that could have introduce performance 
-regression & rolling back if necessary.  
+looking for backend like DB issue or high traffic Overwhelming or backend service checking recent changes that could have introduce performance, and checking idile time and time request is taking and start checking journey of user request ,
+origin of user latency rolling back if necessary.  
 
 ## You recive an Alert at 3 AM what steps would you take?
   
