@@ -61,6 +61,10 @@ container memory usage , container cpu usage , NO.of restart of container.
 
 3: we also scrape API server of k8s just to undertand state of API server we use kubestate metric to get this info.  
 
+## you have configured alert but got woken at 2 am by false alarm? what is your stragey to reduce nosie 
+
+If I get a false alarm at 2 AM, my strategy is to tune thresholds, focus on SLO-based alerts tied to user impact, and use aggregation to suppress noise. I also categorize alerts by severity so only critical issues page at night.
+
 
 
 
