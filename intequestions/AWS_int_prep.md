@@ -85,4 +85,17 @@ I implement drift detection by integrating IaC tools like Terraform or CloudForm
 
 We design the app across multiple AZs with an internet-facing ALB and Auto Scaling groups for app servers in private subnets, connect to an RDS Multi-AZ database and use S3 + CloudFront for static assets. Security is enforced with least-privilege IAM roles, Security Groups, TLS via ACM, secrets stored in Secrets Manager, and WAF/GuardDuty for threat detection. We automate provisioning and deployments with Terraform and CI/CD pipelines, use blue/green or canary deployments for safe releases, and ensure observability with CloudWatch, X-Ray, and centralized logging — all together providing high availability, resilience, and strong security posture.
 
+## How to deploy a services.
+
+1: we will build the application docker image  
+2: create the infrastrucuture servers 
+3: configuring dependencies  Env variable , storage  
+4: Deploy the services pull the container images  
+5: Expose the services Configure load balancers, DNS, firewalls, and service discovery. 
+6: Monitor and validate using prometehus & Grafana  
+## In kubernetes 
+First we will create a deployment.yaml file & kubect apply -f deployment.yaml  
+then we will deploy the services.yaml file & kubectl appy -f deployment.yaml 
+kubectl get pod & svc for cross verifications  
+
 
