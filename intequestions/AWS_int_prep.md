@@ -98,4 +98,8 @@ First we will create a deployment.yaml file & kubect apply -f deployment.yaml
 then we will deploy the services.yaml file & kubectl appy -f deployment.yaml 
 kubectl get pod & svc for cross verifications  
 
+## In inerview asked me >> do you have interaction of databse team? are you involve in any cutover ?
+
+Yes, I collaborate with the database team for schema changes and data migrations. I’ve also participated in cutovers, coordinating deployments, migrations, 
+and monitoring to ensure a smooth transition to the new system.
 
