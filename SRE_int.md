@@ -1,6 +1,6 @@
 ## What is SLA SLO & SLI
 
-SLA >> The agrement we make with our clinet,   SLO >> The objevtive your team must hit to meet the agrement.  
+SLA >> The agrement we make with our clinet,   SLO >> The objevtive your team must hit to meet the aggrement.  
 Sli >> The real numbers on performance.
 
 ## What is Run book?
