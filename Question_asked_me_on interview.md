@@ -14,4 +14,8 @@ The output produced jar or war file.
 
 ## how is your application is connected in frontend in your cluster
 
-In Kubernetes, my frontend connects to the backend through a Service or Ingress. The Service exposes the backend pods, and Ingress (or LoadBalancer) provides external access with DNS so frontend can reach it reliably.
+In Kubernetes, my frontend connects to the backend through a Service or Ingress. The Service exposes the backend pods, and Ingress (or LoadBalancer) provides external access with DNS so frontend can reach it reliably.  
+
+## authentication and autherization who will manage application or loadbalancer ? 
+
+Authentication and authorization are mainly handled by the application or an identity provider (like IAM, Okta, Keycloak). Load balancers can help with SSL termination or simple auth, but detailed access control is managed at the app level.
