@@ -12,3 +12,5 @@ The output produced jar or war file.
 
 ``` In a single repo, I build a pipeline where code commit triggers a build, Docker image is created and pushed to ECR, then deployed to AWS 
 (ECS/EKS/Beanstalk) using IaC or manifest files from the same repo.```
+
+
