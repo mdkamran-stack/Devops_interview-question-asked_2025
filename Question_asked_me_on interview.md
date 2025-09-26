@@ -23,3 +23,7 @@ Authentication and authorization are mainly handled by the application or an ide
 ## how it will authenticate weather user is valid or not  
 
 JWT (JSON Web Token) is a compact token used for authentication, containing a header, payload, and signature. The server issues it after login, and the client sends it with requests to prove identity.
+
+## what is HIGH IO usage 
+
+High I/O usage occurs when processes perform excessive reads/writes to disks or network, potentially causing slow performance. It’s monitored using tools like iostat
