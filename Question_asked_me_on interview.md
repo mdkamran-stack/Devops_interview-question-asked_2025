@@ -26,4 +26,8 @@ JWT (JSON Web Token) is a compact token used for authentication, containing a he
 
 ## what is HIGH IO usage 
 
-High I/O usage occurs when processes perform excessive reads/writes to disks or network, potentially causing slow performance. It’s monitored using tools like iostat
+High I/O usage occurs when processes perform excessive reads/writes to disks or network, potentially causing slow performance. It’s monitored using tools like iostat.  
+
+## how to export metrics to prometeus? 
+
+##  lets say you have application java running micro services in kubernetes cluster from there to grafana
