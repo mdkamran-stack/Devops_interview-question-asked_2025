@@ -18,4 +18,8 @@ In Kubernetes, my frontend connects to the backend through a Service or Ingress.
 
 ## authentication and autherization who will manage application or loadbalancer ? 
 
-Authentication and authorization are mainly handled by the application or an identity provider (like IAM, Okta, Keycloak). Load balancers can help with SSL termination or simple auth, but detailed access control is managed at the app level.
+Authentication and authorization are mainly handled by the application or an identity provider (like IAM, Okta, Keycloak). Load balancers can help with SSL termination or simple auth, but detailed access control is managed at the app level.  
+
+## how it will authenticate weather user is valid or not  
+
+A user is authenticated by verifying credentials (passwords, tokens, or certs) against an identity provider or database. If validation passes, the app issues a session/token; if not, access is denied.  
