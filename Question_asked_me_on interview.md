@@ -22,4 +22,4 @@ Authentication and authorization are mainly handled by the application or an ide
 
 ## how it will authenticate weather user is valid or not  
 
-A user is authenticated by verifying credentials (passwords, tokens, or certs) against an identity provider or database. If validation passes, the app issues a session/token; if not, access is denied.  
+JWT (JSON Web Token) is a compact token used for authentication, containing a header, payload, and signature. The server issues it after login, and the client sends it with requests to prove identity.
