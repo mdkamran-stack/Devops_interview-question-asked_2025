@@ -31,3 +31,12 @@ High I/O usage occurs when processes perform excessive reads/writes to disks or 
 ## how to export metrics to prometeus? 
 
 ##  lets say you have application java running micro services in kubernetes cluster from there to grafana
+
+
+3 instance in 3 diff regions 
+
+3 ec3 instance load from external source i have to divide traffic equally on all 3 
+
+git stash 
+
+shared lib in jenkins 
