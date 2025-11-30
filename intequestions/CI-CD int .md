@@ -21,7 +21,12 @@ Agile is a software development methodology that focuses on iterative developmen
 
 ## Tell me abt you CI/CD process that you have implemented.
 
-In our project, we use GitHub as the source repository. A Jenkins pipeline is triggered via webhook on each commit. Jenkins checks out the code, builds it with Maven, performs static code analysis and AppScan security scanning, then builds a Docker image and pushes it to Docker Hub. We update the deployment.yaml with the new image tag and commit it back to Git. ArgoCD detects the change from Git (single source of truth) and deploys the updated version to Kubernetes using Helm charts.
+In our project, GitHub is used as the source repository and Jenkins pipelines are triggered via webhook on each commit. Jenkins checks out the code, runs unit tests, performs SonarQube static code analysis and AppScan security checks, and then builds the artifact (JAR/WAR) using Maven.
+
+The generated artifact is stored in our artifact repository (Nexus/Artifactory) After that, Jenkins builds a Docker image using the stored artifact and pushes the image to Docker Hub with a versioned tag.
+
+Next, the deployment.yaml is updated with the new image tag and committed back to Git. ArgoCD continuously monitors Git (single source of truth) and automatically deploys the new version to Kubernetes using Helm charts. We use Prometheus/Grafana for observability and Helm/ArgoCD rollback for failure recovery.
+
 
 ## Q: Can you explain the CICD process in your current project ? or Can you talk about any CICD process that you have implemented ?
 
