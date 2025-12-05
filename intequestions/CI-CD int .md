@@ -32,18 +32,31 @@ Next, the deployment.yaml is updated with the new image tag and committed back t
 
 A: In the current project we use the following tools orchestrated with Jenkins to achieve CICD.
    - Maven, Sonar, AppScan, ArgoCD, and Kubernetes
-   
-   Coming to the implementation, the entire process takes place in 8 steps
-   
-    1. Code Commit: Developers commit code changes to a Git repository hosted on GitHub.
-    2. Jenkins Build: Jenkins is triggered to build the code using Maven. Maven builds the code and runs unit tests.
-    3. Code Analysis: Sonar is used to perform static code analysis to identify any code quality issues, security vulnerabilities,and bugs.
-    4. Security Scan: AppScan is used to perform a security scan on the application to identify any security vulnerabilities.
-    5. Deploy to Dev Environment: If the build and scans pass, Jenkins deploys the code to a development environment managed by Kubernetes.
-    6. Continuous Deployment: ArgoCD is used to manage continuous deployment. ArgoCD watches the Git repository and automatically
-    deploys new changes to the development environment as soon as they are committed.
-    7. Promote to Production: When the code is ready for production, it is manually promoted using ArgoCD to the production environment.
-    8. Monitoring: The application is monitored for performance and availability using Kubernetes tools and other monitoring tools.  
+     
+    Code Commit:
+Developers commit code changes to a Git repository hosted on GitHub.
+
+Jenkins Build Trigger:
+A Jenkins pipeline is triggered via webhook. Jenkins checks out the code and builds the application using Maven, along with running unit tests.
+
+Code Quality Analysis:
+SonarQube is used to perform static code analysis to identify code quality issues, bugs, and security vulnerabilities.
+
+Security Scan:
+AppScan is used to perform SAST and DAST security scans on the application.
+
+Docker Image Build & Push:
+Jenkins builds a Docker image for the application and pushes it to the Docker registry (Docker Hub / ECR / ACR) with a versioned tag.
+
+Deploy to Dev Environment (GitOps):
+The deployment.yaml is updated with the new image tag and committed to Git.
+ArgoCD monitors Git (single source of truth) and automatically deploys the updated application to the development Kubernetes cluster.
+
+Promote to Production:
+Once testing is successful, the same image is manually promoted to the production environment using ArgoCD.
+
+Monitoring & Observability:
+The application is continuously monitored for performance and availability using Kubernetes monitoring tools, Prometheus, and Grafana.
     
     
  ## Issues faced during LB INgress provision same thing we can frame during interview (challenges faced in recent project)  
