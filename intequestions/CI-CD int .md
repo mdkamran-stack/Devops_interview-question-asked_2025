@@ -36,7 +36,7 @@ Next, the deployment.yaml is updated with the new image tag and committed back t
    Developers commit code changes to a Git repository hosted on GitHub.
 
 2. **Jenkins Build Trigger:**  
-   A Jenkins pipeline is triggered via webhook. Jenkins checks out the code and builds the application using **Maven**, along with running **unit tests**.
+   A Jenkins pipeline is triggered via webhook. Jenkins checks out the code and builds the application using **Maven**, During this stage, Maven generates the build artifact (JAR/WAR file) and executes unit tests.
 
 3. **Code Quality Analysis:**  
    **SonarQube** is used to perform static code analysis to identify code quality issues, bugs, and security vulnerabilities.
@@ -45,7 +45,7 @@ Next, the deployment.yaml is updated with the new image tag and committed back t
    **AppScan** is used to perform SAST and DAST security scans on the application.
 
 5. **Docker Image Build & Push:**  
-   Jenkins builds a **Docker image** for the application and pushes it to the **Docker registry (Docker Hub / ECR / ACR)** with a versioned tag.
+   Jenkins builds a Docker image using the generated JAR/WAR artifact as input. for the application and pushes it to the **Docker registry (Docker Hub / ECR / ACR)** with a versioned tag.
 
 6. **Deploy to Dev Environment (GitOps):**  
    The **deployment.yaml** is updated with the new image tag and committed to Git.  
