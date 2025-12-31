@@ -1,12 +1,11 @@
 ## Hope you are familiar with the version controlling tools, can you brief about what branching strategy you're following and what is the purpose of using that branching strategy?
   
 
-We have created our on branching strategies called trunk based startegies where we have main branch bunch of feature brach rlease and hot fix branch.  
+We have created our on branching strategies called trunk based startegies where we have main branch bunch of feature brach rlease and hot fix branch. main branch is always updated with latest code.
 
 main branch and bunch of feature branch if any feature is ready we will merge it to main branch and the will create relase branch where QE engineer 
-perform testing if testing passwd then will create tag on it and perform relase.
-if any thing goes wrog we will create hotfix branch push to release branch as well main branch in case any developers working on feature branch will send them
-notification make sure you take those changes on feature branches.
+perform testing if testing passed then will create tag on it and perform relase.
+if any thing goes wrog we will create hotfix branch push to release branch as well main branch in case any developers working on feature branch will send them notification make sure you take those changes on feature branches.
  
 ## How do you resolve the merge conflicts in Git?
 
