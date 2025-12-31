@@ -34,7 +34,7 @@ main branch only needs commit B, not A and C
 
 ## what is git-stash 
 
-git stash lets you temporarily shelve changes you don’t want to commit yet, so you can work on something else and later reapply them.
+git stash temporarily saves uncommitted changes (modified & staged files) and reverts the working directory to a clean state.
 
 ## diff bw .git and .gitignore
 
