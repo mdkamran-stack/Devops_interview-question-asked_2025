@@ -1,6 +1,5 @@
-## Hope you are familiar with the version controlling tools, can you brief about what branching strategy you're following and what is the purpose of using that branching strategy?
+## can you brief about what branching strategy you're following and what is the purpose of using that branching strategy?
   
-
 We have created our on branching strategies called trunk based startegies where we have main branch is always updated with latest code. bunch of feature brach rlease and hot fix branch.
 
 main branch and bunch of feature branch if any feature is ready we will merge it to main branch and the will create relase branch where QE engineer perform testing if testing passed then will create tag on it and perform relase.
@@ -37,5 +36,10 @@ main branch only needs commit B, not A and C
 
 git stash lets you temporarily shelve changes you don’t want to commit yet, so you can work on something else and later reapply them.
 
-## 
+## diff bw .git and .gitignore
+
+.git is a hidden directory created when you run git init, stores all metadata like commit history branches index.
+
+.gitignore that tells git which files/folder to ignore prevent of tracking like Logs build artifact Secrets 
+
 
