@@ -71,6 +71,59 @@ CMD ["nginx", "-g", "daemon off;"]
 docker build -t my-nginx .docker run -d -p 8080:80 my-nginx
 
 
+=================================
+# docker by ram
+
+docker has two types of images:
+1 Raw images: OS minor footprint
+2: service images: Ready to use
+
+docker system df 
+
+## docker info |grep -i root >> to know where docker install (path) or document root 
+
+## how to run container using service?
+
+docker container run -d --name=test nginx  >> it will create file system , mountpoint , nginx, ip, vnic nginx. 
+docker ps 
+ps -ef 
+kill -9 ppid
+docker start test
+docker ps >> to show os process 
+docker top test >> to know ps of container 
+docker exec -it test bash >> to login container terminal
+docker rm test >> to remove conatiner > rmi >> To remove images 
+docker inspect test 
+docker network ls
+docker network inspect bridge |grep -i subnet  
+docker stats test( container name) to know the using resources by container
+
+## we can run to nginx server because they are using seprate namespaces they run in same port they are not conflict
+docker run -d --name=web1 nginx
+docker run -d --name=web2 nginx
+
+## we can trigger any command without login
+docker exec -it web1 touch /roo/abc
+
+## how to run container using service images?
+
+## how to run conatiner using Raw images?
+docker run -itd --name=test ubntu  >> we use itd coz it will allow /bin/bash to alive the container
+to login Raw container >> docker attach test  
+# important point 
+if we use docker attach test (conatiner name) once we exit container will stopped bcause we are using exisitng shell. to exit container without stopping use ctl +p+q (linux nohup signal)
+## if we use docker exec -it test bash the exit will not stop container.
+
+## In industry we cant directly run the images
+
+First we have nginx 
+docker  run -it --name=test imgid bash >> not start native services
+docker run -d --name=web imageid  
+docker exec -it web bash  
+
+
+
+
 
 
 
