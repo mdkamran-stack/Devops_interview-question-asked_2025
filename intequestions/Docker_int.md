@@ -121,6 +121,36 @@ docker  run -it --name=test imgid bash >> not start native services
 docker run -d --name=web imageid  
 docker exec -it web bash  
 
+# image create method  
+1 manually
+Requirements (apache2)
+step1 : BaseImage (raw image) ubuntu
+step2: Run image or deploy container
+step3: attach the container and start the installation software
+step 4 : logout the conatienr and commit it inspired by vcs technology like git
+
+docker pull ubuntu
+docker run -it --name=demo ubuntu
+apt update -y 
+apt install apache2 -y 
+exit 
+docker images 
+docker commit demo apache:2
+## Their is no benefits of keeping conatiner as we have commited changes those changes has been persistent inside the image if we lost container there is no harm image has configured from that image we can launch many container of apache2
+
+## what is diff bw parent & child 
+
+A parent image is the base image defined by FROM, and a child image is built on top of it by adding application-specific layers.
+
+## updates 
+1) Minor (bug/security):vertical practice we follow
+2) major update we follow horizotal practice
+
+## there are two ways to free up space 1 > dangle image we can delete & we can delete unused images (whihc is not currently running not associate with container.
+## dangle images which is unecessay consuming system space which is deprecated version we have to dlete it
+
+# docker image prune  it only terminate dangle images
+# docker image prune -a it will terminate dangle + unused images 
 
 
 
