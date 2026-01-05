@@ -18,9 +18,16 @@ Docker file is text file which uses intruction to assemble docker images, we can
 4 ENV: it sets the ENV varible that can be used inside the docker file.  
 5 CMD : it specify what command start when conatiner starts, just like cmd we can use ENTRY point to do same job.  
  
-WORKDIR  sets the working directory inside the container where commands will run.  
+WORKDIR  It set current working directory permanently   
 
-ENRTPOINT VS CMD: CMD when you want a default command that users can override. Use ENTRYPOINT when you want a fixed command, and let users only supply arguments.
+## ENRTPOINT VS CMD: CMD when you want a default command that users can override. Use ENTRYPOINT when you want a fixed command, and let users only supply an input. 
+# CMD 
+## diff bw command mode vs shell mode
+Shell mode runs commands via a shell and supports shell features, while command (exec) mode runs commands directly and is preferred for production due to better signal handling.
+
+Shell Mode (Shell Form)  CMD echo "Hello World"
+
+Command Mode (Exec Form) CMD ["echo", "Hello World"]  
 
 ## Can you write a real-world multi-stage Dockerfile for a Node.js app?
 
@@ -75,7 +82,7 @@ docker build -t my-nginx .docker run -d -p 8080:80 my-nginx
 # docker by ram
 
 docker has two types of images:
-1 Raw images: OS minor footprint
+1: Raw images: OS minor footprint
 2: service images: Ready to use
 
 docker system df 
@@ -101,6 +108,10 @@ docker stats test( container name) to know the using resources by container
 ## we can run to nginx server because they are using seprate namespaces they run in same port they are not conflict
 docker run -d --name=web1 nginx
 docker run -d --name=web2 nginx
+
+## there are two types of partitions lvm and standard partions
+lvm we can extend but standard partition we cant extend 
+
 
 ## we can trigger any command without login
 docker exec -it web1 touch /roo/abc
@@ -149,8 +160,44 @@ A parent image is the base image defined by FROM, and a child image is built on 
 ## there are two ways to free up space 1 > dangle image we can delete & we can delete unused images (whihc is not currently running not associate with container.
 ## dangle images which is unecessay consuming system space which is deprecated version we have to dlete it
 
-# docker image prune  it only terminate dangle images
-# docker image prune -a it will terminate dangle + unused images 
+## docker image prune  it only terminate dangle images
+## docker image prune -a it will terminate dangle + unused images 
+
+##  what practice i will follow in docker file to decrease no of commit id.
+RUN paramter is improper so there are lots of instruction "use && " insrtuctions.
+
+## to free up builder space 
+docker system df
+docker builder prune ( it delete dangle image cached)
+docker builder prune -a ( it delete all (dangle+ regular image)cache)  
+
+## what is issues before multi stage docker file
+Before multi-stage Dockerfiles, images were large, insecure, and hard to maintain because build and runtime dependencies were bundled together.  
+
+## docker file
+
+copy . . (1st dot says : Source :current directory on your local machine (build context))
+
+2nd dot says: Destination → current working directory inside the image (WORKDIR)
+
+## to get volume informations
+Docker volume ls 
+## to know mapped disk
+docker volume inspect volume name
+
+## To create file system
+docker volume create --device=/dev/device_name --driver local image_name
+
+docker volume create --dev=/dev/device_name --driver local image_name
+
+docker volume create --driver local --opt type=xfs --opt device=/dev/nvmeOn2 oracle
+
+docker volume ls
+
+dcoker volume prune delete unused volume where as -a delete all used as well unused volume 
+
+## to send the data docker cp abc con1:/root
+
 
 
 
