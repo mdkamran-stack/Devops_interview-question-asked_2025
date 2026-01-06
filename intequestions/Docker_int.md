@@ -9,6 +9,9 @@ Recommedned copy
 1 volume wheb we use volume option it will create new volume in /var/lib/docker directory and data will be saved in remote machine f we removed container we can attach one volume to multiple conatiner
 2 Bind mount a file & dir from a host machine is mounted into a container.
 
+## To commnicate two conatiner as ip is not static 
+We can use container name it is always static 
+
 ## What is docker file & its instructions.
 Docker file is text file which uses intruction to assemble docker images, we can custom acc to our need.  
 
@@ -197,6 +200,88 @@ docker volume ls
 dcoker volume prune delete unused volume where as -a delete all used as well unused volume 
 
 ## to send the data docker cp abc con1:/root
+
+## Docker networking
+
+
+docker network ls 
+
+brctl sow to show bridge n/w
+
+docker network inspect bridge |grep -i subnet  
+by default subnet is : 172.17.0.0/16
+
+docker run -itd --name=con1 alpine  
+docker run -itd --name=con2 alpine
+docker inspect con2  >> take the ip address of cont1
+docker exec -it con1 sh  
+
+## what is public/external ip of container .
+Containers do not have a public IP; they use the host’s public IP and are accessed through port mapping or load balancers.
+
+## How many network deriver are there?
+majorly 5 drivers are therir by defaut is uses bridge n/w
+1 Bridge
+2 Host
+3 Macvlan
+4 Ipvlan
+5 None
+
+## To create a custom bridge network 
+docker network create --subnet 192.168.10.0/24 --driver bridge front  
+docker network create --subnet 192.168.11.0/24 --driver bridge backend
+docker network ls  
+
+## it is possibel to create multiple bridge nw in one container 
+Every conatiern has gateway  
+
+docker ps 
+docker exec -it con2 sh  
+
+## To connect DB to application server 
+docker network connect backend web  
+docker exec -it web bash 
+ifconfig  
+telent ip adress of app 3306(db port)
+docker network disconnect backend web (connect bridge name and conatiner name)  
+docker network ls
+docker network prune  
+
+## How to expose bridge network conatiner 
+
+to check the port number of imgae
+docker inspect image_id  
+
+docker run -d --name=db -e MYSQL_ROOT_PASSWORD=redhat mysql:5.6
+
+docker ps  
+
+or login to container 
+docker exec -it db bash
+ apt install net-tools -y 
+netstat -tnlp  
+
+## Port forwarding  (-p stand for port forwarding)
+docker run -d --name=db -p 3336:3306 -e MYSQL_ROOT_PASSWORD=redhat mysql:5.6  
+
+netstat -tnlp
+
+## two types of port forwarding static & dynamic  ( captal P for dynamic port forwarding small p means static port forwarding)
+static means we have to 
+
+docker run -itd --name=con1 --network tst alpine 
+
+docker run -itd --name=con2 --network tst alpine 
+
+docker inspect con1 |grep -i ipaddress
+
+ 
+
+
+
+
+
+
 
 
 
