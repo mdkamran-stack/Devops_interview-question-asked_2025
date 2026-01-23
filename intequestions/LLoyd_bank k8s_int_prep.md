@@ -52,8 +52,8 @@ Virtualization runs full VMs with separate OS, while containerization packages a
 
 Every k8s cluster has Master and worker node.  
 
-Master node having 4 components.     1 API server          2 ETCD          3 scheduler        4 control manager  
-Worker Node having 3 components      1 Kubeproxy           2 Kubelet        3 container run time  
+Master node having 4 components.     **"1 API server**"    **"2 ETCD**"     **"3 scheduler**"    **"4 control manager**"  
+Worker Node having 3 components      **"1 Kubeproxy**"           **"2 Kubelet**"        **"3 container run time**"  
 
 API server : Authenticate the request and get the data Eg: kubectl get pods run in background.  
 
