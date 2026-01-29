@@ -232,12 +232,11 @@ spec:
   . Regular patch and updates k8s version & node OS.  
   . Use Azure Defender for k8s for runtime threat detection.    
   6 **Image Security**  
-  . Use only trusted images from private registry(ACR).    
-  . Scan images for vulnerabilities with Microsoft Defender.  
+  . Use only trusted images from private registry(ECR).      
 
 💡 Quick 15-sec answer for interviews:
 
-“I secure AKS clusters by enforcing RBAC, network policies, and pod security standards, integrating with Azure AD, storing secrets in Key Vault, scanning images for vulnerabilities, and enabling monitoring and threat detection with Azure Defender.”
+“I secure EKS clusters by enforcing Kubernetes RBAC and IAM roles for service accounts (IRSA), implementing network policies, and applying Pod Security Standards. I integrate authentication using AWS IAM and IAM Identity Center, store secrets securely in AWS Secrets Manager, scan container images in Amazon ECR using Amazon Inspector, and enable monitoring and threat detection with Amazon CloudWatch, GuardDuty, and Security Hub.”
 
  ## Prod Kubernetes cluster is unstable — pods aren’t pulling images, some are evicted. What’s your approach?
 
