@@ -17,7 +17,7 @@ A cluster is the collection of nodes where Kubernetes runs apps.
 etcd is Kubernetes’ key-value store that persistently stores all cluster state and configuration data
 
 ## How do Ingress and Ingress controllers work?
-“Ingress is a Kubernetes resource that defines HTTP/HTTPS routing rules to services, while the Ingress Controller (like NGINX or Traefik) enforces those rules by managing the actual load balancer or reverse proxy
+Ingress defines the routing rules for external traffic, while an Ingress Controller enforces those rules by configuring a reverse proxy or load balancer to route traffic into the cluster.
 
 ## What is the difference between Ingress and a LoadBalancer Service?
 
