@@ -40,3 +40,15 @@ High I/O usage occurs when processes perform excessive reads/writes to disks or 
 git stash 
 
 shared lib in jenkins 
+
+Bristlecone interview
+------------------------
+create 10 ubnut server with apache installations  /var/lib/html via terraform
+write shell script get the process with user name kamran and kill the process
+how to deploy application in k8s 
+how to setup k8s in eks
+types of loadbalancer in k8s
+how to setup hpa na vpa
+what is selinux 
+what is loadbalncer in aws & how to setup app LB and NW LB , how network LB works
+What is the difference between the count and for_each meta-arguments?
