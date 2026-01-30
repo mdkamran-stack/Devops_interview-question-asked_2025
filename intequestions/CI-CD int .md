@@ -19,6 +19,10 @@ As a DevOps Engineer in an Agile environment, I start by checking monitoring das
 
 Agile is a software development methodology that focuses on iterative development, collaboration, flexibility, and delivering working software in small, frequent increments.
 
+## Roles and Responsibilities.
+
+As a DevOps Engineer, my role involves building and maintaining CI/CD pipelines, automating cloud infrastructure using IaC, and managing containerized applications on Kubernetes. I work closely with development and security teams to ensure secure, scalable, and reliable deployments. I also handle monitoring, logging, incident response, and continuous improvement of platform reliability.”
+
 ## Tell me abt you CI/CD process that you have implemented.
 
 In our project, GitHub is used as the source repository and Jenkins pipelines are triggered via webhook on each commit. Jenkins checks out the code, runs unit tests, performs SonarQube static code analysis and AppScan security checks, and then builds the artifact (JAR/WAR) using Maven.
