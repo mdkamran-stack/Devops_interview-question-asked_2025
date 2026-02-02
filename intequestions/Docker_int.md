@@ -51,12 +51,29 @@ CMD ["node", "dist/index.js"]
 
 This separates the build and runtime environments, reducing image size and surface area
 
+## One container needs to communicate with another container. How would you do it?
+
+Containers communicate over a shared network using service discovery—via container names in Docker or Services and DNS in Kubernetes—rather than using localhost or fixed IPs.
+
 ## A container crashed. How do you figure out what went wrong?
 
 Use docker logs <container_id> to view logs. Run docker inspect to get the exit code and details. Check for memory limits, incorrect entrypoints, missing files, or permission issues. In Kubernetes, also use kubectl describe pod and kubectl logs.
 
+## How do you reduce Docker image size?
+I reduce Docker image size by using minimal base images, multi-stage builds, cleaning dependencies, minimizing layers, and excluding unnecessary files with .dockerignore
+
 ## How do you troubleshoot failed Docker image push to registry? 
 Answer: Check registry credentials → Validate image name/tag → Ensure repository exists → Retry with correct login. 
+
+## Have you deployed any application to EKS? If yes, how?
+
+1️⃣ Create EKS cluster    2️⃣ Configure access    3️⃣ Build Docker image & push to ECR  4️⃣ Create Kubernetes manifests || Deployment || Service   5️⃣ Deploy to EKS  
+
+Yes, I’ve deployed applications to EKS by containerizing the app, pushing images to ECR, deploying via Kubernetes manifests or Helm, and automating the process using Jenkins with monitoring and scaling enabled.
+
+## Suppose one service is responding slowly while other services are healthy. How would you troubleshoot the issue?
+
+I analyze latency metrics, pod health, logs, and downstream dependencies to isolate the bottleneck, mitigate impact through scaling or rollback, and then apply a permanent fix based on root cause.
 
 ## Write a docker file for Nginx
 ```sh
