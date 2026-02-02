@@ -52,6 +52,6 @@ how to setup hpa na vpa
 what is selinux   
 what is loadbalncer in aws & how to setup app LB and NW LB , how network LB works  
 What is the difference between the count and for_each meta-arguments?  
-how to communicate with two infrastructure?
-how to migrate on-perm to cloud?
-how to communicate microservices?
+how to communicate with two infrastructure?  
+how to migrate on-perm to cloud?  
+how to communicate microservices?  
