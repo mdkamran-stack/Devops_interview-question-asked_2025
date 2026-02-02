@@ -31,6 +31,9 @@ The generated artifact is stored in our artifact repository (Nexus/Artifactory) 
 
 Next, the deployment.yaml is updated with the new image tag and committed back to Git. ArgoCD continuously monitors Git (single source of truth) and automatically deploys the new version to Kubernetes using Helm charts. We use Prometheus/Grafana for observability and Helm/ArgoCD rollback for failure recovery.
 
+##  During a deployment, your CI/CD pipeline fails unexpectedly. What approach would you take to troubleshoot and fix the problem?
+
+I first contain the impact, identify the failing stage using logs, isolate whether it’s code, config, infra, or dependency related, apply a minimal fix, redeploy safely, and then add preventive checks to avoid recurrence.
 
 ## Q: Can you explain the CICD process in your current project ? or Can you talk about any CICD process that you have implemented ?
 
@@ -165,6 +168,10 @@ In CI/CD workflows, I prefer rebase for feature branches to keep history clean a
 ## How do you implement approval gates in a Jenkins pipeline (e.g., manual approval before production)?
 
 In Jenkins, I implement approval gates using the input step in a declarative pipeline, which pauses execution and requires manual approval before moving to production. For stricter controls, I combine this with RBAC so only authorized users can approve. In enterprise setups, I also integrate Jenkins with external systems like ServiceNow or Slack for approval workflows.
+
+##  What are quality gates? Or, how do you confirm that a built artifact is good?
+
+Quality gates are automated approval checkpoints that ensure an artifact meets defined standards for code quality, security, testing, and compliance before promotion.
 
 ## Have you handled parallel execution in a pipeline? How and why?
 
