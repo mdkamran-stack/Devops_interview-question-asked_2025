@@ -279,6 +279,22 @@ Shared modules in Jenkins are Shared Libraries — centralized Groovy code store
 Yes, Jenkins supports multi-language builds by using different agents per stage. For example, I can run a Java build on a Maven agent, 
 a Node.js build on a Node agent, and a Python build on another agent — all in one pipeline.
 
+## What is Agent in jenkins
+A jenkins Agent is worker machine where the jobs (build,test,deploy) actually run.  
+it has two part
+Master/controller > manages jobs.  
+Agent - Hands (execute jobs)  
+Agents help by Distributing workload 2 Running jobs on different OS (linux win mac) 3 Running jobs in parallel 4 scaling for large project  
+
+## Needs of Agent.
+
+suppose we have java based app , python based app So each of env need specific agent in order to segregate env we need agent.
+
+## Types of Agent
+1 Builtin agent runs on the same jenkins m/c  
+2 Static Agent - A fixed m/c connected to jekins  
+3 Dynamic Agent - Created on demand (E.G: Docker, Kubernetes, Cloud )
+
 ## Q: How to setup auto-scaling group for Jenkins in AWS ?
 
 To set up Jenkins with Auto Scaling in AWS, I create a Launch Template with Jenkins installed via user data, then attach it to an Auto Scaling Group behind an ALB. For persistence, I mount Jenkins home on EFS. Usually, the master stays fixed, and the Auto Scaling Group is used for Jenkins agents
