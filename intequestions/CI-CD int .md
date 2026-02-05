@@ -13,6 +13,9 @@ I am responsible for DevOps implementation of those microservices
 
 E-commerce site they sells pharma.
 
+## Tell me about your self.
+my self md kamran i have done my bachelor of engineering in 2015 from Nagpur university i have overall 9 years of experince in It industry & relevent into cloud and devops i am holding 4 years of experince so initially i started my career as Linux admin where i have worked around 5 in this domain later i moved cloud & devops technologies, I have worked in multiple tools and technologies stack git , github , maven . ci/cd tool using jenkins argocd github action contenarization tool docker , container orchestartion tool k8s and source code quality tool sonarqube infrastructure provisioning tool used terraform and monitoing tool like cloudwatch & promethus and grafana coming to cloud technologies i am having very good experince with AWS , mostly in AWS i have i have used services like EC2 , vpc , aws lambda . s3 , EKS , cloud trail , guradduty , AWS WAF & few other services creating and maintaing github repositories, as well coming to my project  
+
 ## Day to day activities:
 
 As a DevOps Engineer in an Agile environment, I start by checking monitoring dashboards and CI/CD pipelines, then join daily stand-ups to align with sprint goals. During the day, I focus on backlog items such as infrastructure automation, deployments, and pipeline improvements. I also collaborate closely with developers to resolve issues and frequently handle Kubernetes deployment requests. I usually wrap up by documenting my work and updating Jira to keep the sprint on track.
