@@ -23,7 +23,7 @@ Docker file is text file which uses intruction to assemble docker images, we can
  
 WORKDIR  It set current working directory permanently   
 
-## ENRTPOINT VS CMD: CMD when you want a default command that users can override. Use ENTRYPOINT when you want a fixed command, and let users only supply an input. 
+## ENRTPOINT VS CMD: CMD when you want a default command that users can override. Use ENTRYPOINT when you want a fixed command, but user can append it during runtime.
 # CMD 
 ## diff bw command mode vs shell mode
 Shell mode runs commands via a shell and supports shell features, while command (exec) mode runs commands directly and is preferred for production due to better signal handling.
