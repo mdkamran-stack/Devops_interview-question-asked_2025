@@ -55,3 +55,10 @@ What is the difference between the count and for_each meta-arguments?
 how to communicate with two infrastructure?  
 how to migrate on-perm to cloud?  
 how to communicate microservices?  
+
+QuessCorp
+------------------
+Terraform list vs terraform show
+IN CI/CD pipeline how to configure that pipeline run during change window and deploy app in cluster
+In prometheus grafana lets say we have distributed monitoring lsts say resources are spread across diff region how we can build now.
+In terraform dependecy error like linear & circular
