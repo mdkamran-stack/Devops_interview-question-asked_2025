@@ -43,26 +43,26 @@ shared lib in jenkins
 
 Bristlecone interview
 ------------------------
-create 10 ubnut server with apache installations  /var/lib/html via terraform  
-write shell script get the process with user name kamran and kill the process  
-how to deploy application in k8s   
-how to setup k8s in eks  
-types of loadbalancer in k8s  
-how to setup hpa na vpa  
-what is selinux   
-what is loadbalncer in aws & how to setup app LB and NW LB , how network LB works  
-What is the difference between the count and for_each meta-arguments?  
+create 10 ubnut server with apache installations  /var/lib/html via terraform   
+write shell script get the process with user name kamran and kill the process   
+how to deploy application in k8s     
+how to setup k8s in eks    
+types of loadbalancer in k8s    
+how to setup hpa na vpa    
+what is selinux    
+what is loadbalncer in aws & how to setup app LB and NW LB , how network LB works    
+What is the difference between the count and for_each meta-arguments?    
 how to communicate with two infrastructure?  
-how to migrate on-perm to cloud?  
+how to migrate on-perm to cloud?   
 how to communicate microservices?  
 
 QuessCorp
 ------------------
-Terraform list vs terraform show
-IN CI/CD pipeline how to configure that pipeline run during change window and deploy app in cluster
-In prometheus grafana lets say we have distributed monitoring lsts say resources are spread across diff region how we can build now.
-In terraform dependecy error like linear & circular
-What is lifecycle in TF
+Terraform list vs terraform show  
+IN CI/CD pipeline how to configure that pipeline run during change window and deploy app in cluster  
+In prometheus grafana lets say we have distributed monitoring lsts say resources are spread across diff region how we can build now.  
+In terraform dependecy error like linear & circular  
+What is lifecycle in TF  
 
 TechMahindra
 ---------------
