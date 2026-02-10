@@ -63,3 +63,8 @@ IN CI/CD pipeline how to configure that pipeline run during change window and de
 In prometheus grafana lets say we have distributed monitoring lsts say resources are spread across diff region how we can build now.
 In terraform dependecy error like linear & circular
 What is lifecycle in TF
+
+TechMahindra
+---------------
+Suppose we have EKS cluster version X to upgrade upper version 3 node cluster while ensuring zero downtime? how did you do that?
+
