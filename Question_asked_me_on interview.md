@@ -63,8 +63,8 @@
 ## Question: your jenkins pipeline takes 20 mins before even starting unit test becasuse its download dependecies every time how do you fix it without modifying developers machine?  
 ## Question: Latency spike occured during high load metrics show cpu is fine but conetxt switching is high?  
 ## Question: A pod JVM service uses 80% cpu deposite load traffic what do you inspect?  
-## A Sudden spike in 400 error occur what you check first as devops perspective?  
-## You must provide a audit log for all infrastructure changes what solution do you implement 
-## A micro services deployment causes API Gateway 502 error even through pods are healthy what your approach
+### QuestionA Sudden spike in 400 error occur what you check first as devops perspective?  
+### Question You must provide a audit log for all infrastructure changes what solution do you implement 
+### Question A micro services deployment causes API Gateway 502 error even through pods are healthy what your approach
 
 
