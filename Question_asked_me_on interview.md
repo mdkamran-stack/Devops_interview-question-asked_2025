@@ -17,7 +17,7 @@
 
 # Bristlecone interview
 ------------------------
-## create 10 ubnut server with apache installations  /var/lib/html via terraform   
+### create 10 ubnut server with apache installations  /var/lib/html via terraform   
 ## write shell script get the process with user name kamran and kill the process   
 ## how to deploy application in k8s     
 ## how to setup k8s in eks    
