@@ -5,23 +5,14 @@
 ## What is output of Maven Build, if it is jar file or war file what command will put in docker file?
 ## scenario: you have one repo and want to build a pipeline to deploy to AWS (e.g., ECS, EKS, 
 ## how is your application is connected in frontend in your cluster 
-
 ## authentication and autherization who will manage application or loadbalancer ? 
-
 ## how it will authenticate weather user is valid or not  
-
 ## what is HIGH IO usage  
-
 ## how to export metrics to prometeus? 
-
 ##  lets say you have application java running micro services in kubernetes cluster from there to grafana
-
 ## 3 instance in 3 diff regions 
-
 ## 3 ec3 instance load from external source i have to divide traffic equally on all 3 
-
 ## git stash 
-
 ## shared lib in jenkins 
 
 # Bristlecone interview
