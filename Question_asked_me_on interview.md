@@ -1,11 +1,9 @@
 # This commit is for questions asked me as devops interview in 2025
 
-## Pepsico
-
+# Pepsico
+==========
 ## What is output of Maven Build, if it is jar file or war file what command will put in docker file?
-
 ## scenario: you have one repo and want to build a pipeline to deploy to AWS (e.g., ECS, EKS, 
-
 ## how is your application is connected in frontend in your cluster 
 
 ## authentication and autherization who will manage application or loadbalancer ? 
