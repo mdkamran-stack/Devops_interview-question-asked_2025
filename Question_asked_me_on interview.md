@@ -38,9 +38,9 @@
 ## In terraform dependecy error like linear & circular  
 ## What is lifecycle in TF  
 
-TechMahindra
+# TechMahindra
 ---------------
-Suppose we have EKS cluster version X to upgrade upper version 3 node cluster while ensuring zero downtime? how did you do that?
+## Suppose we have EKS cluster version X to upgrade upper version 3 node cluster while ensuring zero downtime? how did you do that?
 
 
 Photon
