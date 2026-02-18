@@ -14,7 +14,31 @@ I am responsible for DevOps implementation of those microservices
 E-commerce site they sells pharma.
 
 ## Tell me about your self.
-my self md kamran i have done my bachelor of engineering in 2015 from Nagpur university i have overall 9 years of experince in It industry & relevent into cloud and devops i am holding 4 years of experince so initially i started my career as Linux admin where i have worked around 5 in this domain later i moved cloud & devops technologies, I have worked in multiple tools and technologies stack git , github , maven . ci/cd tool using jenkins argocd github action contenarization tool docker , container orchestartion tool k8s and source code quality tool sonarqube infrastructure provisioning tool used terraform and monitoing tool like cloudwatch & promethus and grafana || coming to cloud technologies i am having very good experince with AWS , mostly in AWS i have i have used services like EC2 , vpc , aws lambda . s3 , EKS , cloud trail , guradduty , AWS WAF & few other services creating and maintaing github repositories, as well coming to my project  
+Hello, my name is Md Kamran. I graduated in 2015 and have over 9 years of overall IT experience.
+
+I began my career as a Linux Administrator, where I supported multiple clients and was responsible for maintaining system stability, resolving performance bottlenecks, and handling server migrations. I was actively involved in upgrade projects, moving systems from legacy versions to newer, more secure, and stable environments.
+
+Over time, I transitioned into a Cloud and DevOps Engineer role. In this capacity, I have worked extensively with modern DevOps tools and cloud technologies. My experience includes:
+
+Git for version control
+
+Jenkins for CI automation
+
+ArgoCD for GitOps-based continuous deployment
+
+Docker for containerization
+
+Kubernetes for container orchestration
+
+Terraform for Infrastructure as Code (IaC)
+
+AWS for designing and managing cloud infrastructure
+
+I have experience building CI/CD pipelines, automating infrastructure provisioning, deploying containerized applications, and managing scalable cloud-native environments.
+
+Overall, my focus has always been on automation, reliability, performance optimization, and delivering secure, scalable infrastructure solutions and monitoing tool like cloudwatch & promethus and grafana ||
+I work closely with development and security teams to ensure secure, scalable, and reliable deployments. I also handle monitoring, logging, incident response, and continuous improvement of platform reliability
+coming to cloud technologies i am having very good experince with AWS , mostly in AWS i have i have used services like EC2 , vpc , aws lambda . s3 , EKS , cloud trail , guradduty , AWS WAF & few other services creating and maintaing github repositories, as well coming to my project  
 
 ## Day to day activities:
 
