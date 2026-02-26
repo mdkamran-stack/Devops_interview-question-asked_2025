@@ -86,7 +86,7 @@ master node build that
 ### Question You must provide a audit log for all infrastructure changes what solution do you implement 
 ### Question A micro services deployment causes API Gateway 502 error even through pods are healthy what your approach
 -----------------------------
-AHEAD questions asked me for AWS cloud devops Engineer
+# AHEAD questions asked me for AWS cloud devops Engineer
 ---------------------------------------------------------------------
 ### Question: Recent infrastructure architecture in aws  >> see in aws file infra provisioning project.
 ### Question: Expalin vpc component and traffic flow how it happen  
