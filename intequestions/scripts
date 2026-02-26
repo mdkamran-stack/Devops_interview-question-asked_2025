@@ -10,36 +10,36 @@ CMD ["npm","start"]
 docker build -t node-app .
 docker -d -p 3000:3000 node-app
 =====================
-		pipeline {
-			agent any
+pipeline {
+	agent any
 			
-		stages {
-			stage (git checkout) {
-				steps {
-				git branch: main
-				url: https://
+	stages {
+stage (git checkout) {
+steps {
+git branch: main
+url: https://
 				}
 			}
-		stage {
-		 steps (maven compile) {
-		   sh 'mvn compile)
+stage {
+steps (maven compile) {
+sh 'mvn compile)
 		   }
 	 }
-	    stage {
-		 steps (maven test) {
-		   sh 'mvn test"
-		   }
-	 }
-	 
-	 stage {
-		 steps (maven package) {
-		   sh 'mvn package'
+stage {
+steps (maven test) {
+   sh 'mvn test"
 		   }
 	 }
 	 
-	 stage { 
-	  steps (login to acr )
-	   docker login acr
+stage {
+ steps (maven package) {
+   sh 'mvn package'
+		   }
+	 }
+	 
+ stage { 
+  steps (login to acr )
+  docker login acr
 	   }
 	  }
 =======================================================
