@@ -86,6 +86,21 @@ master node build that
 ### Question You must provide a audit log for all infrastructure changes what solution do you implement 
 ### Question A micro services deployment causes API Gateway 502 error even through pods are healthy what your approach
 -----------------------------
+AHEAD questions asked me for AWS cloud devops Engineer
+---------------------------------------------------------------------
+### Question: Recent infrastructure architecture in aws  >> see in aws file infra provisioning project.
+### Question: Expalin vpc component and traffic flow how it happen  
+### Question: How does NAT Gateway works internally  
+### Question: diff b/w security group vs nacl  
+### Question: How to create  highly availabe web application in aws  
+### Question:  Diff b/w ALB VS NLB when do you choose 
+### Question: Explain me CI/CD pipeline which you have build in AWS  
+### Question: EC2 based application is slow during high traffic cpu is normal response time is high how to troubleshoot.   
+### Question: Production application behind ALB app LB return 502 error intermitently how to troubleshoot.
+### Question: Your AWS bill jump from 1k to 4k in a month how do you identify the root cause and prevent for next time recurrence.  
+### Question: we have 50 developers need aws access no shared access allowed how to achive using tf  
+### Question: how do you enable zero downtime deployment
+
 Get thses question from whatapp resources.
 ========================
 1. Production AKS app went down at 2 AM. What is your immediate action plan?
