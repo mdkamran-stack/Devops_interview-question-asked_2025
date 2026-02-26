@@ -1,1 +1,19 @@
-
+AWS Devops Project steps by steps 3 tier application 
+---------------------------------
+Tools stack
+=============
+1 > github for source code management
+2> Jenkins for orchestration  
+3> Maven for java based applications  
+4> Docker for build containers  
+5> IAM for authentication & auth
+6> cloud wtach for monitoring & logging  
+7> EKS cluster for application deployment 
+8 > ECR to host our container images  
+========================================
+VPC our infrastructure spread across 3 regions within vpc we have total 9 subnets 
+3 web -app public subnet  internet facing components are deployed in app subnet 
+3 app private subnet  our actual application deployed in app subent 
+3 db database private subnet  our database deployed in db subnet  
+-----------------------------------
+IGW attached with vpc for internet based traffic we have 3 NAT gateway deployed for outgoing internet traffic 
