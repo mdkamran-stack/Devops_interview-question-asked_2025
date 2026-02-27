@@ -46,9 +46,10 @@ As a DevOps Engineer in an Agile environment, I start by checking monitoring das
 
 Agile is a software development methodology that focuses on iterative development, collaboration, flexibility, and delivering working software in small, frequent increments.
 
-## Roles and Responsibilities.
+## Infrastructure Automation (Terraform)
 
-As a DevOps Engineer, my role involves building and maintaining CI/CD pipelines, automating cloud infrastructure using IaC, and managing containerized applications on Kubernetes. I work closely with development and security teams to ensure secure, scalable, and reliable deployments. I also handle monitoring, logging, incident response, and continuous improvement of platform reliability.”
+“I automated infrastructure provisioning using Terraform in AWS. Earlier, environments were created manually, which caused inconsistencies and delays. I implemented reusable Terraform modules to provision VPCs, EC2, ALB, RDS, IAM roles, and auto-scaling setups. I also configured remote state in S3 with DynamoDB locking to prevent state conflicts.
+This reduced environment setup time from 2–3 days to under 30 minutes and ensured consistent infrastructure across dev, test, and prod.”
 
 ## Tell me abt you CI/CD process that you have implemented.
 
