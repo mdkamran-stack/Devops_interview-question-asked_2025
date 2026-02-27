@@ -100,6 +100,9 @@ master node build that
 ### Question: Your AWS bill jump from 1k to 4k in a month how do you identify the root cause and prevent for next time recurrence.  
 ### Question: we have 50 developers need aws access no shared access allowed how to achive using tf  
 ### Question: how do you enable zero downtime deployment
+### Questions what sort of automation you have done.
+### Question: write ebs module and it should attach to ec2
+### Question: my statefile is locked you are trying to deploy you cant able to deploy what will you do?
 
 Get thses question from whatapp resources.
 ========================
