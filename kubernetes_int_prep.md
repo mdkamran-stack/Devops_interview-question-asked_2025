@@ -1,5 +1,3 @@
-# LLyods bank asked questions.
-
 ## Deployment vs demonset?
 
 "**Deployment**" manages the desired state of pods and handles rolling updates, "**DaemonSet**" runs a pod on every node or specific nodes in the cluster.
