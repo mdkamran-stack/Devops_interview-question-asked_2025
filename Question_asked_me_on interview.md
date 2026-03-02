@@ -89,6 +89,7 @@ master node build that
 # AHEAD questions asked me for AWS cloud devops Engineer
 ---------------------------------------------------------------------
 ### Question: Recent infrastructure architecture in aws  >> see in aws file infra provisioning project.
+# How do you approach sudden traffic spikes in production?
 ### Question: Expalin vpc component and traffic flow how it happen  
 ### Question: How does NAT Gateway works internally  
 ### Question: diff b/w security group vs nacl  
