@@ -5,6 +5,11 @@ Below services must have clear understanding check KR NEtwork video
 
 find /var/log -type f -name "*.tmp" -mtime +15 -exec rm -f {} \;
 
+## EKS cluster creation using Terraform (verramalla)
+In order to create EKS cluster first we have created remote backend using S3 , for state locking we create dynamodb using terraform.  
+we have module used modular apparoach for vpc creation as well as EKS cluster creation vpc creation code reside at vpc folder EKs cluster creation code reside at eks folder we have to create public and private vpc nad nat gateway as well IGW asssociates it and then route table association for public and private respecteively. 
+have to create 2 iam roles 1 for cluster anotherone for node create the policy and attach with cluster and the we create control plane same for dataplane  (EKS is managed at control plane level, not at IAM permission level.) 
+
 ## what is different bw a name vs cname records.
 
 An A record maps a domain directly to an IP address, whereas a CNAME record maps a domain to another domain name.
