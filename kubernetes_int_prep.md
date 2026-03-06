@@ -24,10 +24,6 @@ LoadBalancer exposes one Service; Ingress routes to many Services.
 ## How would you secure communication between Pods in Kubernetes?
 I secure Pod-to-Pod communication using NetworkPolicies to restrict traffic, mTLS for encryption/authentication, and RBAC with Secrets to control access to sensitive data
 
-##  How Pod autoscale.
-
-Pod autoscaling in Kubernetes is done using the Horizontal Pod Autoscaler (HPA), which scales Pods based on CPU, memory, or custom metrics.
-
 ## How do you upgrade a Kubernetes cluster with minimal downtime?
 
 “To upgrade a Kubernetes cluster with minimal downtime, I perform a rolling upgrade of control plane components first, then upgrade worker nodes one by one, ensuring workloads remain available throughout the process.
@@ -35,6 +31,32 @@ Pod autoscaling in Kubernetes is done using the Horizontal Pod Autoscaler (HPA),
 ## What is a PersistentVolume (PV) and PersistentVolumeClaim (PVC)?
 
 A PersistentVolume (PV) is a cluster resource representing storage, and a PersistentVolumeClaim (PVC) is a user request for storage,
+
+## Types of scaling in k8s?
+
+### Horizontal Scaling increase the no of pod replicas running an application. kubernetes creates additional pods to distribute workload. Each pod handles a portion of incoming traffic best for stateless App.
+
+### Vertical scaling increases the cpu mem resources assigned to a single pod it uses when application cant easily be repliacted across multiple pods. VPA contineously analyze resource consumption & recommends optimal cpu & mem values it operate in 3 modes.
+ 
+1 Recommendation Mode : Provide resource recommendations without applying changes.
+2 Auto Mode: Automatically updates resource requests & restart pods.  
+3 Initial Mode Applies recommended resources when pods are first created.
+
+### cluster scaling adjust the no of nodes in kubernetes cluster , when cluster dont have enough capacity to schedule pods new nodes are automatically added.  
+
+### Multi-cluster scaling used for large system . eg : Improved fault tolerance , Geographical distibution , independent scaling.
+
+## How to upgrade EKS cluster?
+1 Prerequisutes Cordon Nodes  unscheduable during this process of k8s cluster upgrade during this process takes (1-2 ) hours but customer cant impacted for 1-2 hours we stop any new deployment .
+2 Go through Release Notes for what changes in new release there can be change in particular feature works.
+3 Strart with lower ENV Eg: dev we cant downgrade from upper version to lower version its best practice to upgrade lower env first and wait for a week. 
+4 control plane as well as Nodes should be in same version (suppose our control plane is 1.30 and nodes is 1.29 then we have to first upgrade the node to 1.30 version) 
+5 kubelet and cluster autoscaler are compatible with control plane 
+6 we need  5 available ip address  in subnet 
+Uprade the control plane first & then upgrade nde group 
+uprades addons Eg: kube proxy vpc CNI 
+make sure everything works on lower env so that it works on higher ENV.  we used Rollout process for upgradation rollout basically upgrades one by one nodes 
+After upgradation QE team will proceed with functional testing.  
 
 ## How do you handle zero-downtime deployments?
 
