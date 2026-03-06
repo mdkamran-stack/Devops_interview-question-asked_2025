@@ -47,16 +47,16 @@ A PersistentVolume (PV) is a cluster resource representing storage, and a Persis
 ### Multi-cluster scaling used for large system . eg : Improved fault tolerance , Geographical distibution , independent scaling.
 
 ## How to upgrade EKS cluster?
-1 Prerequisutes Cordon Nodes  unscheduable during this process of k8s cluster upgrade during this process takes (1-2 ) hours but customer cant impacted for 1-2 hours we stop any new deployment .
-2 Go through Release Notes for what changes in new release there can be change in particular feature works.
-3 Strart with lower ENV Eg: dev we cant downgrade from upper version to lower version its best practice to upgrade lower env first and wait for a week. 
-4 control plane as well as Nodes should be in same version (suppose our control plane is 1.30 and nodes is 1.29 then we have to first upgrade the node to 1.30 version) 
-5 kubelet and cluster autoscaler are compatible with control plane 
-6 we need  5 available ip address  in subnet 
-Uprade the control plane first & then upgrade nde group 
-uprades addons Eg: kube proxy vpc CNI 
-make sure everything works on lower env so that it works on higher ENV.  we used Rollout process for upgradation rollout basically upgrades one by one nodes 
-After upgradation QE team will proceed with functional testing.  
+1 Prerequisutes Cordon Nodes  unscheduable during this process of k8s cluster upgrade during this process takes (1-2 ) hours but customer cant impacted for 1-2 hours we stop any new deployment .  
+2 Go through Release Notes for what changes in new release there can be change in particular feature works.  
+3 Strart with lower ENV Eg: dev we cant downgrade from upper version to lower version its best practice to upgrade lower env first and wait for a week.   
+4 control plane as well as Nodes should be in same version (suppose our control plane is 1.30 and nodes is 1.29 then we have to first upgrade the node to 1.30 version)   
+5 kubelet and cluster autoscaler are compatible with control plane     
+6 we need  5 available ip address  in subnet   
+Uprade the control plane first & then upgrade nde group   
+uprades addons Eg: kube proxy vpc CNI   
+make sure everything works on lower env so that it works on higher ENV.  we used Rollout process for upgradation rollout basically upgrades one by one nodes   
+After upgradation QE team will proceed with functional testing.    
 
 ## How do you handle zero-downtime deployments?
 
