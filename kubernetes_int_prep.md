@@ -176,11 +176,8 @@ Prometheus scrapes metrics from target server, stores them in a time-series DB, 
 
 ## ques 4 : how did you check Health of conatiner configuration in k8s.  
 
-I check container health in Kubernetes using liveness, readiness, and startup probes defined in the Pod spec and verify their status with kubectl describe pod and logs.
-
-### How it works  
-. LivenessProbe -> if /health fails repetadely, pod is restarting.   
-. readinessProbe -> if /ready  fails, pod stays running but is removed the service load balancer.   
+I check container health in Kubernetes using liveness, readiness, and startup probes defined in the Pod spec and verify their status with kubectl describe pod and logs.  
+Liveness probe checks whether the application inside a container is still running. If it fails, Kubernetes restarts the container automatically. Readiness probe checks if the application is ready to accept traffic. If it fails, the pod is removed from the service endpoints but the container is not restarted.   
 . Startup Probe -> (Optional) Prevents liveness from killing slow-starting apps.   
 
 ## Difference between secrets vs configmap.
