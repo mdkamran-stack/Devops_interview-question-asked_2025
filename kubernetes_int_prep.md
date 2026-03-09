@@ -6,7 +6,8 @@
 👉 “An orchestration platform for automating container deployment and scaling.”
 
 ## taint & toleration
-Taint is applied on node pod to prevent node being schedule until it tolerated
+
+A taint is applied to a node to prevent pods from being scheduled on that node unless they tolerate it.
 
 A toleration is applied to a pod so it can run on nodes with taints.
 
