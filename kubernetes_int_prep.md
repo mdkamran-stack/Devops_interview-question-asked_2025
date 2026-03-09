@@ -40,9 +40,7 @@ A PersistentVolume (PV) is a cluster resource representing storage, and a Persis
 
 ## Types of scaling in k8s?
 
-### Horizontal Scaling increase the no of pod replicas running an application. kubernetes creates additional pods to distribute workload. Each pod handles a portion of incoming traffic best for stateless App.
-
-### Vertical scaling increases the cpu mem resources assigned to a single pod it uses when application cant easily be repliacted across multiple pods. VPA contineously analyze resource consumption & recommends optimal cpu & mem values it operate in 3 modes.
+Horizontal Pod Autoscaler scales the number of pods based on metrics like CPU or memory usage to handle traffic load. Vertical Pod Autoscaler adjusts the CPU and memory resources assigned to a pod based on its usage. HPA is mainly used for scaling applications under high traffic, while VPA is used for optimizing resource allocation.
  
 1 Recommendation Mode : Provide resource recommendations without applying changes.
 2 Auto Mode: Automatically updates resource requests & restart pods.  
