@@ -5,6 +5,11 @@
 ## What is Kubernetes?
 👉 “An orchestration platform for automating container deployment and scaling.”
 
+## taint & toleration
+Taint is applied on node pod to prevent node being schedule until it tolerated
+
+A toleration is applied to a pod so it can run on nodes with taints.
+
 ## what is cluster
 A cluster is the collection of nodes where Kubernetes runs apps.
 ## What is a Pod?
