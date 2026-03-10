@@ -34,6 +34,8 @@ Terraform for Infrastructure as Code (IaC)
 
 AWS for designing and managing cloud infrastructure
 
+We use Prometheus to monitor Kubernetes and application-level metrics, while CloudWatch is used to monitor AWS infrastructure services like EC2, RDS, and load balancers. Grafana is used to visualize metrics from both sources.
+
 I have experience building CI/CD pipelines, automating infrastructure provisioning, deploying containerized applications, and managing scalable cloud-native environments.
 
 Overall, my focus has always been on automation, reliability, performance optimization, and delivering secure, scalable infrastructure solutions and monitoing tool like cloudwatch & promethus and grafana ||
