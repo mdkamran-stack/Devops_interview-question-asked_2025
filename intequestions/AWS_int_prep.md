@@ -1,3 +1,5 @@
+# https://www.linkedin.com/in/raghu-m-3877793b6/recent-activity/all/
+Use above linkedin id for AWS sceanrio based questions
 Below services must have clear understanding check KR NEtwork video   
 1: EC2  - run apps   2: S3 -sore file    3: IAM - manage access   4: RDS  - databases    5: LAMBDA - run code without server   6: cloudwatch  -Monitor     7: VPC - Network setup  
 
