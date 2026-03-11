@@ -10,6 +10,104 @@ CMD ["npm","start"]
 docker build -t node-app .
 docker -d -p 3000:3000 node-app
 =====================
+Docker file for java application
+-----------------------------------
+FROM openjdk:17-jdk-slim
+
+WORKDIR /app
+
+COPY target/app.jar app.jar
+
+EXPOSE 8080
+
+ENTRYPOINT ["java","-jar","app.jar"]
+==========================================
+Docker file for python based app
+=============================
+FROM python:3.10-slim
+
+WORKDIR /app
+
+COPY requirements.txt .
+
+RUN pip install --no-cache-dir -r requirements.txt
+
+COPY . .
+
+EXPOSE 5000
+
+CMD ["python", "app.py"]
+================================
+Explanation
+
+FROM → base Python image
+
+WORKDIR → working directory inside container
+
+COPY → copies application files
+
+RUN → installs dependencies
+
+EXPOSE → application port
+
+CMD → command to run the app
+======================================
+Write a TF file for EKS cluster setup
+================================================
+provider "aws" {
+  region = "ap-south-1"
+}
+
+# VPC
+module "vpc" {
+  source  = "terraform-aws-modules/vpc/aws"
+  version = "5.1.0"
+
+  name = "eks-vpc"
+  cidr = "10.0.0.0/16"
+
+  azs             = ["ap-south-1a", "ap-south-1b"]
+  public_subnets  = ["10.0.1.0/24", "10.0.2.0/24"]
+  private_subnets = ["10.0.3.0/24", "10.0.4.0/24"]
+
+  enable_nat_gateway = true
+  single_nat_gateway = true
+}
+
+# EKS Cluster
+module "eks" {
+  source  = "terraform-aws-modules/eks/aws"
+  version = "20.8.5"
+
+  cluster_name    = "demo-eks-cluster"
+  cluster_version = "1.29"
+
+  subnet_ids = module.vpc.private_subnets
+  vpc_id     = module.vpc.vpc_id
+
+  eks_managed_node_groups = {
+    worker_nodes = {
+      desired_size = 2
+      max_size     = 3
+      min_size     = 1
+
+      instance_types = ["t3.medium"]
+    }
+  }
+}
+
+## outputs.tf
+
+output "cluster_name" {
+  value = module.eks.cluster_name
+}
+
+output "cluster_endpoint" {
+  value = module.eks.cluster_endpoint
+}
+======================================================================
+
+
 pipeline {
 	agent any
 			
