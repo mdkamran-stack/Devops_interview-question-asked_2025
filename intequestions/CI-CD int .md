@@ -20,25 +20,14 @@ I began my career as a Linux Administrator, where I supported multiple clients a
 
 Over time, I transitioned into a Cloud and DevOps Engineer role. In this capacity, I have worked extensively with modern DevOps tools and cloud technologies. My experience includes:
 
-Git for version control
-
-Jenkins for CI automation
-
-ArgoCD for GitOps-based continuous deployment
-
-Docker for containerization
-
-Kubernetes for container orchestration
-
-Terraform for Infrastructure as Code (IaC)
-
 AWS for designing and managing cloud infrastructure
 
 We use Prometheus to monitor Kubernetes and application-level metrics, while CloudWatch is used to monitor AWS infrastructure services like EC2, RDS, and load balancers. Grafana is used to visualize metrics from both sources.
 
-I have experience building CI/CD pipelines, automating infrastructure provisioning, deploying containerized applications, and managing scalable cloud-native environments.
+I have experience building CI/CD pipelines, automating infrastructure provisioning, deploying containerized applications, and managing scalable cloud-native environments.i have built like reusable terraform module for vpc , eks RDS application lB IM and automated provisioning pipeline with S3 backend and dynamodb for state locking now currently known as TF lock in like nwere version and also handling drift troubleshooting production state and managing multiple environments setup using wrkspaces i worked extensively in k8s designing clusters managing deployments, statefulset demon sets network policies and debugging like crashloopback off scheduling failures rbac misconfiguration I am confortable tools like prometheus grafana & cloudwatch , implemeted jenkins and github action for zero touch deployment integrated with static scan like sonar qube, owas dependency check and contenarize appwith docker and implemeted blue green and canary deployment we have multiple respository in our org we have multiple microservices like all application deployed to AWS which is our primary cloud platform , overall my cloud and devops experience like a blend of hands on engineering production troubleshooting automation and designing scalbale and highly availabe & secure systems my major activity like writing infrasctructure as code using TF where i work closely with devlopment teams where they request for infrastructure creations whenver request come to devops team i am one of the team members who pickup the tf related activities and or iac and delivers work through TF personally i build TF code in the modular approach so i also work in TF modules and putting them in the centralized location.
 
-Overall, my focus has always been on automation, reliability, performance optimization, and delivering secure, scalable infrastructure solutions and monitoing tool like cloudwatch & promethus and grafana ||
+
+verall, my focus has always been on automation, reliability, performance optimization, and delivering secure, scalable infrastructure solutions and monitoing tool like cloudwatch & promethus and grafana ||
 I work closely with development and security teams to ensure secure, scalable, and reliable deployments. I also handle monitoring, logging, incident response, and continuous improvement of platform reliability
 coming to cloud technologies i am having very good experince with AWS , mostly in AWS i have i have used services like EC2 , vpc , aws lambda . s3 , EKS , cloud trail , guradduty , AWS WAF & few other services creating and maintaing github repositories, as well coming to my project  
 
