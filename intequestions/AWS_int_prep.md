@@ -7,6 +7,66 @@ Below services must have clear understanding check KR NEtwork video
 
 find /var/log -type f -name "*.tmp" -mtime +15 -exec rm -f {} \;
 
+# how to create scalble and higly available system.
+
+🎯 1. Start Strong (Opening Line)
+
+👉 Say this first:
+
+“I designed a highly available and scalable architecture in Amazon Web Services using multi-AZ deployment, load balancing, auto scaling, and managed services.”
+
+🧱 2. VPC & Networking (Foundation)
+
+“I designed the VPC with public and private subnets across multiple AZs. Public subnets are connected to the internet using an Internet Gateway, while private subnets use a NAT Gateway for secure outbound access.”
+
+🌐 3. DNS Layer
+
+“I used Route 53 for DNS resolution and health checks to ensure high availability.”
+
+⚖️ 4. Load Balancer (Entry Point)
+
+“I used an Application Load Balancer to distribute incoming traffic across multiple instances and route only to healthy targets.”
+
+⚙️ 5. Compute Layer (Auto Scaling)
+
+👉 Say:
+
+“I configured Auto Scaling Groups to automatically scale EC2 instances based on traffic demand, ensuring availability during peak load.”
+
+🗄️ 6. Database Layer (CRITICAL 🔥)
+
+“I used RDS in Multi-AZ mode for high availability and configured read replicas to handle read-heavy workloads.”
+
+⚡ 7. Caching Layer
+
+“I used ElastiCache to cache frequently accessed data and reduce database load, improving performance.”
+
+📦 8. Storage + CDN
+
+“Static content is stored in S3 and delivered via CloudFront CDN for low latency and high availability.”
+
+🧠 9. Session Management
+
+Using:
+
+DynamoDB
+
+👉 Key Point:
+
+Scalable session storage
+
+👉 Say:
+
+“I used DynamoDB to manage user session data for scalability and real-time access.”
+
+📊 10. Monitoring & Logging (SRE MUST 🔥)
+
+“I used CloudWatch for monitoring and alerts, and CloudTrail for auditing API activity and security tracking.”
+
+👉 Add this line at end:
+
+“This architecture ensures high availability, scalability, and fault tolerance with no single point of failure.”
+
 ## EKS cluster creation using Terraform (verramalla)
 In order to create EKS cluster first we have created remote backend using S3 , for state locking we create dynamodb using terraform.  
 we have module used modular apparoach for vpc creation as well as EKS cluster creation vpc creation code reside at vpc folder EKs cluster creation code reside at eks folder we have to create public and private vpc nad nat gateway as well IGW asssociates it and then route table association for public and private respecteively. 
