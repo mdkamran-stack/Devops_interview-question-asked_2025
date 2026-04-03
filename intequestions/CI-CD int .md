@@ -37,10 +37,11 @@ As a DevOps Engineer in an Agile environment, I start by checking monitoring das
 
 Agile is a software development methodology that focuses on iterative development, collaboration, flexibility, and delivering working software in small, frequent increments.
 
-## Infrastructure Automation (Terraform)
+# How to integrate load testing in ci cd pipeline  (Ispace asked)
 
-“I automated infrastructure provisioning using Terraform in AWS. Earlier, environments were created manually, which caused inconsistencies and delays. I implemented reusable Terraform modules to provision VPCs, EC2, ALB, RDS, IAM roles, and auto-scaling setups. I also configured remote state in S3 with DynamoDB locking to prevent state conflicts.
-This reduced environment setup time from 2–3 days to under 30 minutes and ensured consistent infrastructure across dev, test, and prod.”
+💡 Interview Answer (Best)
+
+“I integrate load testing into CI/CD by using tools like k6 or JMeter, executing tests as a pipeline stage after deployment to staging. I define performance thresholds, and if they are breached, the pipeline fails. This ensures performance regressions are caught early before production release.”
 
 ## Tell me abt you CI/CD process that you have implemented.
 
