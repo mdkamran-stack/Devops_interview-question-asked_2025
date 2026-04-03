@@ -1,5 +1,12 @@
 # This commit is for questions asked me as devops interview in 2025
 
+# Ispace
+
+how to integrate load testing in cicd pipeline  
+what is deployment and daemon set .  
+what is ingress how to use .  
+two module a & b moudle a is creating ec2 instance module instance id how to to get instance id by module b
+
 # Pepsico
 ==========
 ### What is output of Maven Build, if it is jar file or war file what command will put in docker file?
