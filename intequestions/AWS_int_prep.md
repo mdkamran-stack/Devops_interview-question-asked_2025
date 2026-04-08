@@ -47,14 +47,6 @@ find /var/log -type f -name "*.tmp" -mtime +15 -exec rm -f {} \;
 
 🧠 9. Session Management
 
-Using:
-
-DynamoDB
-
-👉 Key Point:
-
-Scalable session storage
-
 👉 Say:
 
 “I used DynamoDB to manage user session data for scalability and real-time access.”
