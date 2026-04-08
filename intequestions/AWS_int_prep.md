@@ -60,10 +60,17 @@ find /var/log -type f -name "*.tmp" -mtime +15 -exec rm -f {} \;
 “This architecture ensures high availability, scalability, and fault tolerance with no single point of failure.”
 
 ## EKS cluster creation using Terraform (verramalla)
-In order to create EKS cluster first we have created remote backend using S3 , for state locking we create dynamodb using terraform.  
-we have module used modular apparoach for vpc creation as well as EKS cluster creation vpc creation code reside at vpc folder EKs cluster creation code reside at eks folder we have to create public and private vpc nad nat gateway as well IGW asssociates it and then route table association for public and private respecteively. 
-have to create 2 iam roles 1 for cluster anotherone for node create the policy and attach with cluster and the we create control plane same for dataplane  (EKS is managed at control plane level, not at IAM permission level.) 
-Define node group min max and desired_size
+“To create an EKS cluster, I used Terraform with a modular approach. First, I configured a remote backend using S3 for state storage and DynamoDB for state locking.
+
+I created a VPC module with public and private subnets, along with an Internet Gateway and NAT Gateway, and configured route tables accordingly.
+
+Then, I defined security groups with appropriate inbound and outbound rules.
+
+For EKS, I created two IAM roles—one for the cluster and one for worker nodes—with required policies attached.
+
+After that, I provisioned the EKS control plane (which is managed by AWS) and configured the worker node group by defining min, max, and desired capacity.
+
+Finally, I validated cluster access and deployed workloads.”
 
 ## what is different bw a name vs cname records.
 
