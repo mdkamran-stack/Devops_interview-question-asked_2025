@@ -63,6 +63,7 @@ find /var/log -type f -name "*.tmp" -mtime +15 -exec rm -f {} \;
 In order to create EKS cluster first we have created remote backend using S3 , for state locking we create dynamodb using terraform.  
 we have module used modular apparoach for vpc creation as well as EKS cluster creation vpc creation code reside at vpc folder EKs cluster creation code reside at eks folder we have to create public and private vpc nad nat gateway as well IGW asssociates it and then route table association for public and private respecteively. 
 have to create 2 iam roles 1 for cluster anotherone for node create the policy and attach with cluster and the we create control plane same for dataplane  (EKS is managed at control plane level, not at IAM permission level.) 
+Define node group min max and desired_size
 
 ## what is different bw a name vs cname records.
 
