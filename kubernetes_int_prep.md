@@ -66,6 +66,10 @@ After upgradation QE team will proceed with functional testing.
 
 I handle zero-downtime deployments in Kubernetes using rolling updates, blue-green, or canary deployments, ensuring old Pods remain available until new ones are ready and traffic is safely switched.
 
+## How do you find out what environment variables a running pod has?"
+
+kubectl exec <pod> -- env — or kubectl describe pod to see the sources (secretRef, configMapRef).
+
 ## What is RBAC (Role-Based Access Control) in Kubernetes?
 RBAC in Kubernetes controls access to resources by assigning roles to users or service accounts, defining what actions they can perform on which resources.
 ## Can you explain what is virtualization and containerization? Why do we need containerization?
@@ -190,18 +194,82 @@ A ConfigMap stores non-sensitive configuration data in plain text, while a Secre
 
 ## Ques: In Kubernetes, How the auto-healing mechanism automatically detects and recovers from failed workloads without manual intervention.  
 
-### How Auto Healing works.  
-Kubernetes has a built-in self-healing mechanism. It continuously monitors Pods using controllers and health probes. If a Pod crashes, fails a liveness check, or a node goes down, Kubernetes automatically restarts the container or reschedules the Pod on a healthy node to maintain the desired state. This happens without any manual intervention, ensuring application availability and resilience
+## Interview Question: "What is ArgoCD and how does it implement GitOps?"
 
-1  **Liveness Probes**  
- . If a container becomes unresponsive or unhealthy, the **liveness Probe** triggers at restart.  
-2  **ReplicaSet/Deployment Controller**  
-  . Ensure the desired no.of pod always running.  
-  . if a pod crashes or deleted a new pod will automatically created.    
-3  **Node Failure Recover**  
-  . If pod goes down a qubescheduler will shedule a new nodes.    
-4. **Horizontal pod Autoscaler (HPA)**  
-  . Not exactly healing, but it can automatically scale pod up/Down to avoid overload failures.  
+ArgoCD is a declarative GitOps tool for Kubernetes. It continuously polls Git repositories and compares the desired state (YAML/Helm in Git) with the actual state in the cluster. When drift is detected, it either alerts (manual sync) or automatically reconciles (automated sync with selfHeal). Every deployment is a Git commit — full audit trail, easy rollback, no manual kubectl in production.
+
+## Interview Question: "What is the difference between ArgoCD Sync and Health status?"
+
+Sync status: does the cluster match what's in Git? (Synced / OutOfSync) Health status: is the application actually running correctly? (Healthy / Degraded / Progressing) A deployment can be Synced but Degraded — e.g., ArgoCD applied the manifest but pods are CrashLooping.
+
+## Interview Question: "What is selfHeal in ArgoCD?"
+
+When selfHeal: true, ArgoCD automatically reverts any manual changes to the cluster back to the Git state. This enforces GitOps strictly — the cluster always matches Git, even if someone runs kubectl directly.
+
+## Interview Question: "What is Helm and why use it over plain YAML?"
+
+Helm is a Kubernetes package manager. A Helm chart is a collection of templated YAML files — values are injected at deploy time from a values.yaml file. This means one chart serves all environments (dev/qa/prod) — you only change the values. In our project, one shared helm-charts/ folder deploys all 4 backend services, each with its own values file. Without Helm you'd have 20 nearly-identical YAML files to maintain.
+
+## Interview Question: "What is the difference between helm install and helm upgrade --install?"
+
+helm install fails if the release already exists. helm upgrade --install creates it if missing or upgrades it if it exists — idempotent, safe to run repeatedly. Always use helm upgrade --install in CI/CD pipelines.  
+
+## Interview Question: "What is GitOps and why is it better than running kubectl apply manually?"
+
+GitOps uses Git as the single source of truth for infrastructure state. ArgoCD continuously reconciles the cluster state with what's in Git. Benefits: full audit trail (Git history), easy rollback (git revert), no manual kubectl in production, drift detection (if someone changes something manually, ArgoCD detects and reverts it).
+
+## Interview Question: "How do you debug a microservice that is returning 500 errors?"
+
+First kubectl get pods -n dev to check pod health and restart count. Then kubectl logs <pod> to read the application logs — look for exceptions. kubectl describe pod <pod> to check events (OOMKill, probe failures, image pull errors). If the pod is running, kubectl exec -it <pod> -- /bin/sh to inspect the environment and test connectivity to dependencies.
+
+## Interview Question: "What is RBAC in Kubernetes and why does it matter?"
+
+RBAC controls what actions each identity (user, service account) can perform on which resources. A Role defines permissions within a namespace; a ClusterRole applies cluster-wide. In our project, each microservice has its own ServiceAccount — the api-gateway's ServiceAccount has an IAM role annotation (IRSA) that allows it to access AWS services. This follows least-privilege: each pod only has the AWS permissions it actually needs.
+
+## Interview Question: "How does ArgoCD use Helm?"
+
+ArgoCD has Helm built in. When an Application has path: helm-charts with helm.valueFiles, ArgoCD runs helm template locally to generate the final YAML manifests, then applies them. It doesn't use helm install — it uses Helm purely as a template engine, then manages the resources itself.
+
+## Interview Question: "How does HPA decide when to scale?"
+
+It checks the metrics-server every 15 seconds. If average CPU across all pods exceeds the target percentage, it adds pods (up to maxReplicas). When load drops, it scales down after a cooldown period (default 5 minutes). 
+
+  ## Concept: Kubernetes uses probes to know if a pod is alive and ready to serve traffic.  
+
+ livenessProbe — if this fails 3 times, Kubernetes restarts the pod
+readinessProbe — if this fails, Kubernetes stops sending traffic to the pod (but doesn't restart it)
+initialDelaySeconds: 60 — Spring Boot takes ~60s to start, so Kubernetes waits before checking  
+
+## How does Kubernetes achieve zero-downtime deployments?"
+
+Rolling update strategy. maxSurge: 1 means it can create 1 extra pod above desired count. maxUnavailable: 0 means no pod is removed until the new one is Ready. So at no point is capacity reduced below 100%. Rolling update is a zero-downtime deployment strategy where new application versions are deployed gradually by replacing old instances one by one.
+
+## Interview Question: "What is the difference between liveness and readiness probes?"
+
+Liveness: is the app alive? If it fails, restart the pod. Readiness: is the app ready for traffic? If it fails, remove from Service endpoints but don't restart. Use readiness to handle slow startups or temporary overloads without killing the pod.  
+
+## Interview Question: "How does the Kubernetes scheduler decide where to place a pod?"
+
+It filters nodes that meet the pod's requirements (enough CPU/memory requests, matching nodeSelector/affinity rules, no taints). Then it scores the remaining nodes — preferring nodes with more available resources, spreading replicas across nodes (if anti-affinity is set). In our prod values, we use podAntiAffinity to ensure two replicas of the same service never land on the same node.
+
+# Interview Question: "How do microservices discover and communicate with each other in Kubernetes?"
+
+Via Kubernetes DNS. Every Service gets a DNS name: <service>.<namespace>.svc.cluster.local. In our project, the api-gateway is configured with AUTH_SERVICE_URL=http://auth-service:8081 — Kubernetes DNS resolves auth-service to the ClusterIP of the auth-service Service, which load-balances across all auth-service pods.
+
+## Ingress — Change Routing Rules
+Concept: The Ingress Controller routes traffic based on host and path rules.  
+
+## Interview Question: "How does nginx ingress route traffic to different services?"
+
+nginx ingress controller watches for Ingress resources and generates nginx configuration automatically. When a request arrives, nginx checks the Host header and path against the rules. In our project, path /api goes to api-gateway and / goes to pharma-ui — both share a single ELB entry point.
+
+## Interview Question: "What is the difference between resource requests and limits?"
+
+Requests: what the pod is guaranteed — used by the scheduler to find a node with enough capacity. Limits: the maximum a pod can use — if it exceeds memory limit, the kernel OOMKills it. If it exceeds CPU limit, it is throttled (slowed down, not killed).
+
+## Interview Question: "What is the difference between a ConfigMap and a Secret?"
+
+Both inject config into pods as env vars or files. ConfigMaps are for non-sensitive config (log level, port, URLs). Secrets are for sensitive data (passwords, tokens) — stored base64-encoded in etcd, and in our project, synced from AWS Secrets Manager by External Secrets Operator so they never touch Git.
 
   ### Example Deployment with Auto-Healing  
   ```yaml
