@@ -1,0 +1,20 @@
+# what is Gitops?
+## Gitops uses Git as a single source of truth to deliver applications and infrastructure. 
+
+It basically keeps the state between Git & Argocd.    
+
+# Advantages of Gitops
+- Security
+- Versioning (track of chages)
+- Auto upgrades
+- Auto Healing of any unwanted changes
+- Continous Reconciliation  
+
+# Declarative : A system managed by Gitops must have its desired state expressed declaratively  
+
+# Versioned and immutable : Desired state is stored in a way that enforces immutability,versioning and retains a complete version history. 
+
+# Pulled Automatically: Software agents automatically pull the desired state declarations from the source.  
+
+# Contionous Reconciled: Software continously observe actual system state and attempt to apply the desired state.  
+
