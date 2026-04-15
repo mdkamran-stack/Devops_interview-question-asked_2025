@@ -103,6 +103,11 @@ count = 3
 
 # Conditional Expression.
 
+## deleting specific resource
+## terraform destroy -target target name
+
+## After delting resources  best practice to comment it out otherwise tf will again create same resource, even after commenting tf will destory in plan as well 
+
 ### Base Code of conditional-expression.tf
 
 ```sh
