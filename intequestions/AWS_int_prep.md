@@ -150,10 +150,71 @@ S3 PUT from CLI authenticates your request, transfers data securely, and stores 
 
 I implement drift detection by integrating IaC tools like Terraform or CloudFormation with CI/CD pipelines, audit logs, and monitoring platforms to continuously compare desired and actual infrastructure states across environments.
 
-## aws how to create highly available and secure app
+## AWS Scenario-Based Interview Q&A – Day 1
 
-We design the app across multiple AZs with an internet-facing ALB and Auto Scaling groups for app servers in private subnets, connect to an RDS Multi-AZ database and use S3 + CloudFront for static assets. Security is enforced with least-privilege IAM roles, Security Groups, TLS via ACM, secrets stored in Secrets Manager, and WAF/GuardDuty for threat detection. We automate provisioning and deployments with Terraform and CI/CD pipelines, use blue/green or canary deployments for safe releases, and ensure observability with CloudWatch, X-Ray, and centralized logging — all together providing high availability, resilience, and strong security posture.
+🔹 1. EC2 instance is running, but application not accessible – How to troubleshoot?
 
+✅ Steps:
+
+Check Security Groups → Ensure required ports (80/443) are open
+Verify NACLs → Allow inbound/outbound traffic
+Check Application status → systemctl status nginx / netstat -tulnp
+Validate Public IP / DNS
+Check OS firewall → iptables / firewalld
+Review logs → /var/log/messages, app logs
+
+💡 Example:
+Port 80 was not open in Security Group → Added rule → Application became accessible.
+
+🔹 2. Application slow during peak traffic – What to check?
+
+✅ Check:
+
+CloudWatch Metrics → CPU, Memory, Network
+Enable Auto Scaling
+Use Elastic Load Balancer (ALB)
+Enable CloudFront CDN
+Optimize DB (RDS read replicas)
+
+💡 Example:
+High CPU (90%) during peak → Enabled Auto Scaling → Traffic distributed → Performance improved.
+
+🔹 3. Design a Highly Available AWS Architecture
+
+✅ Best Practices:
+
+Deploy across Multiple AZs
+Use ALB + Auto Scaling Group
+Store static content in S3
+Use RDS Multi-AZ
+Add Route 53 health checks
+
+2. How will you manage SSL certificates for the load balancer?
+
+SSL certificates are managed using AWS Certificate Manager.
+
+👉 Steps:
+
+Request or import certificate in ACM
+Attach certificate to ALB
+Configure HTTPS listener (port 443)
+
+6. What is the use of CloudWatch?
+
+Amazon CloudWatch is used for:
+Monitoring logs and metrics
+Setting alarms
+Troubleshooting applications
+Observability of AWS resources
+
+✅ 7. What is API in AWS?
+
+API = Application Programming Interface
+In AWS, Amazon API Gateway is used to:
+
+Create and manage APIs
+Connect frontend with backend services
+Secure and scale APIs
 ## How to deploy a services.
 
 1: we will build the application docker image  
