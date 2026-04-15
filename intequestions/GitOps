@@ -1,0 +1,103 @@
+# what is Gitops?
+## Gitops uses Git as a single source of truth to deliver applications and infrastructure. 
+
+It basically keeps the state between Git & Argocd.    
+
+# Advantages of Gitops
+- Security
+- Versioning (track of chages)
+- Auto upgrades
+- Auto Healing of any unwanted changes
+- Continous Reconciliation  
+
+# Declarative : A system managed by Gitops must have its desired state expressed declaratively  
+
+# Versioned and immutable : Desired state is stored in a way that enforces immutability,versioning and retains a complete version history. 
+
+# Pulled Automatically: Software agents automatically pull the desired state declarations from the source.  
+
+# Contionous Reconciled: Software continously observe actual system state and attempt to apply the desired state.  
+
+# why are we using githubaction
+
+## we are on ecosystem already on github project is lreaady on github we manage everything on github 
+
+# How do you secure sensitive information on Github  
+## We use Secretes and variables to secure informations  
+
+# how do you create a ci file in github  
+## In the repository itself we create .github/workflows folder and after that steps 
+
+name: CI-CD Pipeline (Docker + Kubernetes)
+
+on:
+  push:
+    branches:
+      - main
+
+env:
+  IMAGE_NAME: my-app
+  REGISTRY: docker.io
+
+jobs:
+
+  build-test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v3
+
+      - name: Setup Node
+        uses: actions/setup-node@v3
+        with:
+          node-version: "18"
+
+      - name: Install Dependencies
+        run: npm install
+
+      - name: Run Tests
+        run: npm test
+
+  docker-build-push:
+    runs-on: ubuntu-latest
+    needs: build-test
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v3
+
+      - name: Login to DockerHub
+        uses: docker/login-action@v2
+        with:
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_PASSWORD }}
+
+      - name: Build Docker Image
+        run: docker build -t $IMAGE_NAME:${{ github.sha }} .
+
+      - name: Tag Image
+        run: docker tag $IMAGE_NAME:${{ github.sha }} ${{ secrets.DOCKER_USERNAME }}/$IMAGE_NAME:${{ github.sha }}
+
+      - name: Push Image
+        run: docker push ${{ secrets.DOCKER_USERNAME }}/$IMAGE_NAME:${{ github.sha }}
+
+  deploy:
+    runs-on: ubuntu-latest
+    needs: docker-build-push
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v3
+
+      - name: Set up Kubeconfig
+        run: |
+          mkdir -p $HOME/.kube
+          echo "${{ secrets.KUBE_CONFIG }}" > $HOME/.kube/config
+
+      - name: Update Image in Deployment
+        run: |
+          kubectl set image deployment/my-app my-app=${{ secrets.DOCKER_USERNAME }}/$IMAGE_NAME:${{ github.sha }}
+
+      - name: Verify Deployment
+        run: kubectl rollout status deployment/my-app
