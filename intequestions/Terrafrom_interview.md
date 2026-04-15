@@ -9,6 +9,59 @@ Infrastructure as Code (Terraform)
     What is data block in Terraform?  
     What is the use of Terraform import command?  
 
+    # in tf how do you reference a variable from other module?  
+    1. Same Module (Simple Case)
+
+If variables are in the same module, you can reference directly:
+
+variable "env" {
+  default = "dev"
+}
+
+variable "name" {
+  default = "app"
+}
+
+output "full_name" {
+  value = "${var.name}-${var.env}"
+}
+🔹 2. Between Modules (Most Asked 🔥)
+
+👉 Step 1: Define output in Module A
+
+# module A (e.g., VPC)
+output "vpc_id" {
+  value = aws_vpc.main.id
+}
+
+👉 Step 2: Pass it to Module B
+
+module "vpc" {
+  source = "./vpc"
+}
+
+module "ec2" {
+  source = "./ec2"
+  vpc_id = module.vpc.vpc_id
+}
+
+👉 Step 3: Use in Module B
+
+variable "vpc_id" {}
+
+resource "aws_instance" "example" {
+  subnet_id = var.vpc_id
+}
+🔹 3. Key Concept (VERY IMPORTANT)
+
+👉
+
+❌ You cannot directly access variables across modules
+✅ You must use:
+output (from source module)
+module.<name>.<output> (in root module)
+pass as input variable to another module
+
 ## What is the purpose of the Terraform state file?
 The Terraform state file (terraform.tfstate) is a JSON file Terraform state file is the source of truth that maintains the mapping between Terraform configuration and real-world infrastructure resources. It also tracks resource metadata and dependencies, which allows Terraform to create an accurate plan for creating, updating, or destroying infrastructure. The state file is crucial for drift detection and ensuring changes are applied correctly.  
 
