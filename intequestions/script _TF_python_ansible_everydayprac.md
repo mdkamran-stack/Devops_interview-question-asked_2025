@@ -34,35 +34,35 @@ print("Backup completed!")
 
 ## Write a simple groovy pipeline for java spring boot app that waits for user input for approvals to move the next stage, with stages for checkout, build, push & deploy.  
 
-pipeline {
- agent any
+pipeline {  
+ agent any  
  
- stages {
-  stage('Checkout') {
-    steps {
-      git 'https://github.com.git'
-      }
-}
- stage('Build') {
-  steps{
-    sh '/mvn clean package'
-    }
-}
-stage('push')
-  steps{
-    sh'docker build t docker-repo/java-sp-boot'
-    sh'docker push docker-repo/java-sp-boot'
-    }
-}
-stage(Approval'){
-steps{
- input'Do you want to deploy to prod?'
- }
-}
-stage(Deploy){
- steps{
-   sh'kubectl apply -f deployment.yaml'
-   }
-}
-}
-}
+ stages {  
+  stage('Checkout') {  
+    steps {  
+      git 'https://github.com.git'  
+      }  
+}  
+ stage('Build') {  
+  steps{  
+    sh '/mvn clean package'  
+    }  
+}   
+stage('push')  
+  steps{  
+    sh'docker build t docker-repo/java-sp-boot'  
+    sh'docker push docker-repo/java-sp-boot'  
+    }  
+}  
+stage(Approval'){  
+steps{  
+ input'Do you want to deploy to prod?'  
+ }  
+}  
+stage(Deploy){  
+ steps{  
+   sh'kubectl apply -f deployment.yaml'  
+   }  
+}  
+}  
+}  
