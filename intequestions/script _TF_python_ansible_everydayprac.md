@@ -32,76 +32,37 @@ for filename in os.listdir(SOURCE_DIR):
 print("Backup completed!")
 ```
 
-
-## Build a Java/Maven application Package it into a Docker image Push image to DockerHub Deploy to Kubernetes
+## Write a simple groovy pipeline for java spring boot app that waits for user input for approvals to move the next stage, with stages for checkout, build, push & deploy.  
 
 pipeline {
-    agent any
-
-    environment {
-        APP_NAME   = "myapp"
-        APP_VERSION = "1.0.${BUILD_NUMBER}"
-        DOCKER_REGISTRY = "docker.io/your-dockerhub-user"
+ agent any
+ 
+ stages {
+  stage('Checkout') {
+    steps {
+      git 'https://github.com.git'
+      }
+}
+ stage('Build') {
+  steps{
+    sh '/mvn clean package'
     }
-
-    stages {
-        stage('Checkout') {
-            steps {
-                git branch: 'main', url: 'https://github.com/org/repo.git'
-            }
-        }
-
-        stage('Build with Maven') {
-            steps {
-                sh 'mvn clean package -DskipTests'
-            }
-        }
-
-        stage('Run Unit Tests') {
-            steps {
-                sh 'mvn test'
-            }
-        }
-
-        stage('Build Docker Image') {
-            steps {
-                script {
-                    sh """
-                    docker build -t $DOCKER_REGISTRY/$APP_NAME:$APP_VERSION .
-                    """
-                }
-            }
-        }
-
-        stage('Push Docker Image') {
-            steps {
-                withCredentials([usernamePassword(credentialsId: 'dockerhub-creds', usernameVariable: 'USER', passwordVariable: 'PASS')]) {
-                    sh """
-                    echo $PASS | docker login -u $USER --password-stdin
-                    docker push $DOCKER_REGISTRY/$APP_NAME:$APP_VERSION
-                    """
-                }
-            }
-        }
-
-        stage('Deploy to Kubernetes') {
-            steps {
-                withKubeConfig(credentialsId: 'k8s-config') {
-                    sh """
-                    kubectl set image deployment/$APP_NAME $APP_NAME=$DOCKER_REGISTRY/$APP_NAME:$APP_VERSION -n dev
-                    kubectl rollout status deployment/$APP_NAME -n dev
-                    """
-                }
-            }
-        }
+}
+stage('push')
+  steps{
+    sh'docker build t docker-repo/java-sp-boot'
+    sh'docker push docker-repo/java-sp-boot'
     }
-
-    post {
-        success {
-            echo "✅ Build & Deployment Successful: $APP_NAME:$APP_VERSION"
-        }
-        failure {
-            echo "❌ Pipeline Failed. Please check logs."
-        }
-    }
+}
+stage(Approval'){
+steps{
+ input'Do you want to deploy to prod?'
+ }
+}
+stage(Deploy){
+ steps{
+   sh'kubectl apply -f deployment.yaml'
+   }
+}
+}
 }
