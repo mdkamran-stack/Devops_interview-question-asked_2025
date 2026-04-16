@@ -10,11 +10,11 @@ or remove the resources, coz next time we tf apply it will again create the reso
 we can achive detroy by commenting out as well commnet out and tf apply it will destroy resources.  
 
 ## TF state file : 
-TF stores the state of the infra that is being created from the TF files, This state allows TF to map real world resource to your existing configuration.
+TF stores information about managed infrastructure in a state file, This state file keeps track of resources created by your configuration.
 
 ## Desired state current state. 
-DESIRED state: TF primary func is to create modify & destroy infra resources to match the desired state describe in TF conf.
-Current state: Current state is the acutal state of resource that is currently deployed.
+DESIRED state: The desired state is the conf you write in your tf files.
+Current state: Current state is the acutal reality of your infra.
 TF tries to ensure that the deployed infra is based on the desired state.
 
 ## dependency lock file : TF dependency lock file allows us to lock spaecific version of the provider.
