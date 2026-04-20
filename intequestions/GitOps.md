@@ -28,6 +28,15 @@ It basically keeps the state between Git & Argocd.
 # how do you create a ci file in github  
 ## In the repository itself we create .github/workflows folder and after that steps 
 
+# CI/CD Pipeline using GitHub Actions
+
+This pipeline builds a Java application, creates a Docker image, pushes it to Docker Hub, and deploys it to Kubernetes.
+
+---
+
+## 📌 Workflow Definition
+
+```yaml
 name: CI-CD Pipeline
 
 on:
