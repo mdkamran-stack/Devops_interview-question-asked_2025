@@ -28,76 +28,45 @@ It basically keeps the state between Git & Argocd.
 # how do you create a ci file in github  
 ## In the repository itself we create .github/workflows folder and after that steps 
 
-name: CI-CD Pipeline (Docker + Kubernetes)
+name: CI-CD Pipeline
 
 on:
   push:
-    branches:
-      - main
-
-env:
-  IMAGE_NAME: my-app
-  REGISTRY: docker.io
+    branches: [ "main" ]
 
 jobs:
-
-  build-test:
+  build:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout Code
-        uses: actions/checkout@v3
+    - name: Checkout Code
+      uses: actions/checkout@v3
 
-      - name: Setup Node
-        uses: actions/setup-node@v3
-        with:
-          node-version: "18"
+    - name: Setup Java
+      uses: actions/setup-java@v3
+      with:
+        distribution: 'temurin'
+        java-version: '17'
 
-      - name: Install Dependencies
-        run: npm install
+    - name: Build Application
+      run: mvn clean package
 
-      - name: Run Tests
-        run: npm test
+    - name: Build Docker Image
+      run: docker build -t my-app:${{ github.sha }} .
 
-  docker-build-push:
-    runs-on: ubuntu-latest
-    needs: build-test
+    - name: Login to Docker Hub
+      run: echo "${{ secrets.DOCKER_PASSWORD }}" | docker login -u "${{ secrets.DOCKER_USERNAME }}" --password-stdin
 
-    steps:
-      - name: Checkout Code
-        uses: actions/checkout@v3
-
-      - name: Login to DockerHub
-        uses: docker/login-action@v2
-        with:
-          username: ${{ secrets.DOCKER_USERNAME }}
-          password: ${{ secrets.DOCKER_PASSWORD }}
-
-      - name: Build Docker Image
-        run: docker build -t $IMAGE_NAME:${{ github.sha }} .
-
-      - name: Tag Image
-        run: docker tag $IMAGE_NAME:${{ github.sha }} ${{ secrets.DOCKER_USERNAME }}/$IMAGE_NAME:${{ github.sha }}
-
-      - name: Push Image
-        run: docker push ${{ secrets.DOCKER_USERNAME }}/$IMAGE_NAME:${{ github.sha }}
+    - name: Push Image
+      run: docker push my-app:${{ github.sha }}
 
   deploy:
+    needs: build
     runs-on: ubuntu-latest
-    needs: docker-build-push
 
     steps:
-      - name: Checkout Code
-        uses: actions/checkout@v3
-
-      - name: Set up Kubeconfig
-        run: |
-          mkdir -p $HOME/.kube
-          echo "${{ secrets.KUBE_CONFIG }}" > $HOME/.kube/config
-
-      - name: Update Image in Deployment
-        run: |
-          kubectl set image deployment/my-app my-app=${{ secrets.DOCKER_USERNAME }}/$IMAGE_NAME:${{ github.sha }}
+    - name: Deploy to Kubernetes
+      run: kubectl apply -f k8s/deployment.yaml
 1️⃣ Scenario: GitHub Actions Workflow Fails Due to Missing Secrets
 
 Problem:
