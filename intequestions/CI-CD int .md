@@ -13,6 +13,34 @@ I am responsible for DevOps implementation of those microservices
 
 E-commerce site they sells pharma.
 
+Optimization of Jenkins pipeline using paralleism
+
+Both the stages start at same time so our build time may optimize 
+
+Pipeline {
+ agent any 
+   stages {
+     stage ('parallelStage')
+        parallel {
+          stage('Stage1') {
+            steps {
+              echo 'Stage 1 started'
+              sleep(time: 5, unit: SECONDS')
+              echo 'Stage 1 completed'
+              }
+            }
+            stage('Stage2') {
+              steps {
+                echo 'Stage 2 started'
+                sleep(time: 5, unit: SECONDS')
+                echo 'Stage 2 completed'
+               }
+             }
+          }
+       }
+    }
+                
+ 
 ## Tell me about your self.
 Hello, my name is Md Kamran. I graduated in 2015 and have over 9 years of overall IT experience.
 
