@@ -63,7 +63,7 @@ module.<name>.<output> (in root module)
 pass as input variable to another module
 
 ## What is the purpose of the Terraform state file?
-The Terraform state file (terraform.tfstate) is a JSON file Terraform state file is the source of truth that maintains the mapping between Terraform configuration and real-world infrastructure resources. It also tracks resource metadata and dependencies, which allows Terraform to create an accurate plan for creating, updating, or destroying infrastructure. The state file is crucial for drift detection and ensuring changes are applied correctly.  
+Terraform state file is used to store the current state of infrastructure so Terraform can track resources and manage changes efficiently.  
 
      Okay, code to deploy I'll give simple task only virtual machine in Azure it includes provider.tf, main.tf, locals.tf, and variables.tf. If you don't know about these files, just let me know. Can you share the screen?
     You can write all these files with the basics thing. You can take reference from Google also. But I need that code to be changed to a method where you have to variabilize that. In Google you'll get it with list of resource blocks, right? That you need to convert it to low variables and locals and other things again.
