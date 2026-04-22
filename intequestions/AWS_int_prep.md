@@ -57,7 +57,28 @@ find /var/log -type f -name "*.tmp" -mtime +15 -exec rm -f {} \;
 
 👉 Add this line at end:
 
-“This architecture ensures high availability, scalability, and fault tolerance with no single point of failure.”
+“This architecture ensures high availability, scalability, and fault tolerance with no single point of failure.”  
+
+## DR setup using AWS Elastic Disaster Recovery.
+
+“Yes, I’ve worked on disaster recovery. In our environment, we implemented an automated DR setup using AWS Elastic Disaster Recovery, where the primary server was continuously replicated to a secondary subnet.
+
+For failover, we configured health checks and integrated Amazon Route 53 failover routing. Whenever the primary instance became unhealthy, traffic was automatically redirected to the recovery server without manual intervention.
+
+We also integrated monitoring and alerts to validate failover events and ensure the system responded as expected.
+
+In terms of recovery objectives, we maintained an RTO of a few minutes and near-zero RPO due to continuous replication.
+
+Additionally, we regularly conducted DR drills to ensure the entire failover process worked seamlessly in real scenarios. 
+
+## How Route53 dedect failures 
+
+“Route 53 uses health checks on the application endpoint. If it detects consecutive failures, it marks the primary as unhealthy and automatically redirects traffic to the recovery server using failover routing.”  
+
+We also tuned parameters like:
+
+Request interval (e.g., 30 seconds)
+Failure threshold (e.g., 3 consecutive failures)
 
 ## EKS cluster creation using Terraform (verramalla)
 “To create an EKS cluster, I used Terraform with a modular approach. First, I configured a remote backend using S3 for state storage and DynamoDB for state locking.
