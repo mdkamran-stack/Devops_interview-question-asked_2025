@@ -37,6 +37,29 @@ git stash temporarily saves uncommitted changes (modified & staged files) and re
 
 .git is a hidden directory created when you run git init, stores all metadata like commit history branches index.
 
-.gitignore that tells git which files/folder to ignore prevent of tracking like Logs build artifact Secrets 
+.gitignore that tells git which files/folder to ignore prevent of tracking like 
+
+how to resolve merge conflict  
+===================================
+
+git merge branch-name  
+Git will tell you which files have conflicts:  
+git status  
+Open the conflicted file  
+
+Inside the file, you’ll see markers like this:
+<<<<<<< HEAD  
+your current code  
+=======
+incoming code from other branch
+>>>>>>> branch-name  
+>>>>>>> HEAD = your branch  
+Below ======= = code from the branch you're merging  
+>>>>>>> 4. Mark as resolved  
+
+After editing:  
+git add file-name  
+Complete the merge  
+Git commit
 
 
