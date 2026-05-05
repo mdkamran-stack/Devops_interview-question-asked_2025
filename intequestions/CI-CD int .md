@@ -209,6 +209,12 @@ Monitor pipeline activity using centralized logging and monitoring tools like AW
 
 I keep infrastructure and application code in sync by using Infrastructure as Code with Git-based workflows, so both are version-controlled, reviewed, and deployed together through CI/CD pipelines.
 
+## SonarQube
+SonarQube is a code quality and security analysis tool that scans source code to detect bugs, vulnerabilities, and code smells, and helps maintain clean and secure code in CI/CD pipelines.  
+
+## Quality Gates
+A Quality Gate is a set of conditions in SonarQube that determines whether code passes or fails quality checks based on metrics like bugs, vulnerabilities, and coverage before allowing deployment  
+
 ## What is the difference between rebase and merge? Which one do you prefer in CI/CD workflows?
 
 In CI/CD workflows, I prefer rebase for feature branches to keep history clean and avoid merge clutter. However, for merging into the main branch, I often use merge (via pull requests) because it preserves history and avoids rewriting commits others may depend on. A common workflow is to rebase locally for cleanup and then merge via PR into main
