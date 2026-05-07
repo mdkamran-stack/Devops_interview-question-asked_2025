@@ -78,7 +78,56 @@ Additionally, we regularly conducted DR drills to ensure the entire failover pro
 We also tuned parameters like:
 
 Request interval (e.g., 30 seconds)
-Failure threshold (e.g., 3 consecutive failures)
+Failure threshold (e.g., 3 consecutive failures)  
+
+# AWS Migration on-perm to AWS 
+
+We access Bastion host to app and db servers and we anaylyse the data in migration hib athena application discovery service app migration service & db migration service 
+
+Deploy The architecture using cloudformation stack  Access the Bastion host & Explore the Environment   
+
+Migration Process 
+===================
+
+Create Application Migration services Replication agent IAM User
+Replication setting in AWS Migration service  
+Installing Agent on perm servers  
+Configuring of EC2 instance launch template  
+Launch test instance  
+Launch cutover instance 
+Shutdown source server  
+updating DNS servesrs 
+Finalize the cutovers 
+
+Exploring data in AWS
+===============
+Obtain Ip address and Hostname for servers 
+Identify servers with or without agent  
+Analyze System Performance data for servers with agents  
+Track outbound communication b/w server Based on port Number  
+Track Inbound comm between servers based on port number  
+identify running software from port number  
+
+
+Application Discovery Services  
+===================================
+Enabling ADS and Athena integration  
+Installing ADS agent in the servers 
+Starting ADS data collection  
+Browsing the discovered data  
+Viewing Network Connection  
+Exploring EC2 Instance    
+
+DataBase Migration using AWS DMS 
+=================================
+Creating the replication network using subnet groups 
+Launching a DMS replication instance  
+Configuring end point for source and target database  
+replicating database using DMS replication task  
+Updating DNS entries for application servers to communicate with Aurora hosted DB  
+
+
+
 
 ## EKS cluster creation using Terraform (verramalla)
 “To create an EKS cluster, I used Terraform with a modular approach. First, I configured a remote backend using S3 for state storage and DynamoDB for state locking.
