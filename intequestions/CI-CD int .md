@@ -40,7 +40,8 @@ Pipeline {
        }  
     }  
                 
- ![Uploading recent_challenges.PNG…]()
+ ```<img width="580" height="253" alt="recent_challenges" src="https://github.com/user-attachments/assets/2892b50d-0517-42c9-b6e8-2e7c6da02898" />```
+
 
 ## Tell me about your self.
 Hello, my name is Md Kamran. I graduated in 2015 and have over 9 years of overall IT experience.
