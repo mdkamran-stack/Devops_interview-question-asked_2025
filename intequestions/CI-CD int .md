@@ -13,6 +13,19 @@ I am responsible for DevOps implementation of those microservices
 
 E-commerce site they sells pharma.
 
+# CAP Theorem
+“In distributed systems, CAP theorem states that a system can provide only two out of three guarantees: Consistency, Availability, and Partition Tolerance.
+
+Consistency means all users see the same latest data.
+Availability means the system always responds to requests.
+Partition tolerance means the system continues working even during network failures between nodes.
+
+During a network partition, the system must choose either Consistency or Availability.
+
+For example:
+
+Banking systems usually prefer CP to avoid incorrect transactions.
+Social media applications usually prefer AP for high availability.”
 Optimization of Jenkins pipeline using paralleism
 
 Both the stages start at same time so our build time may optimize 
