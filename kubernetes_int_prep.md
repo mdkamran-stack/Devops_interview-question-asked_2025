@@ -9,7 +9,10 @@
 
 A taint is applied to a node to prevent pods from being scheduled on that node unless they tolerate it.
 
-A toleration is applied to a pod so it can run on nodes with taints.
+A toleration is applied to a pod so it can run on nodes with taints.  
+
+## Affinity >> Affinity tells Kubernetes to place pods together based on labels or node conditions.  
+## Anti-Affinity >> Anti-affinity tells Kubernetes not to place certain pods together.
 
 ## what is cluster
 A cluster is the collection of nodes where Kubernetes runs apps.
