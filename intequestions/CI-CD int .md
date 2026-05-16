@@ -84,14 +84,6 @@ Agile is a software development methodology that focuses on iterative developmen
 
 “I integrate load testing into CI/CD by using tools like k6 or JMeter, executing tests as a pipeline stage after deployment to staging. I define performance thresholds, and if they are breached, the pipeline fails. This ensures performance regressions are caught early before production release.”
 
-## Tell me abt you CI/CD process that you have implemented.
-
-In our project, GitHub is used as the source repository and Jenkins pipelines are triggered via webhook on each commit. Jenkins checks out the code, runs unit tests, performs SonarQube static code analysis and AppScan security checks, and then builds the artifact (JAR/WAR) using Maven.
-
-The generated artifact is stored in our artifact repository (Nexus/Artifactory) After that, Jenkins builds a Docker image using the stored artifact and pushes the image to Docker Hub with a versioned tag.
-
-Next, the deployment.yaml is updated with the new image tag and committed back to Git. ArgoCD continuously monitors Git (single source of truth) and automatically deploys the new version to Kubernetes using Helm charts. We use Prometheus/Grafana for observability and Helm/ArgoCD rollback for failure recovery.
-
 ##  During a deployment, your CI/CD pipeline fails unexpectedly. What approach would you take to troubleshoot and fix the problem?
 
 I first contain the impact, identify the failing stage using logs, isolate whether it’s code, config, infra, or dependency related, apply a minimal fix, redeploy safely, and then add preventive checks to avoid recurrence.
@@ -115,69 +107,29 @@ I first contain the impact, identify the failing stage using logs, isolate wheth
 5. **Docker Image Build & Push:**  
    Jenkins builds a Docker image using the generated JAR/WAR artifact as input. for the application and pushes it to the **Docker registry (Docker Hub / ECR / ACR)** with a versioned tag.
 
-6. **Deploy to Dev Environment (GitOps):**  
-   The **deployment.yaml** is updated with the new image tag and committed to Git.  
-   **ArgoCD** monitors Git (single source of truth) and automatically deploys the updated application to the **development Kubernetes cluster**.
+6. Deploy to Dev Environment:
+   After the Docker image is pushed to the container registry, the Jenkins pipeline deploys the application to the Development Kubernetes cluster using Helm charts.
 
-7. **Promote to Production:**  
+   Jenkins executes the Helm upgrade/install command with the latest image tag:
+
+   helm upgrade --install myapp ./helm-chart \
+   --set image.tag=${BUILD_NUMBER}
+
+   The Helm chart manages Kubernetes resources like Deployment, Service, ConfigMap, and Ingress, ensuring consistent and automated application deployment into the Dev environment.
+
+8. **Promote to Production:**  
    Once testing is successful, the same image is **manually promoted** to the production environment using ArgoCD.
 
-8. **Monitoring & Observability:**  
+9. **Monitoring & Observability:**  
    The application is continuously monitored for performance and availability using **Kubernetes monitoring tools, Prometheus, and Grafana**.
-
-    
-    
- ## Issues faced during LB INgress provision same thing we can frame during interview (challenges faced in recent project)  
-
-One of the most challenging issues I recently resolved involved provisioning an AWS Application Load Balancer through the AWS Load Balancer Controller in EKS.
- Everything looked correct — IAM roles, subnet tags, controller deployment — but the ALB simply wouldn’t appear. I dug into the controller logs and found repeated
- errors about subnet discovery and security group authorization. The key error was: ‘InvalidGroup.NotFound: You have specified two resources that belong to different networks.’
-That told me the controller was trying to authorize traffic between security groups in different VPCs — which AWS doesn’t allow.
-
-I validated this by inspecting the VPC IDs of both security groups, and sure enough, they were mismatched. To fix it, I created a new security group in the correct VPC, opened port 80 for public access, and explicitly assigned it to the Ingress using annotations. I also ensured the controller was using IRSA for IAM authentication, patched the ServiceAccount, and restarted the controller. Once everything aligned — VPC, SG, IAM, and annotations — the ALB provisioned successfully and traffic flowed as expected.
-
-This experience reinforced how critical it is to trace cloud resource relationships across layers — IAM, networking, and Kubernetes manifests — and how controller logs can be your best friend. It also showed my ability to stay focused through multi-hour debugging and deliver a clean, production-ready soluti
-
-## steps followed
-
-🛠️ How You Fixed It
-✅ 1. Created a New Security Group in the Correct VPC
-You created sg-00143fa7ec576ee35 in vpc-0bbe799d063d0395f, which is the VPC your EKS cluster and subnets live in.
-
-✅ 2. Opened Port 80 for Public Access
-You authorized inbound traffic on port 80 to allow ALB access:
-
-bash
-aws ec2 authorize-security-group-ingress \
-  --group-id sg-00143fa7ec576ee35 \
-  --protocol tcp \
-  --port 80 \
-  --cidr 0.0.0.0/0
-✅ 3. Explicitly Assigned the Correct SG to Your Ingress
-You added this annotation to your Ingress manifest:
-
-yaml
-alb.ingress.kubernetes.io/security-groups: sg-00143fa7ec576ee35
-This forced the controller to use the correct SG from the correct VPC.
-
-✅ 4. Restarted the Controller and Monitored Logs
-You restarted the controller to pick up the changes:
-
-bash
-kubectl rollout restart deployment aws-load-balancer-controller -n kube-system
-Then monitored logs to confirm successful ALB provisioning.
-
-✅ Final Result
-Your Ingress now shows a valid ALB DNS name:
 
 ## CI/CD & Build Tools
 
 Q: How do you design/manage a CI/CD pipeline?  
-👉 Use Jenkins/Bamboo with modular stages (build → test → package → deploy). Integrate SonarQube + Nexus. Make it fast, automated, and repeatable.
+👉 Use Jenkins with modular stages (build → test → package → deploy). Integrate SonarQube + Nexus. Make it fast, automated, and repeatable.
 
 Q: How do you handle build failures?  
 Check logs, re-run with debug, fix root cause, notify dev team, prevent recurrence via automation/tests.
-
 
 ## Reduced build and deployment times by20% by optimizing CI/CDpipelines.
 
@@ -197,7 +149,7 @@ Infrastructure: Used auto-scaling agents/runners for faster builds.
 
 Automation: Introduced Infrastructure as Code (IaC) or deployment scripts.
 
-20% faster builds/deployments (e.g., from 5 min to 3 min).
+20% faster builds/deployments (e.g., from 30 min to 3 min).
 
 Improved team productivity and release frequency.
 
@@ -234,7 +186,7 @@ In CI/CD workflows, I prefer rebase for feature branches to keep history clean a
 
 ## How do you implement approval gates in a Jenkins pipeline (e.g., manual approval before production)?
 
-In Jenkins, I implement approval gates using the input step in a declarative pipeline, which pauses execution and requires manual approval before moving to production. For stricter controls, I combine this with RBAC so only authorized users can approve. In enterprise setups, I also integrate Jenkins with external systems like ServiceNow or Slack for approval workflows.
+In Jenkins, I implement approval gates using the input step in a declarative pipeline, which pauses execution and requires manual approval before moving to production. For stricter controls, I combine this with RBAC so only authorized users can approve. In enterprise setups, I also integrate Jenkins with external systems like JiRA or Slack for approval workflows.
 
 ##  What are quality gates? Or, how do you confirm that a built artifact is good?
 
