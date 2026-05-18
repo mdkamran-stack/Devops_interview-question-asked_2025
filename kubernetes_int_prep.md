@@ -193,7 +193,12 @@ Liveness probe checks whether the application inside a container is still runnin
 
 ## Difference between secrets vs configmap.
 
-A ConfigMap stores non-sensitive configuration data in plain text, while a Secret is meant for sensitive data (like passwords, tokens, certs) and is base64-encoded (and can be encrypted at rest)
+A ConfigMap stores non-sensitive configuration data in plain text, while a Secret is meant for sensitive data (like passwords, tokens, certs) and is base64-encoded (and can be encrypted at rest) 
+
+## Interview Question: "What is the difference between liveness and readiness probes?"
+
+1. Liveness Probe  Checks whether application is alive.
+2. Readiness Probe  Checks whether application is ready to receive traffic.
 
 ## Ques: In Kubernetes, How the auto-healing mechanism automatically detects and recovers from failed workloads without manual intervention.  
 
@@ -245,11 +250,7 @@ initialDelaySeconds: 60 — Spring Boot takes ~60s to start, so Kubernetes waits
 
 ## How does Kubernetes achieve zero-downtime deployments?"
 
-Rolling update strategy. maxSurge: 1 means it can create 1 extra pod above desired count. maxUnavailable: 0 means no pod is removed until the new one is Ready. So at no point is capacity reduced below 100%. Rolling update is a zero-downtime deployment strategy where new application versions are deployed gradually by replacing old instances one by one.
-
-## Interview Question: "What is the difference between liveness and readiness probes?"
-
-Liveness: is the app alive? If it fails, restart the pod. Readiness: is the app ready for traffic? If it fails, remove from Service endpoints but don't restart. Use readiness to handle slow startups or temporary overloads without killing the pod.  
+Rolling update strategy. maxSurge: 1 means it can create 1 extra pod above desired count. maxUnavailable: 0 means no pod is removed until the new one is Ready. So at no point is capacity reduced below 100%. Rolling update is a zero-downtime deployment strategy where new application versions are deployed gradually by replacing old instances one by one. 
 
 ## Interview Question: "How does the Kubernetes scheduler decide where to place a pod?"
 
