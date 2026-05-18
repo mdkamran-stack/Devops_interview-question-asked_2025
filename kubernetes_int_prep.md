@@ -131,7 +131,7 @@ Stateless apps don’t retain data between requests and are easy to scale, while
 
  check these things in the official Kubernetes release notes for version compatibility, cloud provider documentation (like AWS EKS or Azure AKS) for supported upgrade paths, cluster add-on versions (like CNI, CoreDNS), and existing workloads using kubectl and monitoring dashboards to ensure readiness.  
 
- ## How does kubelet handle node pressure? What happens when the disk fills?
+ ## How does kubelet handle node pressure? What happens when the disk fills?  
 
  “Kubelet handles node pressure by monitoring resource thresholds and evicting low-priority pods when disk, memory, or inode usage gets critical—starting with cleanup and escalating to eviction if needed.
 
