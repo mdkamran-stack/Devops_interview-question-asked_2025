@@ -53,7 +53,37 @@ Pipeline {
        }  
     }  
                 
- !<img width="580" height="253" alt="recent_challenges gif" src="https://github.com/user-attachments/assets/ee303be2-e8e8-4453-a1f7-4d2238c072b8" />
+ ## StatefulSet Pods Failing Due to Volume Affinity
+
+### Scenario
+You are running a MongoDB StatefulSet with three replicas.  
+You need to scale it to five replicas to handle a data surge.
+
+However, Pod-3 and Pod-4 are stuck in Pending state with:
+
+```text
+FailedScheduling: 0/3 nodes are available:
+3 node(s) had volume node affinity conflict.
+```
+
+### Question
+How can a cluster have enough CPU/Memory but still fail to schedule a StatefulSet pod due to storage affinity?
+
+### Answer
+- This usually happens in Multi-AZ Kubernetes clusters.
+- The Persistent Volume (PV) may be attached to Zone-A.
+- But available worker nodes/resources are in Zone-B.
+- Kubernetes must schedule the pod in the same zone where the volume exists.
+- Because of this zone mismatch, scheduling fails even though CPU and memory are available.
+
+### Solution
+Use `WaitForFirstConsumer` in the StorageClass:
+
+```yaml
+volumeBindingMode: WaitForFirstConsumer
+```
+
+This ensures the Persistent Volume is created in the same zone where the pod gets scheduled.
 
 ## Tell me about your self.
 Hello, my name is Md Kamran. I graduated in 2015 and have over 9 years of overall IT experience.
