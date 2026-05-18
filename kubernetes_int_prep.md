@@ -7,9 +7,9 @@
 
 ## taint & toleration
 
-A taint is applied to a node to prevent pods from being scheduled on that node unless they tolerate it.
+A taint is applied on a node to restrict pods from being scheduled on that node.
 
-A toleration is applied to a pod so it can run on nodes with taints.  
+A toleration is added in pod specification to allow the pod to run on tainted nodes.
 
 ## Affinity >> Affinity tells Kubernetes to place pods together based on labels or node conditions.  
 ## Anti-Affinity >> Anti-affinity tells Kubernetes not to place certain pods together.
