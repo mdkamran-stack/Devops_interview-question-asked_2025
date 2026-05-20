@@ -122,7 +122,9 @@ I first contain the impact, identify the failing stage using logs, isolate wheth
 
 ## CI/CD Pipeline Flow (With Docker Image Build & GitOps)##  
 
-1. Git Checkout
+---
+
+## 2. Git Checkout
 Jenkins checks out the latest source code from GitHub repository.
 
 ****
