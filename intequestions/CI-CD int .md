@@ -124,7 +124,7 @@ I first contain the impact, identify the failing stage using logs, isolate wheth
 
 ---
 
-## 2. Git Checkout
+## 1. Git Checkout
 Jenkins checks out the latest source code from GitHub repository.
 
 ****
@@ -134,14 +134,14 @@ Maven compiles the application source code.
 ```bash
 mvn clean compile
 ```
-## 4. Test Stage
+## 3. Test Stage
 Unit tests are executed to validate application functionality.
 
 ```bash
 mvn test
 ```
 
-## 5. File System Scan
+## 4. File System Scan
 Security scanning tools like TruffleHog scan repository for:
 - Hardcoded secrets
 - API keys
@@ -151,7 +151,7 @@ Security scanning tools like TruffleHog scan repository for:
 Pipeline fails immediately if secrets are detected.
 
 ---
-## 6. SonarQube Analysis
+## 5. SonarQube Analysis
 SonarQube performs static code analysis to identify:
 - Bugs
 - Vulnerabilities
@@ -159,7 +159,7 @@ SonarQube performs static code analysis to identify:
 - Technical debt
 
 ---
-## 7. Quality Gate
+## 6. Quality Gate
 Pipeline validates SonarQube quality gate.
 
 If quality gate fails:
@@ -167,31 +167,31 @@ If quality gate fails:
 Deployment stops automatically.
 ```
 
-## 8. Build Stage
+## 7. Build Stage
 Maven packages the application and generates artifact:
 - JAR  OR  - WAR
 
 ```bash
 mvn package
-
-## 9. Publish to Nexus
+```
+## 8 . Publish to Nexus
 Artifact is uploaded to Nexus repository for:
 - Centralized artifact management
 - Version control
 - Reusability
 
-## 10. Docker Build & Tag
+## 9. Docker Build & Tag
 Docker image is created using Dockerfile and tagged with build number/version.
 
 ```bash
 docker build -t app:v1 .
 ```
-## 11. Push Docker Image
+## 10. Push Docker Image
 Docker image is pushed to container registry such as:
 - DockerHub
 - AWS ECR
 
-## 12. Deploy to Kubernetes
+## 11. Deploy to Kubernetes
 Application is deployed to Kubernetes cluster using:
 - Helm charts
 OR
@@ -201,13 +201,13 @@ Example:
 ```bash
 helm upgrade --install myapp ./helm-chart
 ```
-## 13. Verify Deployment
+## 12. Verify Deployment
 Post-deployment validation checks:
 - Pod health
 - Readiness probes
 - Application accessibility
 - 
-## 14. Post Actions
+## 13. Post Actions
 Pipeline sends:
 - Email notifications
 - Slack alerts
@@ -215,7 +215,7 @@ Pipeline sends:
 
 # Interview Closing Line
 
-> This CI/CD pipeline automates code validation, security scanning, quality checks, artifact management, containeri
+> This CI/CD pipeline automates code validation, security scanning, quality checks, artifact management, containerization, and Kubernetes deployment, ensuring faster and reliable software delivery with minimal manual intervention.
 
 ## CI/CD & Build Tools
 
