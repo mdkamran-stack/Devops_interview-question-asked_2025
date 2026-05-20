@@ -120,38 +120,100 @@ I first contain the impact, identify the failing stage using logs, isolate wheth
 
 ## Q: Can you explain the CICD process in your current project ? or Can you talk about any CICD process that you have implemented ?
 
-# CI/CD Pipeline Flow (With Docker Image Build & GitOps)
+## CI/CD Pipeline Flow (With Docker Image Build & GitOps)##  
 
-1. **Code Commit:**  
-   Developers commit code changes to a Git repository hosted on GitHub.
+1. Git Checkout
+Jenkins checks out the latest source code from GitHub repository.
 
-2. **Jenkins Build Trigger:**  
-   A Jenkins pipeline is triggered via webhook. Jenkins checks out the code and builds the application using **Maven**, During this stage, Maven generates the build artifact (JAR/WAR file) and executes unit tests.
+****
+## 2. Compile Stage
+Maven compiles the application source code.
 
-3. **Code Quality Analysis:**  
-   **SonarQube** is used to perform static code analysis to identify code quality issues, bugs, and security vulnerabilities.
+```bash
+mvn clean compile
+```
+## 4. Test Stage
+Unit tests are executed to validate application functionality.
 
-4. **Security Scan:**  
-   **AppScan** is used to perform SAST and DAST security scans on the application.
+```bash
+mvn test
+```
 
-5. **Docker Image Build & Push:**  
-   Jenkins builds a Docker image using the generated JAR/WAR artifact as input. for the application and pushes it to the **Docker registry (Docker Hub / ECR / ACR)** with a versioned tag.
+## 5. File System Scan
+Security scanning tools like TruffleHog scan repository for:
+- Hardcoded secrets
+- API keys
+- Passwords
+- Tokens
 
-6. Deploy to Dev Environment:
-   After the Docker image is pushed to the container registry, the Jenkins pipeline deploys the application to the Development Kubernetes cluster using Helm charts.
+Pipeline fails immediately if secrets are detected.
 
-   Jenkins executes the Helm upgrade/install command with the latest image tag:
+---
+## 6. SonarQube Analysis
+SonarQube performs static code analysis to identify:
+- Bugs
+- Vulnerabilities
+- Code smells
+- Technical debt
 
-   helm upgrade --install myapp ./helm-chart \
-   --set image.tag=${BUILD_NUMBER}
+---
+## 7. Quality Gate
+Pipeline validates SonarQube quality gate.
 
-   The Helm chart manages Kubernetes resources like Deployment, Service, ConfigMap, and Ingress, ensuring consistent and automated application deployment into the Dev environment.
+If quality gate fails:
+```text
+Deployment stops automatically.
+```
 
-8. **Promote to Production:**  
-   Once testing is successful, the same image is **manually promoted** to the production environment using ArgoCD.
+## 8. Build Stage
+Maven packages the application and generates artifact:
+- JAR  OR  - WAR
 
-9. **Monitoring & Observability:**  
-   The application is continuously monitored for performance and availability using **Kubernetes monitoring tools, Prometheus, and Grafana**.
+```bash
+mvn package
+
+## 9. Publish to Nexus
+Artifact is uploaded to Nexus repository for:
+- Centralized artifact management
+- Version control
+- Reusability
+
+## 10. Docker Build & Tag
+Docker image is created using Dockerfile and tagged with build number/version.
+
+```bash
+docker build -t app:v1 .
+```
+## 11. Push Docker Image
+Docker image is pushed to container registry such as:
+- DockerHub
+- AWS ECR
+
+## 12. Deploy to Kubernetes
+Application is deployed to Kubernetes cluster using:
+- Helm charts
+OR
+- kubectl manifests
+
+Example:
+```bash
+helm upgrade --install myapp ./helm-chart
+```
+## 13. Verify Deployment
+Post-deployment validation checks:
+- Pod health
+- Readiness probes
+- Application accessibility
+- 
+## 14. Post Actions
+Pipeline sends:
+- Email notifications
+- Slack alerts
+- Build status updates
+
+# Interview Closing Line
+
+> This CI/CD pipeline automates code validation, security scanning, quality checks, artifact management, containeri
 
 ## CI/CD & Build Tools
 
