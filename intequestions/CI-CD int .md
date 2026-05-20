@@ -127,13 +127,17 @@ I first contain the impact, identify the failing stage using logs, isolate wheth
 ## 1. Git Checkout
 Jenkins checks out the latest source code from GitHub repository.
 
-****
+---
+
 ## 2. Compile Stage
 Maven compiles the application source code.
 
 ```bash
 mvn clean compile
 ```
+
+---
+
 ## 3. Test Stage
 Unit tests are executed to validate application functionality.
 
@@ -141,16 +145,20 @@ Unit tests are executed to validate application functionality.
 mvn test
 ```
 
-## 4. File System Scan
-Security scanning tools like TruffleHog scan repository for:
+---
+
+## 4. TruffleHog Security Scan
+TruffleHog scans source code repository for:
 - Hardcoded secrets
 - API keys
 - Passwords
+- SSH keys
 - Tokens
 
-Pipeline fails immediately if secrets are detected.
+If secrets are detected, pipeline fails immediately.
 
 ---
+
 ## 5. SonarQube Analysis
 SonarQube performs static code analysis to identify:
 - Bugs
@@ -159,7 +167,8 @@ SonarQube performs static code analysis to identify:
 - Technical debt
 
 ---
-## 6. Quality Gate
+
+## 6. Quality Gate Validation
 Pipeline validates SonarQube quality gate.
 
 If quality gate fails:
@@ -167,18 +176,26 @@ If quality gate fails:
 Deployment stops automatically.
 ```
 
+---
+
 ## 7. Build Stage
 Maven packages the application and generates artifact:
-- JAR  OR  - WAR
+- JAR
+- WAR
 
 ```bash
 mvn package
 ```
-## 8 . Publish to Nexus
+
+---
+
+## 8. Publish to Nexus
 Artifact is uploaded to Nexus repository for:
 - Centralized artifact management
 - Version control
 - Reusability
+
+---
 
 ## 9. Docker Build & Tag
 Docker image is created using Dockerfile and tagged with build number/version.
@@ -186,36 +203,83 @@ Docker image is created using Dockerfile and tagged with build number/version.
 ```bash
 docker build -t app:v1 .
 ```
-## 10. Push Docker Image
+
+---
+
+## 10. Trivy Image Scan
+Trivy scans Docker image for:
+- OS vulnerabilities
+- Library/package vulnerabilities
+- Secrets
+- Docker misconfigurations
+
+```bash
+trivy image --exit-code 1 --severity CRITICAL,HIGH app:v1
+```
+
+Pipeline fails if critical vulnerabilities are found.
+
+---
+
+## 11. Push Docker Image
 Docker image is pushed to container registry such as:
 - DockerHub
 - AWS ECR
 
-## 11. Deploy to Kubernetes
+---
+
+## 12. Deploy to Kubernetes
 Application is deployed to Kubernetes cluster using:
 - Helm charts
 OR
 - kubectl manifests
 
-Example:
 ```bash
 helm upgrade --install myapp ./helm-chart
 ```
-## 12. Verify Deployment
+
+---
+
+## 13. Deployment Verification
 Post-deployment validation checks:
 - Pod health
 - Readiness probes
 - Application accessibility
-- 
-## 13. Post Actions
+
+Commands:
+```bash
+kubectl get pods
+kubectl get svc
+```
+
+---
+
+## 14. Monitoring & Alerting
+After deployment, monitoring tools are used to track:
+- Application health
+- CPU/Memory usage
+- Pod status
+- API latency
+- Error rates
+
+Common tools:
+- Prometheus
+- Grafana
+- CloudWatch
+- ELK Stack
+
+Alerts are configured for:
+- Pod failures
+- High resource usage
+- Application downtime
+- Error spikes
+
+---
+## 15. Post Actions
 Pipeline sends:
 - Email notifications
 - Slack alerts
 - Build status updates
-
-# Interview Closing Line
-
-> This CI/CD pipeline automates code validation, security scanning, quality checks, artifact management, containerization, and Kubernetes deployment, ensuring faster and reliable software delivery with minimal manual intervention.
 
 ## CI/CD & Build Tools
 
