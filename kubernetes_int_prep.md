@@ -12,7 +12,394 @@ A taint is applied on a node to restrict pods from being scheduled on that node.
 A toleration is added in pod specification to allow the pod to run on tainted nodes.
 
 ## Affinity >> Affinity tells Kubernetes to place pods together based on labels or node conditions.  
-## Anti-Affinity >> Anti-affinity tells Kubernetes not to place certain pods together.
+## Anti-Affinity >> Anti-affinity tells Kubernetes not to place certain pods together.  
+
+# CrashllopBackoff Error Resolution.  
+CrashLoopBack Error is says Image is pulled container is started but the Application inside conatiner is crashed  Restart...Crash..repeat  Kubelet bacically restart it again n again 
+
+Reason Behind CrashloopBackOff 
+1 >> Unhandled Application Error 2>> OOM Killed : Memory exceeds 3>> Liveness Probe fails  k8s restart it 4>> Missing Configuration like Secret not mount so that app not starts 
+5 >> Wrong image or image could not pulled 
+Debug: 
+1 >> Kubectl describe pod pod_name  2>> kubectl logs pod_name --previous 3 >> Basically shows root cause 4>> kubectl log if pod running 5>> Kubectl get event --sort-by=metadata.creation time stamp 6>> kubectl top pod 
+
+Fix : if oomkilled incrase the mem 2>> Liveness Prob fails then incrase initial delay second 3>> if missing env then check config ma or secret 4>> if image is wrong then check image policy and tag 
+# Imgae PullBackoff Error:
+
+Pod tried pulling image multiple times and failed.
+“ImagePullBackOff occurs when Kubernetes cannot pull the container image due to issues like incorrect image tags, registry authentication failure, network connectivity problems, or missing images. I usually troubleshoot by checking pod events, validating image availability, registry access, and imagePullSecrets configuration.  
+kubectl describe pod <pod-name>  Shows what exact failure 
+3. Verify Image Exists in Registry  docker pull nginx:latest  If local pull fails   Image/tag issue exists.  
+5. Check Node Connectivity  curl https://registry-1.docker.io  
+6. Check Disk Space   Sometimes image pull fails due to  Node disk full :  Df -h  
+
+# Pod to pod communication failuers in same node 
+# Troubleshooting Steps
+
+## 1. Check Pod Status
+
+Verify pods are running and scheduled on same node.
+
+```bash
+kubectl get pods -o wide
+```
+
+Check:
+- Pod status should be `Running`
+- Pod IP should be assigned
+- Both pods should be on same worker node
+
+---
+
+## 2. Test Pod Connectivity
+
+Login into Pod-A:
+
+```bash
+kubectl exec -it pod-a -- /bin/sh
+```
+Ping Pod-B IP and port
+
+```bash
+ping <pod-b-ip>
+```
+---
+
+## 3. Verify Application Listening Port
+
+Inside target pod:
+
+```bash
+netstat -tulnp
+```
+Verify:
+- Application is running
+- Correct port is listening
+
+---
+
+## 4. Check Network Policies
+
+Sometimes NetworkPolicy blocks pod traffic.
+
+List policies:
+
+```bash
+kubectl get networkpolicy -A
+```
+---
+
+## 5. Verify CNI Plugin Health
+
+Check CNI components:
+
+```bash
+kubectl get pods -n kube-system
+```
+
+Examples:
+- calico
+- flannel
+- cilium
+
+If CNI plugin fails:
+- Pod networking may break
+- Pod communication may stop
+---
+
+## 6. Check Node Network Interfaces
+
+SSH into worker node:
+
+```bash
+ssh user@worker-node
+```
+
+Verify:
+- cni0 bridge
+- flannel/calico interfaces
+- veth interfaces
+
+---
+
+## 7. Check IPTables / Firewall Rules
+
+```bash
+iptables -L
+```
+
+Check whether firewall rules are blocking traffic.
+
+---
+
+## 8. Verify DNS Resolution (If Using Service Name)
+
+```bash
+nslookup service-name
+```
+---
+## 9. Check kube-proxy Status
+
+```bash
+kubectl get pods -n kube-system
+```
+
+Verify kube-proxy pods are healthy.
+
+If kube-proxy fails:
+- Service routing may fail
+
+---
+
+## 10. Check Node Resource Pressure
+
+```bash
+kubectl describe node <node-name>
+```
+Check:
+- MemoryPressure
+- DiskPressure
+- Network issues
+
+- # Troubleshooting Pod-to-Pod Communication on Different Kubernetes Nodes
+
+## Problem
+Pods running on different Kubernetes worker nodes are unable to communicate.
+
+Example:
+
+```text
+Pod-A → Node-1
+Pod-B → Node-2
+```
+
+Communication between pods is failing.
+
+---
+
+# Troubleshooting Steps
+
+## 1. Check Pod Status and Node Placement
+
+```bash
+kubectl get pods -o wide
+```
+
+Verify:
+- Pods are in `Running` state
+- Pods have IP addresses
+- Pods are running on different nodes
+
+---
+
+## 2. Test Pod Connectivity
+
+Login into Pod-A:
+
+```bash
+kubectl exec -it pod-a -- /bin/sh
+```
+
+Ping Pod-B:
+
+```bash
+ping <pod-b-ip>
+```
+
+OR test application port:
+
+```bash
+curl <pod-b-ip>:8080
+```
+
+---
+
+## 3. Verify Node-to-Node Connectivity
+
+SSH into Node-1:
+
+```bash
+ssh user@node-1
+```
+
+Ping Node-2:
+
+```bash
+ping <node-2-ip>
+```
+
+Check routing:
+
+```bash
+traceroute <node-2-ip>
+```
+
+If node-to-node communication fails:
+- Pods across nodes cannot communicate
+
+---
+
+## 4. Check CNI Plugin Health
+
+Verify networking plugin:
+
+```bash
+kubectl get pods -n kube-system
+```
+
+Examples:
+- Calico
+- Flannel
+- Cilium
+- Weave
+
+If CNI is unhealthy:
+```text
+Cross-node pod communication breaks.
+```
+
+---
+
+## 5. Check CNI Routes
+
+SSH into node:
+
+```bash
+ip route
+```
+
+Verify routes exist for:
+- Remote pod CIDRs
+- Overlay network
+
+Example:
+```text
+10.244.x.x via flannel.1
+```
+
+---
+
+## 6. Verify Overlay Network Interfaces
+
+```bash
+ip addr
+```
+
+Check interfaces such as:
+- flannel.1
+- cali*
+- weave
+- cni0
+
+---
+
+## 7. Check Firewall / Security Groups
+
+Verify required ports are open between worker nodes.
+
+Common ports:
+| Component | Port |
+|---|---|
+| Flannel VXLAN | UDP 8472 |
+| Calico BGP | TCP 179 |
+| Kubernetes Node Communication | Various |
+
+Check firewall:
+
+```bash
+iptables -L
+```
+
+If on AWS:
+- Verify Security Groups
+- Verify NACL rules
+
+---
+
+## 8. Check Network Policies
+
+```bash
+kubectl get networkpolicy -A
+```
+
+Sometimes NetworkPolicy blocks traffic between namespaces/pods.
+
+---
+
+## 9. Verify kube-proxy
+
+```bash
+kubectl get pods -n kube-system
+```
+
+If kube-proxy fails:
+- Service routing may fail
+- Cross-node communication issues may occur
+
+---
+
+## 10. Check MTU Mismatch
+
+Sometimes overlay network packets drop due to MTU mismatch.
+
+Check MTU:
+
+```bash
+ip link
+```
+
+Symptoms:
+- Ping works
+- Large packets fail
+
+---
+
+## 11. Check Node Resource Issues
+
+```bash
+kubectl describe node <node-name>
+```
+
+Verify:
+- Node Ready state
+- Network availability
+- Memory/Disk pressure
+
+---
+
+# Real-Time Scenario Example
+
+```text
+Issue:
+Pods on different nodes unable to communicate.
+
+Root Cause:
+Flannel VXLAN UDP port 8472 blocked in AWS Security Group.
+
+Fix:
+Allowed required UDP port between worker nodes and communication was restored.
+```
+
+---
+
+# Important Commands Summary
+
+```bash
+kubectl get pods -o wide
+kubectl exec -it pod-a -- ping <pod-b-ip>
+kubectl get pods -n kube-system
+ip route
+ip addr
+iptables -L
+kubectl get networkpolicy -A
+kubectl describe node <node-name>
+```
+
+---
+
+# Interview Closing Line
+
+> For cross-node pod communication issues, I verify pod health, node-to-node connectivity, CNI plugin health, overlay network routes, firewall/security group rules, kube-proxy status, and network policies to isolate and resolve the networking problem efficiently.
 
 ## what is cluster
 A cluster is the collection of nodes where Kubernetes runs apps.
