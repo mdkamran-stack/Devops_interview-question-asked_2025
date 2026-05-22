@@ -15,15 +15,181 @@ A toleration is added in pod specification to allow the pod to run on tainted no
 ## Anti-Affinity >> Anti-affinity tells Kubernetes not to place certain pods together.  
 
 # CrashllopBackoff Error Resolution.  
-CrashLoopBack Error is says Image is pulled container is started but the Application inside conatiner is crashed  Restart...Crash..repeat  Kubelet bacically restart it again n again 
+# CrashLoopBackOff in Kubernetes
 
-Reason Behind CrashloopBackOff 
-1 >> Unhandled Application Error 2>> OOM Killed : Memory exceeds 3>> Liveness Probe fails  k8s restart it 4>> Missing Configuration like Secret not mount so that app not starts 
-5 >> Wrong image or image could not pulled 
-Debug: 
-1 >> Kubectl describe pod pod_name  2>> kubectl logs pod_name --previous 3 >> Basically shows root cause 4>> kubectl log if pod running 5>> Kubectl get event --sort-by=metadata.creation time stamp 6>> kubectl top pod 
+## What is CrashLoopBackOff?
 
-Fix : if oomkilled incrase the mem 2>> Liveness Prob fails then incrase initial delay second 3>> if missing env then check config ma or secret 4>> if image is wrong then check image policy and tag 
+CrashLoopBackOff means:
+
+```text
+Container starts successfully
+But application inside container crashes repeatedly
+Kubelet keeps restarting the container continuously
+```
+
+Flow:
+
+```text
+Start → Crash → Restart → Crash
+```
+
+---
+
+# Common Reasons Behind CrashLoopBackOff
+
+## 1. Application Crash
+- Unhandled exception
+- Startup failure
+- Wrong application configuration
+
+---
+
+## 2. OOMKilled
+Container exceeds memory limit and Kubernetes kills it.
+
+Check:
+```bash
+kubectl describe pod <pod-name>
+```
+
+Look for:
+```text
+OOMKilled
+```
+
+---
+
+## 3. Liveness Probe Failure
+If liveness probe fails continuously:
+- Kubernetes assumes container is unhealthy
+- Restarts container
+
+---
+
+## 4. Missing Configurations
+Examples:
+- Secret not mounted
+- ConfigMap missing
+- Environment variables missing
+
+Application fails during startup.
+
+---
+
+## 5. Dependency Issues
+Examples:
+- Database unreachable
+- API endpoint unavailable
+- DNS issue
+
+Application crashes during initialization.
+
+---
+
+# Troubleshooting Steps
+
+## Check Pod Details
+
+```bash
+kubectl describe pod <pod-name>
+```
+
+Shows:
+- Events
+- Restart reason
+- Probe failures
+
+---
+
+## Check Container Logs
+
+Current logs:
+
+```bash
+kubectl logs <pod-name>
+```
+
+Previous crashed container logs:
+
+```bash
+kubectl logs <pod-name> --previous
+```
+
+This usually gives exact root cause.
+
+---
+
+## Check Events
+
+```bash
+kubectl get events --sort-by=.metadata.creationTimestamp
+```
+
+---
+
+## Check Resource Usage
+
+```bash
+kubectl top pod
+```
+
+---
+
+# Fixes
+
+## If OOMKilled
+Increase memory limits:
+
+```yaml
+resources:
+  limits:
+    memory: "1Gi"
+```
+
+---
+
+## If Liveness Probe Fails
+Increase:
+
+```yaml
+initialDelaySeconds
+```
+
+OR fix health endpoint.
+
+---
+
+## If Configuration Missing
+Verify:
+- ConfigMaps
+- Secrets
+- Environment variables
+
+---
+
+## If Dependency Failure
+Check:
+- Database connectivity
+- Service endpoints
+- DNS/network
+
+---
+
+# Important Commands
+
+```bash
+kubectl describe pod <pod-name>
+kubectl logs <pod-name>
+kubectl logs <pod-name> --previous
+kubectl get events --sort-by=.metadata.creationTimestamp
+kubectl top pod
+```
+
+---
+
+# Interview Closing Line
+
+> CrashLoopBackOff indicates that the container starts but the application inside crashes repeatedly. I usually troubleshoot by checking pod events, logs, probe failures, resource usage, and application dependencies to identify and resolve the root cause efficiently. 
 # Imgae PullBackoff Error:
 
 Pod tried pulling image multiple times and failed.
