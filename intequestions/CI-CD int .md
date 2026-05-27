@@ -1,4 +1,4 @@
-## About Project in Interview . Roels & responsiblities.
+## About Project in Interview . Roels & responsiblities.  
 
 Hi my name kamran in my current org concentrix and client were regenron where organization has E-commerce application 
 and this E-commerece application is multi micro service architecture because there are more tha 100 micro services there are multiple
@@ -12,6 +12,12 @@ i work with payments and cart devlopment teams
 I am responsible for DevOps implementation of those microservices 
 
 E-commerce site they sells pharma.
+
+I would like to understand how success is measured for this role. What would be the key expectations and milestones 
+for the selected candidate in the first 3 months, 6 months, and over the first year?  
+
+Could you share a bit more about the background of this role? Is this position part of team expansion and new initiatives, 
+or is it a backfill for an existing role?   
 
 # CAP Theorem
 “In distributed systems, CAP theorem states that a system can provide only two out of three guarantees: Consistency, Availability, and Partition Tolerance.
