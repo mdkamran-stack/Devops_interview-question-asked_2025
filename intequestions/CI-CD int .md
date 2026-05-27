@@ -59,7 +59,7 @@ Pipeline {
        }  
     }  
                 
- # StatefulSet Pods Failing Due to Volume Affiniy Scenraio
+ # StatefulSet Pods Failing Due to Volume Affinity Scenraio
 
 ### Scenario
 You are running a MongoDB StatefulSet with three replicas.  
