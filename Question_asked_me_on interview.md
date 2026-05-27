@@ -1,4 +1,14 @@
-# This commit is for questions asked me as devops interview in 2025
+# This commit is for questions asked me as devops interview in 2025  
+
+# Trinet
+
+## What is multistage docker file why it is used. 
+## Setup build application multibrach java app and load the artifactory  
+## Autobuild jenkins pipeline  
+## How to push repository in nexus  
+## Jenkins jobs running almost 2 hours jobs start normally.
+
+
 
 # Ispace
 
