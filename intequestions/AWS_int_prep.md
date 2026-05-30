@@ -3,6 +3,14 @@ Use above linkedin id for AWS sceanrio based questions
 Below services must have clear understanding check KR NEtwork video   
 1: EC2  - run apps   2: S3 -sore file    3: IAM - manage access   4: RDS  - databases    5: LAMBDA - run code without server   6: cloudwatch  -Monitor     7: VPC - Network setup  
 
+## have to prepare for below topics asked in sutherland 
+1 > what is metrics logs and all
+2> cost optimization 
+3> Disaster recovery 
+4> active active & active passive
+5> rto rpo 
+6> myslql mongodb rds when you use and why. 
+
 ## Bash one-liner: Delete all .tmp files older than 15 days in /var/log
 
 find /var/log -type f -name "*.tmp" -mtime +15 -exec rm -f {} \;
