@@ -12,7 +12,111 @@ Below services must have clear understanding check KR NEtwork video
 6> myslql mongodb rds when you use and why.   
 
 # AWS cost optimization.
-My AWS cost optimization approach starts with analyzing costs using Cost Explorer and tagging reports. I right-size EC2 and RDS instances based on utilization metrics, leverage Savings Plans for steady workloads, and use Spot Instances for non-production and batch workloads. I implement Auto Scaling to avoid overprovisioning, optimize S3 storage with lifecycle policies, remove unused resources such as EBS volumes and Elastic IPs, and continuously monitor spending through AWS Budgets and CloudWatch alerts. In Kubernetes environments, I optimize pod resource requests and use Cluster Autoscaler. These practices typically help reduce cloud costs while maintaining performance and reliability
+My AWS cost optimization approach starts with analyzing costs using Cost Explorer and tagging reports. I right-size EC2 and RDS instances based on utilization metrics, leverage Savings Plans for steady workloads, and use Spot Instances for non-production and batch workloads. I implement Auto Scaling to avoid overprovisioning, optimize S3 storage with lifecycle policies, remove unused resources such as EBS volumes and Elastic IPs, and continuously monitor spending through AWS Budgets and CloudWatch alerts. In Kubernetes environments, I optimize pod resource requests and use Cluster Autoscaler. These practices typically help reduce cloud costs while maintaining performance and reliability  
+
+## when you use different db & why use case 
+
+# Database Selection: When to Use Which Database
+
+## Interview Question
+**When do you use Redis, MongoDB, SQL Server, MariaDB, DynamoDB, and other NoSQL databases, and why?**
+
+### 1. Redis
+**Use Cases:**
+- Caching
+- Session management
+- Rate limiting
+- Real-time leaderboards
+
+**Why:**
+- In-memory database with extremely low latency.
+- Provides very fast read/write operations.
+
+**Example:**
+Cache frequently accessed product data to reduce load on the primary database.
+
+---
+
+### 2. MongoDB
+**Use Cases:**
+- Product catalogs
+- Content management systems
+- User profile management
+- Applications with changing schemas
+
+**Why:**
+- Document-oriented database.
+- Flexible schema design.
+- Easy horizontal scaling.
+
+**Example:**
+E-commerce applications where different products have different attributes.
+
+---
+
+### 3. Microsoft SQL Server
+**Use Cases:**
+- Banking applications
+- ERP systems
+- Financial transactions
+- Inventory management
+
+**Why:**
+- Strong ACID compliance.
+- Supports complex joins and transactions.
+- Ensures data consistency and integrity.
+
+**Example:**
+Fund transfer systems where transaction consistency is critical.
+
+---
+
+### 4. MariaDB
+**Use Cases:**
+- Web applications
+- E-commerce platforms
+- Content management systems
+
+**Why:**
+- Open-source relational database.
+- MySQL compatible.
+- Cost-effective and reliable.
+
+**Example:**
+Storing customer orders, user accounts, and application data.
+
+---
+
+### 5. DynamoDB
+**Use Cases:**
+- Serverless applications
+- Gaming leaderboards
+- IoT applications
+- High-traffic APIs
+
+**Why:**
+- Fully managed AWS service.
+- Automatic scaling.
+- Low latency at large scale.
+
+**Example:**
+Shopping cart service handling millions of requests per day.
+
+---
+
+### 6. NoSQL Databases (General)
+**Use Cases:**
+- Big data applications
+- Unstructured or semi-structured data
+- High-scale distributed systems
+
+**Why:**
+- Flexible schema.
+- Horizontal scalability.
+- High availability.
+
+**Example:**
+Social media applications storing user-generated content.
 
 ## Bash one-liner: Delete all .tmp files older than 15 days in /var/log
 
