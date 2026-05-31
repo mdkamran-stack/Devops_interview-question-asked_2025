@@ -9,7 +9,10 @@ Below services must have clear understanding check KR NEtwork video
 3> Disaster recovery 
 4> active active & active passive
 5> rto rpo 
-6> myslql mongodb rds when you use and why. 
+6> myslql mongodb rds when you use and why.   
+
+# AWS cost optimization.
+## My AWS cost optimization approach starts with analyzing costs using Cost Explorer and tagging reports. I right-size EC2 and RDS instances based on utilization metrics, leverage Savings Plans for steady workloads, and use Spot Instances for non-production and batch workloads. I implement Auto Scaling to avoid overprovisioning, optimize S3 storage with lifecycle policies, remove unused resources such as EBS volumes and Elastic IPs, and continuously monitor spending through AWS Budgets and CloudWatch alerts. In Kubernetes environments, I optimize pod resource requests and use Cluster Autoscaler. These practices typically help reduce cloud costs while maintaining performance and reliability
 
 ## Bash one-liner: Delete all .tmp files older than 15 days in /var/log
 
