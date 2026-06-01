@@ -35,7 +35,7 @@ I select the database based on business requirements. If the application require
 Then give one real-world example:
 
 For an e-commerce application, I would use PostgreSQL for orders and payments because transactions are critical, MongoDB for the product catalog because product attributes vary, Redis for user sessions and caching, and Elasticsearch for product search.  
-
+ACID stands for Atomicity, Consistency, Isolation, and Durability.  
 A – Atomicity
 
 All operations succeed or none of them succeed.
