@@ -30,111 +30,11 @@ My AWS cost optimization approach starts with analyzing costs using Cost Explore
 
 ## when you use different db & why use case 
 
-# Database Selection: When to Use Which Database
+I select the database based on business requirements. If the application requires ACID transactions and strong consistency, such as banking, payment processing, or order management systems, I choose relational databases like MySQL, PostgreSQL, SQL Server, or Oracle. If the schema changes frequently or the application stores semi-structured JSON data, I prefer MongoDB. For internet-scale applications requiring low latency and automatic scaling, I use DynamoDB. For caching, session management, and reducing database load, I use Redis. For centralized logging and full-text search, Elasticsearch is a good choice. My decision is based on data structure, transaction requirements, scalability, performance, availability, disaster recovery requirements, and operational cost.
 
-## Interview Question
-**When do you use Redis, MongoDB, SQL Server, MariaDB, DynamoDB, and other NoSQL databases, and why?**
+Then give one real-world example:
 
-### 1. Redis
-**Use Cases:**
-- Caching
-- Session management
-- Rate limiting
-- Real-time leaderboards
-
-**Why:**
-- In-memory database with extremely low latency.
-- Provides very fast read/write operations.
-
-**Example:**
-Cache frequently accessed product data to reduce load on the primary database.
-
----
-
-### 2. MongoDB
-**Use Cases:**
-- Product catalogs
-- Content management systems
-- User profile management
-- Applications with changing schemas
-
-**Why:**
-- Document-oriented database.
-- Flexible schema design.
-- Easy horizontal scaling.
-
-**Example:**
-E-commerce applications where different products have different attributes.
-
----
-
-### 3. Microsoft SQL Server
-**Use Cases:**
-- Banking applications
-- ERP systems
-- Financial transactions
-- Inventory management
-
-**Why:**
-- Strong ACID compliance.
-- Supports complex joins and transactions.
-- Ensures data consistency and integrity.
-
-**Example:**
-Fund transfer systems where transaction consistency is critical.
-
----
-
-### 4. MariaDB
-**Use Cases:**
-- Web applications
-- E-commerce platforms
-- Content management systems
-
-**Why:**
-- Open-source relational database.
-- MySQL compatible.
-- Cost-effective and reliable.
-
-**Example:**
-Storing customer orders, user accounts, and application data.
-
----
-
-### 5. DynamoDB
-**Use Cases:**
-- Serverless applications
-- Gaming leaderboards
-- IoT applications
-- High-traffic APIs
-
-**Why:**
-- Fully managed AWS service.
-- Automatic scaling.
-- Low latency at large scale.
-
-**Example:**
-Shopping cart service handling millions of requests per day.
-
----
-
-### 6. NoSQL Databases (General)
-**Use Cases:**
-- Big data applications
-- Unstructured or semi-structured data
-- High-scale distributed systems
-
-**Why:**
-- Flexible schema.
-- Horizontal scalability.
-- High availability.
-
-**Example:**
-Social media applications storing user-generated content.
-
-## Bash one-liner: Delete all .tmp files older than 15 days in /var/log
-
-find /var/log -type f -name "*.tmp" -mtime +15 -exec rm -f {} \;
+For an e-commerce application, I would use PostgreSQL for orders and payments because transactions are critical, MongoDB for the product catalog because product attributes vary, Redis for user sessions and caching, and Elasticsearch for product search.
 
 # how to create scalble and higly available system.
 
