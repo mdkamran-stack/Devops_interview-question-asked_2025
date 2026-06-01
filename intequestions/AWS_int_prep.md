@@ -34,7 +34,13 @@ I select the database based on business requirements. If the application require
 
 Then give one real-world example:
 
-For an e-commerce application, I would use PostgreSQL for orders and payments because transactions are critical, MongoDB for the product catalog because product attributes vary, Redis for user sessions and caching, and Elasticsearch for product search.
+For an e-commerce application, I would use PostgreSQL for orders and payments because transactions are critical, MongoDB for the product catalog because product attributes vary, Redis for user sessions and caching, and Elasticsearch for product search.  
+
+# Active Active vs Active Passive  
+
+Active-Active means multiple backend servers are registered behind a Load Balancer and simultaneously serve production traffic. For example, an ALB with IP 10.0.0.100 routes requests to App Servers 10.0.1.10 and 10.0.1.11. Health checks ensure that if one server becomes unhealthy, traffic is automatically routed to the healthy server without service interruption.
+
+Active-Passive means there is one active node handling traffic and another standby node ready for failover. The Load Balancer or virtual IP points only to the active node. When the active node fails, health checks trigger failover and traffic is redirected to the standby node. Active-Active is preferred for scalable customer-facing applications, whereas Active-Passive is commonly used for databases and disaster recovery scenarios where simplicity and data consistency are critical.
 
 # how to create scalble and higly available system.
 
