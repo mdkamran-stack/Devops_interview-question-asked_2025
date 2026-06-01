@@ -36,6 +36,18 @@ Then give one real-world example:
 
 For an e-commerce application, I would use PostgreSQL for orders and payments because transactions are critical, MongoDB for the product catalog because product attributes vary, Redis for user sessions and caching, and Elasticsearch for product search.  
 
+A – Atomicity
+
+All operations succeed or none of them succeed.
+
+Example:
+Transferring ₹1,000 from Account A to Account B:
+
+Deduct ₹1,000 from A.
+Add ₹1,000 to B.
+
+If step 2 fails, step 1 is rolled back. The transaction is treated as a single unit.
+
 # Active Active vs Active Passive  
 
 Active-Active means multiple backend servers are registered behind a Load Balancer and simultaneously serve production traffic. For example, an ALB with IP 10.0.0.100 routes requests to App Servers 10.0.1.10 and 10.0.1.11. Health checks ensure that if one server becomes unhealthy, traffic is automatically routed to the healthy server without service interruption.
