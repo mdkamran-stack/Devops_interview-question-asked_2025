@@ -7,6 +7,7 @@
 ## Autobuild jenkins pipeline  
 ## How to push repository in nexus  
 ## Jenkins jobs running almost 2 hours jobs start normally.
+## aws secret can't fetched how do you debug.
 
 
 
