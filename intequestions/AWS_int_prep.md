@@ -16,6 +16,17 @@ RTO (Recovery Time Objective) defines the maximum acceptable downtime after a di
 - Tracing(Traces): involves tracking the flow of a request or transaction as it moves through different services and components within a system.
     - `Tracing shows how it is happening.`
 
+## AWS EventBridge  
+# AWS EventBridge is a serverless event bus that helps event-driven arch by connecting AWS applications,& SaaS app using Event. 
+## AWS Services > Scenario EC2 Monitoring > Event Ec2 instance stop > capture Event > Triggers Lambda > sends alert via sns > 
+We have event for Production servers Event eg: all event like and custom event like start stop 
+
+Workflow
+1>> When an EC2 instance stops the event source generate an event  
+2>> This event is cretaed in json format and sent to the EventBus  
+3>> The Event Bus forwards the event to rules  
+4> The rule checks the condition and if it matches send the event to target 
+5>> Finally the target performs the required actions.  
 
 ## have to prepare for below topics asked in sutherland 
 1 > what is metrics logs and all
