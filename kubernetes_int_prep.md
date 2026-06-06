@@ -566,6 +566,63 @@ kubectl describe node <node-name>
 # Interview Closing Line
 
 > For cross-node pod communication issues, I verify pod health, node-to-node connectivity, CNI plugin health, overlay network routes, firewall/security group rules, kube-proxy status, and network policies to isolate and resolve the networking problem efficiently.
+>
+>##  Troubleshooting Deleted Pods in Kubernetes
+When pods keep getting deleted unexpectedly, work through these steps to identify the cause:
+
+1. Check Recent Events
+bash
+
+
+## kubectl get events --sort-by='.lastTimestamp' -A
+Look for Killing, Evicted, OOMKilled, or FailedScheduling events tied to your pod.
+
+2. Inspect the Pod's Last State
+bash
+
+
+## kubectl describe pod <pod-name> -n <namespace>
+Key sections to examine:
+
+##State / Last State — shows termination reason (OOMKilled, Error, Completed)
+Restart Count — high count suggests crash loops
+Events — often reveals liveness/readiness probe failures or resource pressure
+3. Review Logs
+bash
+
+
+## kubectl logs <pod-name> -n <namespace> --previous
+The --previous flag retrieves logs from the last terminated container—critical for crash debugging.
+
+4. Common Causes and Fixes
+Symptom	Likely Cause	Fix
+### OOMKilled	Container exceeded memory limit	Increase resources.limits.memory or optimize app
+### Liveness probe failed	App too slow to respond or wrong endpoint	Tune initialDelaySeconds, timeoutSeconds, or fix health endpoint
+### Evicted	Node under disk/memory pressure	Free node resources or add nodes
+### Pod disappears, no events	Manual deletion, HPA scale-down, or deployment rollout	Check kubectl rollout history and audit logs
+### CrashLoopBackOff	App crashing on startup	Fix application error; check --previous logs
+5. Check Controllers
+If a Deployment, ReplicaSet, DaemonSet, or Job manages the pod, changes there can delete pods:
+
+bash
+
+
+kubectl describe deployment <name> -n <namespace>
+kubectl rollout history deployment/<name> -n <namespace>
+Look for recent rollouts, replica count changes, or updated pod specs.
+
+6. Look for External Actors
+Node autoscaler — may drain nodes, evicting pods
+PodDisruptionBudgets — can block or allow evictions
+Cluster policies (Kyverno, OPA/Gatekeeper) — may reject or terminate non-compliant pods
+Priority/Preemption — lower-priority pods get evicted when higher-priority pods need resources
+Check node conditions and any policy admission logs.
+
+7. Node-Level Issues
+bash
+
+
+kubectl describe node <node-name>
 
 ## what is cluster
 A cluster is the collection of nodes where Kubernetes runs apps.
