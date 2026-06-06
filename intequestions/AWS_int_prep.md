@@ -38,6 +38,7 @@ Workflow
 
 # AWS cost optimization.
 My AWS cost optimization approach starts with analyzing costs using Cost Explorer and tagging reports. I right-size EC2 and RDS instances based on utilization metrics, leverage Savings Plans for steady workloads, and use Spot Instances for non-production and batch workloads. I implement Auto Scaling to avoid overprovisioning, optimize S3 storage with lifecycle policies, remove unused resources such as EBS volumes and Elastic IPs, and continuously monitor spending through AWS Budgets and CloudWatch alerts. In Kubernetes environments, I optimize pod resource requests and use Cluster Autoscaler. These practices typically help reduce cloud costs while maintaining performance and reliability  
+## We have used AWS SYSTEM MANAGER for automatically start and stop non production server after business hours.
 
 ## when you use different db & why use case 
 
