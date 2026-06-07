@@ -624,6 +624,204 @@ bash
 
 kubectl describe node <node-name>
 
+
+## # What Happens When You Run `kubectl apply`?
+
+When you execute:
+
+```bash
+kubectl apply -f deployment.yaml
+```
+
+Kubernetes compares the desired state defined in the YAML file with the current state in the cluster and makes only the necessary changes to reach the desired state.
+
+---
+
+## Step-by-Step Flow
+
+### 1. kubectl Sends Request to API Server
+
+```text
+kubectl
+   |
+   v
+Kubernetes API Server
+```
+
+The YAML manifest is sent to the API Server.
+
+---
+
+### 2. API Server Validates the Manifest
+
+Checks:
+
+* YAML syntax
+* API version
+* Resource kind
+* Required fields
+* RBAC permissions
+
+Example:
+
+```yaml
+apiVersion: apps/v1
+kind: Deployment
+```
+
+---
+
+### 3. Compare Desired vs Current State
+
+Kubernetes checks:
+
+```text
+Current State
+      vs
+Desired State (YAML)
+```
+
+Possible outcomes:
+
+| Scenario                    | Action    |
+| --------------------------- | --------- |
+| Resource doesn't exist      | Create    |
+| Resource exists but differs | Update    |
+| No changes                  | No action |
+
+---
+
+### 4. Update etcd
+
+The desired configuration is stored in etcd.
+
+```text
+API Server
+     |
+     v
+etcd
+```
+
+etcd acts as Kubernetes' source of truth.
+
+---
+
+### 5. Controllers Reconcile State
+
+Controllers continuously watch for changes.
+
+Example:
+
+```yaml
+replicas: 3
+```
+
+Current state:
+
+```text
+2 Pods Running
+```
+
+Deployment Controller action:
+
+```text
+Creates 1 additional Pod
+```
+
+---
+
+### 6. Scheduler Assigns Pods
+
+If new Pods are needed:
+
+```text
+Scheduler
+   |
+   v
+Selects Node
+```
+
+The scheduler chooses the most suitable worker node.
+
+---
+
+### 7. Kubelet Creates Containers
+
+On the selected node:
+
+```text
+Kubelet
+   |
+   v
+Container Runtime
+```
+
+The image is pulled and containers are started.
+
+---
+
+## Example
+
+Current Deployment:
+
+```yaml
+replicas: 2
+```
+
+Updated Deployment:
+
+```yaml
+replicas: 5
+```
+
+Run:
+
+```bash
+kubectl apply -f deployment.yaml
+```
+
+Result:
+
+```text
+Deployment Controller
+    |
+    v
+Creates 3 additional Pods
+```
+
+No downtime occurs because Kubernetes performs a rolling update.
+
+---
+
+## Difference Between `kubectl apply` and `kubectl create`
+
+### Create
+
+```bash
+kubectl create -f deployment.yaml
+```
+
+* Creates resource only once
+* Fails if resource already exists
+
+### Apply
+
+```bash
+kubectl apply -f deployment.yaml
+```
+
+* Creates resource if missing
+* Updates resource if it already exists
+* Idempotent operation
+* Preferred for CI/CD and GitOps workflows
+
+---
+
+## Interview Answer
+
+When `kubectl apply` is executed, the manifest is sent to the Kubernetes API Server, which validates it and compares the desired state in the YAML with the current state stored in the cluster. The desired state is persisted in etcd, and Kubernetes controllers reconcile any differences by creating, updating, or deleting resources as required. If changes involve Deployments, the Deployment Controller performs rolling updates while the Scheduler assigns Pods to nodes and Kubelets start the containers. This declarative approach ensures the cluster continuously converges to the desired state.
+
+
 ## what is cluster
 A cluster is the collection of nodes where Kubernetes runs apps.
 ## What is a Pod?
