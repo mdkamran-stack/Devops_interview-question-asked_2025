@@ -5,6 +5,64 @@
 ## What is Kubernetes?
 👉 “An orchestration platform for automating container deployment and scaling.”
 
+# DNS Resolution if user type google.com
+
+User types: google.com
+              │
+              ▼
+┌─────────────────────────────┐
+│   1. Browser Cache          │ ──── Found? → Done ✓ (use cached IP)
+│   Check in-memory DNS cache │
+└─────────────────────────────┘
+              │ Not found
+              ▼
+┌─────────────────────────────┐
+│   2. OS Cache               │ ──── Found? → Done ✓ (use cached IP)
+│   /etc/hosts file           │
+└─────────────────────────────┘
+              │ Not found
+              ▼
+┌─────────────────────────────┐
+│   3. Recursive Resolver     │ ──── Cached? → Done ✓ (return cached)
+│   ISP / 8.8.8.8             │
+└─────────────────────────────┘
+              │ Not cached
+              ▼
+┌─────────────────────────────┐
+│   4. Root Name Server       │
+│   "I don't know google.com  │
+│    but .com is at            │
+│    192.5.6.30"              │
+└─────────────────────────────┘
+              │
+              ▼
+┌─────────────────────────────┐
+│   5. TLD Name Server        │
+│   (.com server)             │
+│   "google.com is managed    │
+│    by ns1.google.com"       │
+└─────────────────────────────┘
+              │
+              ▼
+┌─────────────────────────────┐
+│   6. Authoritative NS       │
+│   "google.com =             │
+│    142.250.182.46" ✓        │
+│   Source of truth           │
+└─────────────────────────────┘
+              │
+              ▼
+┌─────────────────────────────┐
+│   IP returned to browser    │
+│   Resolver caches (TTL)     │
+└─────────────────────────────┘
+              │
+              ▼
+┌─────────────────────────────┐
+│   Browser connects          │
+│   TCP → TLS → HTTP request  │     
+└─────────────────────────────┘
+
 ## taint & toleration
 
 A taint is applied on a node to restrict pods from being scheduled on that node.
