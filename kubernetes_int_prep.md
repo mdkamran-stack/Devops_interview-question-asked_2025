@@ -64,7 +64,9 @@ User types: google.com
 │   TCP → TLS → HTTP request  │
 └─────────────────────────────┘
 ```
+# How does a Service discover Pods?
 
+A Service uses label selectors to find matching Pods — any Pod with the matching labels gets added to the Service's Endpoints list. kube-proxy then routes traffic to those Endpoints via iptables or IPVS rules.
 ## taint & toleration
 
 A taint is applied on a node to restrict pods from being scheduled on that node.
