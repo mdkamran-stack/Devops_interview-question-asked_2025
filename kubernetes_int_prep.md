@@ -7,6 +7,7 @@
 
 # DNS Resolution if user type google.com
 
+```
 User types: google.com
               │
               ▼
@@ -60,8 +61,9 @@ User types: google.com
               ▼
 ┌─────────────────────────────┐
 │   Browser connects          │
-│   TCP → TLS → HTTP request  │     
+│   TCP → TLS → HTTP request  │
 └─────────────────────────────┘
+```
 
 ## taint & toleration
 
