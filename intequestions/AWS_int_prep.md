@@ -6,6 +6,14 @@ Below services must have clear understanding check KR NEtwork video
 ## RTO & RPO  
 RTO (Recovery Time Objective) defines the maximum acceptable downtime after a disaster or service failure. RPO (Recovery Point Objective) defines the maximum acceptable amount of data loss measured in time. For example, if an application has an RTO of 30 minutes and an RPO of 15 minutes, the system must be restored within 30 minutes and no more than 15 minutes of data can be lost. These requirements drive decisions around backups, replication, failover, and disaster recovery architecture.  
 
+## SCP in AWS = Service Control Policy
+
+Service Control Policies (SCPs) are part of AWS Organizations and are used to define the maximum permissions that AWS accounts can have within an organization.  
+IAM Policy = Allow
+SCP = Deny
+----------------
+Final Result = Deny
+
 # 💡 Introduction to Observability
 - Observability is the ability to understand the internal state of a system by analyzing the data it produces, including logs, metrics, and traces.
 
