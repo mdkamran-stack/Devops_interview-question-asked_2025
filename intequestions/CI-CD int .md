@@ -11,6 +11,9 @@ So this is my project where I work for the development teams.
 i work with payments and cart devlopment teams
 I am responsible for DevOps implementation of those microservices 
 
+# Service outage user-report 
+When a user cannot access the application, I first determine the scope and impact of the issue. Then I check monitoring dashboards, DNS resolution, load balancer health, Kubernetes resources such as Ingress, Services, and Pods, and review application logs. I also verify whether any recent deployments or configuration changes were made. If a recent change caused the issue, I perform a rollback to restore service quickly and then conduct a root cause analysis to prevent recurrence.
+
 P1 ticket 
 =============
 Confirm Severity and Business Impact
