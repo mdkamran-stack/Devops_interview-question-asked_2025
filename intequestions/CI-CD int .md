@@ -20,23 +20,7 @@ Revenue-impacting issue
 Security/data integrity risk
 Critical SLA breach  Quickly assess:
 
-Scope affected
-Number of users/customers
-Critical systems involved
-Prioritize Service Restoration Over Root Cause
-For P1s, the order is:
-Restore service
-Stabilize environment
-Identify root cause
-Implement permanent fix
-
-Examples of immediate mitigation:
-
-Rollback recent deployment
-Fail over to secondary region
-Restart degraded services
-Disable problematic feature flags
-Scale infrastructure
+No of users affected Entire app is down or some functionalities not working my focusing the on rapid service restoration before root-cause analysis. I establish clear ownership through incident command roles, prioritize customer-facing impact above all else, communicate updates consistently to stakeholders,
 
 E-commerce site they sells pharma.
 
