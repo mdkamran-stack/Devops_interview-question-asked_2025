@@ -11,6 +11,10 @@ So this is my project where I work for the development teams.
 i work with payments and cart devlopment teams
 I am responsible for DevOps implementation of those microservices 
 
+# Q: What is RBAC in Kubernetes?
+
+RBAC (Role-Based Access Control) is a Kubernetes authorization mechanism used to control what actions users, groups, or service accounts can perform on cluster resources. A Role defines permissions within a namespace, while a ClusterRole defines permissions across the entire cluster. RoleBindings and ClusterRoleBindings are used to assign these permissions to users, groups, or service accounts. RBAC follows the principle of least privilege, ensuring that entities only have the access they require.
+
 # Service outage user-report 
 When a user cannot access the application, I first determine the scope and impact of the issue. Then I check monitoring dashboards, DNS resolution, load balancer health, Kubernetes resources such as Ingress, Services, and Pods, and review application logs. I also verify whether any recent deployments or configuration changes were made. If a recent change caused the issue, I perform a rollback to restore service quickly and then conduct a root cause analysis to prevent recurrence.
 
