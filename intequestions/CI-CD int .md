@@ -11,6 +11,33 @@ So this is my project where I work for the development teams.
 i work with payments and cart devlopment teams
 I am responsible for DevOps implementation of those microservices 
 
+P1 ticket 
+=============
+Confirm Severity and Business Impact
+Validate whether it truly meets P1 criteria:
+Production outage
+Revenue-impacting issue
+Security/data integrity risk
+Critical SLA breach  Quickly assess:
+
+Scope affected
+Number of users/customers
+Critical systems involved
+Prioritize Service Restoration Over Root Cause
+For P1s, the order is:
+Restore service
+Stabilize environment
+Identify root cause
+Implement permanent fix
+
+Examples of immediate mitigation:
+
+Rollback recent deployment
+Fail over to secondary region
+Restart degraded services
+Disable problematic feature flags
+Scale infrastructure
+
 E-commerce site they sells pharma.
 
 I would like to understand how success is measured for this role. What would be the key expectations and milestones 
