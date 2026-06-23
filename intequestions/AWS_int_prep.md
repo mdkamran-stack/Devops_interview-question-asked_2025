@@ -1,7 +1,10 @@
 # https://www.linkedin.com/in/raghu-m-3877793b6/recent-activity/all/
 Use above linkedin id for AWS sceanrio based questions
 Below services must have clear understanding check KR NEtwork video   
-1: EC2  - run apps   2: S3 -sore file    3: IAM - manage access   4: RDS  - databases    5: LAMBDA - run code without server   6: cloudwatch  -Monitor     7: VPC - Network setup   7>> scp  EC2 isntance cant connect how to debug
+1: EC2  - run apps   2: S3 -sore file    3: IAM - manage access   4: RDS  - databases    5: LAMBDA - run code without server   6: cloudwatch  -Monitor     7: VPC - Network setup   7>> scp  EC2 isntance cant connect how to debug  
+
+## P1 AWS Scenarios  
+During a peak traffic event, API response times increased to 8 seconds. I checked CloudWatch and found EC2 CPU utilization above 90%. The Auto Scaling policy was misconfigured and not scaling. I manually increased capacity, restored service within 10 minutes, corrected the scaling policy, and added alerts and load testing to prevent recurrence.
 
 ## RTO & RPO  
 RTO (Recovery Time Objective) defines the maximum acceptable downtime after a disaster or service failure. RPO (Recovery Point Objective) defines the maximum acceptable amount of data loss measured in time. For example, if an application has an RTO of 30 minutes and an RPO of 15 minutes, the system must be restored within 30 minutes and no more than 15 minutes of data can be lost. These requirements drive decisions around backups, replication, failover, and disaster recovery architecture.  
