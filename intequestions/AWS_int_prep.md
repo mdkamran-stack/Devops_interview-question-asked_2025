@@ -17,6 +17,18 @@ SCP = Deny
 ----------------
 Final Result = Deny
 
+EPAM : Python code asked :
+
+your team wants quickly audit Iam User and ensure they have all amazon s3 managed policy attached 
+requirements:
+write a python script using boto3 that:
+list all iam users in the account  
+for each user checks if the AmazonS3Readonly Access policy is already attached  
+if not attaches the policy to the user.  
+
+Ques2: Write a python script that checks if an s3 bucket exist , if not create it 
+bucket name: Kamran region us-east-1
+
 # 💡 Introduction to Observability
 - Observability is the ability to understand the internal state of a system by analyzing the data it produces, including logs, metrics, and traces.
 
