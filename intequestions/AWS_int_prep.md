@@ -50,23 +50,10 @@ My AWS cost optimization approach starts with analyzing costs using Cost Explore
 
 ## when you use different db & why use case 
 
-I select the database based on business requirements. If the application requires ACID transactions and strong consistency, such as banking, payment processing, or order management systems, I choose relational databases like MySQL, PostgreSQL, SQL Server, or Oracle. If the schema changes frequently or the application stores semi-structured JSON data, I prefer MongoDB. For internet-scale applications requiring low latency and automatic scaling, I use DynamoDB. For caching, session management, and reducing database load, I use Redis. For centralized logging and full-text search, Elasticsearch is a good choice. My decision is based on data structure, transaction requirements, scalability, performance, availability, disaster recovery requirements, and operational cost.
-
-Then give one real-world example:
-
-For an e-commerce application, I would use PostgreSQL for orders and payments because transactions are critical, MongoDB for the product catalog because product attributes vary, Redis for user sessions and caching, and Elasticsearch for product search.  
-ACID stands for Atomicity, Consistency, Isolation, and Durability.  
-A – Atomicity
-
-All operations succeed or none of them succeed.
-
-Example:
-Transferring ₹1,000 from Account A to Account B:
-
-Deduct ₹1,000 from A.
-Add ₹1,000 to B.
-
-If step 2 fails, step 1 is rolled back. The transaction is treated as a single unit.
+1. MySQL / MariaDB (Relational Database)  I use MySQL or MariaDB when data has well-defined relationships and transactional consistency is required, such as order management or financial systems.
+2. PostgreSQL   I prefer PostgreSQL for applications requiring complex queries, reporting, and advanced database features while maintaining ACID compliance.
+3. MongoDB (Document Database)  I use MongoDB when application data is semi-structured and schemas change frequently, reducing the need for database migrations.
+4. DynamoDB (AWS NoSQL)  I use DynamoDB for highly scalable applications that require predictable low-latency performance without managing database servers.
 
 # Active Active vs Active Passive  
 
