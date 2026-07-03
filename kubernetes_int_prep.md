@@ -883,7 +883,9 @@ kubectl apply -f deployment.yaml
 
 When `kubectl apply` is executed, the manifest is sent to the Kubernetes API Server, which validates it and compares the desired state in the YAML with the current state stored in the cluster. The desired state is persisted in etcd, and Kubernetes controllers reconcile any differences by creating, updating, or deleting resources as required. If changes involve Deployments, the Deployment Controller performs rolling updates while the Scheduler assigns Pods to nodes and Kubelets start the containers. This declarative approach ensures the cluster continuously converges to the desired state.
 
+# pod is Evicted 30% how did you troubleshoot? 
 
+When I noticed that around 30% of the pods were evicted, I first listed the affected pods using kubectl get pods -A and identified the node hosting them with kubectl get pods -o wide. I described one of the evicted pods and found the reason was MemoryPressure. I then checked the node using kubectl describe node and confirmed it was under memory pressure. Using kubectl top nodes and kubectl top pods, I identified a deployment consuming unusually high memory because it had no memory limits configured. As an immediate action, I scaled the workload and added capacity through the Cluster Autoscaler. After the incident, I updated the deployment with appropriate resource requests and limits and configured monitoring and alerts to detect high memory usage before it led to further pod evictions.
 ## what is cluster
 A cluster is the collection of nodes where Kubernetes runs apps.
 ## What is a Pod?
