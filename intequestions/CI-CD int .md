@@ -11,6 +11,17 @@ So this is my project where I work for the development teams.
 i work with payments and cart devlopment teams
 I am responsible for DevOps implementation of those microservices 
 
+# how to fix vulnerabilities if sonarqube finds 
+Production Example (Interview Answer)
+
+"In one project, SonarQube detected a Critical vulnerability because database queries were built using string concatenation, making the application vulnerable to SQL injection. I worked with the developer to replace those queries with prepared statements. In the same scan, SonarQube also identified hardcoded AWS credentials, which we removed and replaced with AWS Secrets Manager. After the fixes, we reran the SonarQube scan, confirmed the Quality Gate passed, and only then allowed the CI/CD pipeline to deploy the application."
+
+If You Are a DevOps Engineer
+
+It's important to explain your role clearly:
+
+"As a DevOps engineer, I usually don't modify the application code myself. I analyze the SonarQube report, share the findings with the development team, ensure Critical and Blocker vulnerabilities are resolved, rerun the scan, and configure the CI/CD pipeline to block deployments until the SonarQube Quality Gate passes. I also help developers understand the recommended remediation when needed."
+
 # Q: What is RBAC in Kubernetes?
 
 RBAC (Role-Based Access Control) is a Kubernetes authorization mechanism used to control what actions users, groups, or service accounts can perform on cluster resources. A Role defines permissions within a namespace, while a ClusterRole defines permissions across the entire cluster. RoleBindings and ClusterRoleBindings are used to assign these permissions to users, groups, or service accounts. RBAC follows the principle of least privilege, ensuring that entities only have the access they require.
