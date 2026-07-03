@@ -60,7 +60,11 @@ resource "aws_instance" "example" {
 ✅ You must use:
 output (from source module)
 module.<name>.<output> (in root module)
-pass as input variable to another module
+pass as input variable to another module 
+
+# Terraform plan failed in midway how did you troubleshoot? 
+
+During a production deployment, terraform plan failed with an AccessDenied error while reading an encrypted S3 bucket. I first validated the configuration, then confirmed the AWS account using aws sts get-caller-identity. The debug logs showed the execution role lacked kms:Decrypt permission on the customer-managed KMS key. After coordinating with the security team to update the IAM policy, I reran terraform plan, verified there were no unexpected infrastructure changes, and then proceeded with terraform apply
 
 ## What is the purpose of the Terraform state file?
 Terraform state file is used to store the current state of infrastructure so Terraform can track resources and manage changes efficiently.  
