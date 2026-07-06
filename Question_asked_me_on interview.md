@@ -9,7 +9,20 @@
 ## Jenkins jobs running almost 2 hours jobs start normally.
 ## aws secret can't fetched how do you debug.
 
+# Dish Network 
 
+## what is shared library  
+## db sharding 
+## dockerfile file for nodejs app
+## lets consider got a req from custom docker image private repo when building docker image in internal image & push to private artifact how to integrate base image push private registry?
+## I have a 100 docker cont running lot of uns=used container cleaning ?
+## What are the k8s cluster type? 
+## EKS addons 
+## what is k8s webhooks & its types 
+## deploy app running but do not update image new pod should not disturb to old pod 
+## when you have images docker file image is stored in nexus to download image how to manage authentication and put t k8s 
+## in a node created deployment yaml run kubectl apply 4 pod all 4 split into 4 worker node like pod1 got to node 1
+## 
 
 # Ispace
 
