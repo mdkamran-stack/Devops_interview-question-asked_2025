@@ -11,6 +11,10 @@ So this is my project where I work for the development teams.
 i work with payments and cart devlopment teams
 I am responsible for DevOps implementation of those microservices 
 
+# how did you select instance type while creating eks cluster 
+
+For development environments, I generally use cost-effective instance types such as t3.large or t3.medium because the workloads are lighter and the focus is on minimizing cost. For production, I prefer general-purpose instances like m6i.large or m6i.xlarge, depending on the application's CPU and memory requirements. If the application is CPU-intensive, I would use the C-series, and for memory-intensive applications, the R-series. In production, I also deploy worker nodes across multiple Availability Zones, enable Cluster Autoscaler, and often use a combination of On-Demand and Spot Instances for cost optimization while ensuring critical workloads remain highly available.
+
 # how to fix vulnerabilities if sonarqube finds 
 Production Example (Interview Answer)
 
