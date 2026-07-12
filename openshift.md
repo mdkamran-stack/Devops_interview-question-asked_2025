@@ -1,6 +1,6 @@
 # Openshift
 
-## if image cant able to pull registry server then i will verify the token and public key is valid or not  
+## if image cant able to pull registry server then i will verify the token and public key is valid or not .
 
 Openshift insllation using two method
 1> IPI method which is automated
