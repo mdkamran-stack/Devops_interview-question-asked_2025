@@ -27,9 +27,19 @@ Add-on services:
 
    Master1: Nic1-Private Network
             Nic2- Internet
+   
+# if their is two nw interface one for private one for public ping google not working it basically confused the we have use cmd ip route  and we have to set the matrix 
 
+# Chapter 01
+## Rolling update rollingout means updating new version where as rollback means preveious stable version ( Rolling update genrally apply in stateless app
+## here we have to define  max surge max unavilable. 
+# Recrcreate apply on stateful application like database.
+## it will delete 100% & create new pod
    Step1: Service Nodes.
 
-   All master and woker node we have to write RHCOS
+   All master and woker node we have to write RHCOS  
 
-   # if their is two nw interface one for private one for public ping google not working it basically confused the we have use cmd ip route  and we have to set the matrix 
+Mine Issue
+Jupiter cant open and GUI not working
+
+
