@@ -28,4 +28,8 @@ Add-on services:
    Master1: Nic1-Private Network
             Nic2- Internet
 
-   Step1: Service Nodes. 
+   Step1: Service Nodes.
+
+   All master and woker node we have to write RHCOS
+
+   # if their is two nw interface one for private one for public ping google not working it basically confused the we have use cmd ip route  and we have to set the matrix 
