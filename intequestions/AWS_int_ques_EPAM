@@ -1,0 +1,68 @@
+# AWS Interview EPAM.
+
+# I have update resume as per EKS:
+
+Ques: If your client wants secure con b/w aws on -perm system how did you design a solution.
+
+Ques: you are running multiple app inside aws vpc & some EC2 instance in private subnet cant reach  database while other in public can reach but sometime it fail because of internet conection how will you
+monitor & troubleshoot this issue.  
+
+Ques: if a company reqire vpn failover between aws over on perm how do you confiugre to provide high availability.  
+
+Ques: what is the use of stickey session in loadbalancer.  
+
+Ques: ALB is deployed but traffic is not reaching intended target how would you troubleshoot.  
+
+Ques: ALB is expose to internet must be protected DDOS attack which aws services their. 
+
+Ques: what is difference between way and shield. 
+
+Ques: difference between cloud watch vs cloud trail.  
+
+Ques: how would you use cloud trial for unauthrize or credential misuse. 
+
+Ques: what if your api gateway endpoint is consitently returning 403 error to clinet how did you troubleshoot?  
+
+Ques: if your apigateway integration with lambda function is failing causing request through return error how d you debug issue.  
+
+Ques: what is difference between restapi and https api.  
+
+Ques: if your user report high latency on first request in lambda funtion how to mitigate cold start issue. 
+
+Ques: if lambda function processing s3 event ocassionaly fails how do you design retries or error handling.  
+
+Ques: if lambda fun is trying to process a large file store in s3 but it keeps timing out failing how did you design a solution for big work load.  
+
+Ques: can we do without step funtion.  
+
+Ques. what is diff b/w inline policy and managed policy in iam.  
+
+Ques: what is sso implementaion.  
+
+Ques: how to configure okta idp with iam.  
+
+Ques: user in account a want to access bucket in account B  how to design iam permission.  
+
+Ques: difference between scp vs permission boundry?  
+
+Ques: if your critical app is running on EC2 required gen security patch how would you desin zero downtime patching.  
+
+Ques: if EC2 instance is availale you have one volume available but volume is not able to attach to EC2 how will you troubleshoot.  
+
+Ques: you have launced ecs cluster using vpc and you encounter ip exaustion how will you debug.  
+
+Ques: how would you provide secure acess for kubernetes workload running eks to intract with aws service such as dynamodb and s3 bucket. 
+
+Ques: in k8s one pod in one namespace cant communicate to podb in another namsespace even network policy allow it how do you debug this issue.  
+
+Ques: you are working on terraform config while to try to apply state file is locked how would you resolve this issue.  
+
+Ques: what is difference between count and for_each in terraform.  
+
+Ques: what is use of target option in terraform. 
+
+Ques: kernel upgrade fail how would you rollback to last stable state.  
+
+Ques: if Ec2 instance shows high cpu how do you mitigate it.  
+
+Ques: Coding task is there. 
