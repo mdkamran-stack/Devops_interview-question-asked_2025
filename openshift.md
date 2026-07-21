@@ -51,6 +51,8 @@ oc create deploy test --image=registry.ocp4.example.com:8443/redhattraining/hell
 
 # Graphical command oc whoami --show-console
 
+Now we have to start from chapter 1 API resources
+
 
 
 
