@@ -42,4 +42,16 @@ Add-on services:
 Mine Issue
 Jupiter cant open and GUI not working
 
+# Declarative manifest:
+oc create deploy test --image=registry.ocp4.example.com:8443/redhattraining/hello-world-nginx:latest --dry-run=server -o yaml > test.yml   (NA dchange your value as per req)
+
+# After starting lab we have excute below command:
+# lab start auth-providers
+# https://console-openshift-console.apps.ocp4.example.com:6443
+
+# Graphical command oc whoami --show-console
+
+
+
+
 
