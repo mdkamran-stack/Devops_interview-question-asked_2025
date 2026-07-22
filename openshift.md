@@ -49,7 +49,37 @@ oc create deploy test --image=registry.ocp4.example.com:8443/redhattraining/hell
 # lab start auth-providers
 # https://console-openshift-console.apps.ocp4.example.com:6443
 
-# Graphical command oc whoami --show-console
+# Graphical command "oc whoami --show-console" 
+
+## API Resources:
+Example
+1. Image url
+2. replicas
+3. ResourcesQuota
+4. Scheduling rules
+5. Deployment strategy
+6. Volume
+
+2>> Replicaset
+1. self-healing
+2. scalability
+
+3>> Pod: It is the running application process.  
+
+Pod=container  
+
+4>> Service:
+1. static IP top of the pod.
+2. ProxyIP front of the pod.
+
+5>> Router (Ingress node):
+1. ALB
+2. HTTP/HTTPS based service expose help
+
+Client --Router ---service ---podIP  
+
+
+
 
 Now we have to start from chapter 1 API resources
 
