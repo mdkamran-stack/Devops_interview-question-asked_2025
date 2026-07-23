@@ -338,9 +338,25 @@ resource "aws_instance" "web" {
   tags = {
     Name = each.key
   }
-}
-### how to communicate with two infrastructure?
-> The communication method depends on where the infrastructures are hosted. If both are AWS VPCs, I use **VPC Peering** or **AWS Transit Gateway**. If communication is between on-premises and AWS, I use **Site-to-Site VPN** or **AWS Direct Connect**. For communication between different cloud providers such as AWS and Azure, I use VPN or Direct Connect/ExpressRoute. After connectivity is established, I configure route tables, security groups, and network ACLs to allow only the required traffic.
+}  
+
+# how to communicate with two infrastructure?
+
+> The communication method depends on where the infrastructures are hosted. If both are AWS VPCs, I use **VPC Peering** or **AWS Transit Gateway**. If communication is between on-premises and AWS, I use **Site-to-Site VPN** or **AWS Direct Connect**. For communication between different cloud providers such as AWS and Azure, I use **VPN** or **Direct Connect + ExpressRoute**. After connectivity is established, I configure **route tables**, **security groups**, and **network ACLs** to allow only the required traffic.
+
+---
+
+# Common Communication Methods
+
+| **Scenario** | **Solution** |
+|--------------|--------------|
+| AWS VPC to AWS VPC | VPC Peering |
+| Multiple AWS VPCs | AWS Transit Gateway |
+| AWS to On-Premises | Site-to-Site VPN |
+| AWS to On-Premises (High Bandwidth) | AWS Direct Connect |
+| AWS to Azure | VPN or Direct Connect + ExpressRoute |
+| Kubernetes Cluster to Kubernetes Cluster | VPN, Transit Gateway, Service Mesh |
+| Application to Database | Private Subnet + Security Groups |
 
 ---
 
