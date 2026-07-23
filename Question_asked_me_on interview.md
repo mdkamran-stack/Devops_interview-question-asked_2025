@@ -91,7 +91,16 @@ To share the EC2 instance ID between Terraform modules, I expose the instance ID
 ### how to deploy application in k8s     
 In production, the deployment process starts when a developer pushes code to Git. A CI tool such as Jenkins or builds and tests the application, creates a Docker image, and pushes it to a container registry like ECR. A CD tool such as Argo CD then deploys the updated Kubernetes manifests or Helm chart to the cluster. Kubernetes creates or updates the Deployment, which manages ReplicaSets and Pods. A Service exposes the Pods internally, and an Ingress or LoadBalancer exposes the application externally. After deployment, I verify the rollout using kubectl rollout status and monitor the Pods and application health
 ### how to setup k8s in eks    
+> I start by creating a VPC with public and private subnets across multiple Availability Zones. Then I create the EKS cluster and managed node groups using `eksctl` or Terraform. After configuring `kubectl`, I install essential add-ons such as the VPC CNI, CoreDNS, kube-proxy, AWS Load Balancer Controller, Metrics Server, EBS CSI Driver, and Cluster Autoscaler. Finally, I deploy applications, configure monitoring with Prometheus and Grafana, enable autoscaling, and secure the cluster using IAM roles, RBAC, and AWS Secrets Manager.
 ### types of loadbalancer in k8s    
+ Kubernetes Service Types
+
+| Service Type | Accessible From | Use Case |
+|--------------|-----------------|----------|
+| ClusterIP | Inside the cluster | Internal communication |
+| NodePort | Outside via Node IP and Port | Testing and development |
+| LoadBalancer | Internet (Cloud Provider) | Production applications |
+| ExternalName | External DNS | External services |
 ### how to setup hpa na vpa    
 HPA (Horizontal Pod Autoscaler)
 
@@ -134,10 +143,226 @@ It may recreate Pods to apply the new resource settings.
 
 ### what is selinux    
 ### what is loadbalncer in aws & how to setup app LB and NW LB , how network LB works    
+How to Set Up an Application Load Balancer (ALB)
+
+## Step 1: Launch EC2 Instances
+
+Deploy at least **2 EC2 instances** in different Availability Zones.
+
+```
+EC2-1 (AZ-1)
+EC2-2 (AZ-2)
+```
+
+---
+
+## Step 2: Create a Target Group
+
+- Target Type: Instance
+- Protocol: HTTP
+- Port: 80
+- Register EC2 instances
+
+---
+
+## Step 3: Create an ALB
+
+- Scheme: Internet-facing
+- Type: Application Load Balancer
+- Select at least two public subnets
+- Attach Security Group
+- Attach Target Group
+
+---
+
+## Step 4: Configure Listener
+
+```
+HTTP :80
+```
+
+or
+
+```
+HTTPS :443
+```
+
+Forward traffic to the Target Group.
+
+---
+
+## Step 5: Configure Health Check
+
+Example:
+
+```
+Path:
+/health
+```
+
+Healthy targets receive traffic.
+
+---
+
+## ALB Traffic Flow
+
+```
+Internet
+      │
+      ▼
+Application Load Balancer
+      │
+      ▼
+Target Group
+      │
+ ┌────┴────┐
+ ▼         ▼
+EC2-1    EC2-2
+```
+
+---
+
+# How to Set Up a Network Load Balancer (NLB)
+
+## Step 1
+
+Launch EC2 instances.
+
+---
+
+## Step 2
+
+Create a Target Group
+
+- Protocol: TCP
+- Port: 8080 (example)
+
+---
+
+## Step 3
+
+Create Network Load Balancer
+
+- Internet-facing or Internal
+- Select subnets
+- Attach Target Group
+
+---
+
+## Step 4
+
+Create Listener
+
+```
+TCP :8080
+```
+
+or
+
+```
+TLS :443
+```
+
+---
+
+## Step 5
+
+Verify Health Checks
+
+```
+TCP
+```
+
+or
+
+```
+HTTP
+```
+
+---
 ### What is the difference between the count and for_each meta-arguments?    
-### how to communicate with two infrastructure?  
-### how to migrate on-perm to cloud?   
-### how to communicate microservices?  
+> Both **`count`** and **`for_each`** are Terraform meta-arguments used to create multiple resources. The key difference is that **`count`** creates resources using a numeric index, while **`for_each`** creates resources using unique keys from a map or set. I use **`count`** when all resources are nearly identical, and **`for_each`** when each resource has unique attributes or names. In production, `for_each` is generally preferred because it provides stable resource addressing and avoids unnecessary resource recreation when items are added or removed.
+
+---
+
+# count
+
+- Uses a numeric index (`0,1,2...`)
+- Best when resources are identical
+- Access resources using `count.index`
+
+### Example
+
+```hcl
+resource "aws_instance" "web" {
+  count = 3
+
+  ami           = "ami-123456"
+  instance_type = "t3.micro"
+
+  tags = {
+    Name = "server-${count.index}"
+  }
+}
+```
+
+Creates:
+
+```
+server-0
+server-1
+server-2
+```
+
+---
+
+# for_each
+
+- Uses a **map** or **set**
+- Each resource has a unique key
+- Access values using `each.key` and `each.value`
+
+### Example
+
+```hcl
+resource "aws_instance" "web" {
+  for_each = {
+    web1 = "t3.micro"
+    web2 = "t3.small"
+    web3 = "t3.medium"
+  }
+
+  ami           = "ami-123456"
+  instance_type = each.value
+
+  tags = {
+    Name = each.key
+  }
+}
+### how to communicate with two infrastructure?
+> The communication method depends on where the infrastructures are hosted. If both are AWS VPCs, I use **VPC Peering** or **AWS Transit Gateway**. If communication is between on-premises and AWS, I use **Site-to-Site VPN** or **AWS Direct Connect**. For communication between different cloud providers such as AWS and Azure, I use VPN or Direct Connect/ExpressRoute. After connectivity is established, I configure route tables, security groups, and network ACLs to allow only the required traffic.
+
+---
+
+# Common Communication Methods
+
+| Scenario | Solution |
+|----------|----------|
+| AWS VPC to AWS VPC | VPC Peering |
+| Multiple AWS VPCs | AWS Transit Gateway |
+| AWS to On-Premises | Site-to-Site VPN |
+| AWS to On-Premises (High Bandwidth) | AWS Direct Connect |
+| AWS to Azure | VPN or Direct Connect + ExpressRoute |
+| Kubernetes Cluster to Kubernetes Cluster | VPN, Transit Gateway, Service Mesh |
+| Application to Database | Private Subnet + Security Groups |
+
+---
+
+### how to migrate on-perm to cloud?
+I begin by assessing the existing on-premises environment, including applications, databases, dependencies, and network architecture. Based on the assessment, I select an appropriate migration strategy such as Rehost or Replatform. I provision the AWS infrastructure using Terraform, establish secure connectivity with a Site-to-Site VPN or Direct Connect, migrate servers using AWS MGN, migrate databases using AWS DMS, and transfer files using DataSync or Snowball when needed. After thorough testing, I perform the production cutover during a maintenance window, monitor the application with CloudWatch, and decommission the on-premises infrastructure once the migration is confirmed to be successful.
+
+### how to communicate microservices?
+ Microservices communicate either synchronously using REST APIs or gRPC, or asynchronously using messaging systems such as Kafka, RabbitMQ, Amazon SQS, or Amazon SNS. In Kubernetes, services communicate internally through Kubernetes Services and DNS. In production, REST/gRPC is typically used for request-response communication, while message queues are used for event-driven workloads to improve scalability and reliability.
 
 # QuessCorp
 ------------------
