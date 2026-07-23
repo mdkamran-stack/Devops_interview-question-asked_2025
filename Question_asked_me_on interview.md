@@ -320,13 +320,13 @@ server-2
 
 ---
 
-# for_each
+# `for_each`
 
 - Uses a **map** or **set**
 - Each resource has a unique key
 - Access values using `each.key` and `each.value`
 
-### Example
+## Example
 
 ```hcl
 resource "aws_instance" "web" {
@@ -343,13 +343,15 @@ resource "aws_instance" "web" {
     Name = each.key
   }
 }
+```
 
----    
+---
 
-# how to communicate with two infrastructure?
+# How to Communicate Between Two Infrastructures?
 
-The communication method depends on where the infrastructures are hosted. If both are AWS VPCs, I use **VPC Peering** or **AWS Transit Gateway**. If communication is between on-premises and AWS, I use **Site-to-Site VPN** or **AWS Direct Connect**. For communication between different cloud providers such as AWS and Azure, I use **VPN** or **Direct Connect + ExpressRoute**. After connectivity is established, I configure **route tables**, **security groups**, and **network ACLs** to allow only the required traffic.
+## Interview Answer
 
+> The communication method depends on where the infrastructures are hosted. If both are AWS VPCs, I use **VPC Peering** or **AWS Transit Gateway**. If communication is between on-premises and AWS, I use **Site-to-Site VPN** or **AWS Direct Connect**. For communication between different cloud providers such as AWS and Azure, I use **VPN** or **Direct Connect + ExpressRoute**. After connectivity is established, I configure **route tables**, **security groups**, and **network ACLs** to allow only the required traffic.
 ---
 
 
