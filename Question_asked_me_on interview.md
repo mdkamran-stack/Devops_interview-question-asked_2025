@@ -5,37 +5,70 @@
 ## What is multistage docker file why it is used. 
 A multi-stage Dockerfile uses multiple FROM statements in a single Dockerfile to separate the build environment from the runtime environment.
 ## Setup build application multibrach java app and load the artifactory  
+
 ## Autobuild jenkins pipeline  
+We automate the Jenkins pipeline using a GitHub webhook. Whenever a developer pushes code, Jenkins automatically triggers the pipeline, checks out the code, builds the application, runs tests, performs code quality and security scans, builds a Docker image, pushes it to ECR/Nexus, and deploys it to Kubernetes using Helm or Argo CD. Finally, it sends a success or failure notification
+
 ## How to push repository in nexus  
 Method 2: Upload Using cURL 
 curl -u username:password \
 --upload-file app.jar \
 http://nexus.company.com/repository/maven-releases/app.jar
 
-## Jenkins jobs running almost 2 hours jobs start normally.
-## aws secret can't fetched how do you debug.
+## Jenkins jobs running almost 2 hours jobs start normally. 
+5-Step Troubleshooting
+Check Console Output – Identify the stage where the job is stuck.
+Check Jenkins Agent – Ensure the agent is online and responsive.
+Check Resources – Verify CPU, memory, and disk (top, free -h, df -h).
+Check External Dependencies – Git, Nexus, Docker, SonarQube, Kubernetes, cloud services.
+Check Jenkins Logs – Review logs and compare with the last successful build.
+
+## aws secret can't fetched how do you debug.  
+5-Step Debug Process (Easy to Remember)
+Check application logs – Identify the exact error.
+Verify IAM Role/IRSA – Ensure secretsmanager:GetSecretValue is allowed.
+Verify the secret – Confirm the secret name and AWS Region are correct.
+Check AWS identity – Run aws sts get-caller-identity.
+Check networking & KMS – Verify NAT/VPC Endpoint and kms:Decrypt permission if using a customer-managed KMS key.
 
 # Dish Network 
 
-## what is shared library  
-## db sharding 
+## what is shared library  in jenkins 
+A Jenkins Shared Library is a reusable collection of Groovy scripts, functions, and pipeline code that can be shared across multiple Jenkins pipelines.
+
+## what is db sharding 
+Database sharding is a horizontal scaling technique where a large database is split into multiple smaller databases, called shards. Each shard stores a portion of the data, which distributes read and write traffic across multiple servers, improving performance and scalability. 
+
 ## dockerfile file for nodejs app
 ## lets consider got a req from custom docker image private repo when building docker image in internal image & push to private artifact how to integrate base image push private registry?
 ## I have a 100 docker cont running lot of uns=used container cleaning ?
 ## What are the k8s cluster type? 
+There are two main types of Kubernetes clusters: self-managed and managed. In self-managed clusters, the organization manages the control plane and worker nodes using tools like kubeadm or OpenShift. In managed clusters, cloud providers manage the control plane, such as Amazon EKS, Azure AKS, and Google GKE. Depending on business requirements, these clusters can also be deployed in on-premises, hybrid, or multi-cloud environments.
 ## EKS addons 
 ## what is k8s webhooks & its types 
-## deploy app running but do not update image new pod should not disturb to old pod 
-## when you have images docker file image is stored in nexus to download image how to manage authentication and put t k8s 
+Kubernetes Webhooks are admission controllers that intercept API requests before they are persisted. There are two types: Mutating Admission Webhooks, which modify resources such as injecting sidecars or adding labels, and Validating Admission Webhooks, which enforce policies by allowing or rejecting requests. Mutating webhooks run first, followed by validating webhooks 
+## How do you update an application without disturbing the existing running Pods? 
+I use Kubernetes Rolling Updates. When I deploy a new image, Kubernetes creates new Pods gradually while keeping the existing Pods running. Only after the new Pods pass their readiness probe and become healthy does Kubernetes terminate the old Pods. This ensures zero downtime and no impact on users. 
+### maxSurge: 1 → Create one extra Pod during the update.
+### maxUnavailable: 0 → Never make an existing Pod unavailable until a new Pod is ready.
+
+## when you have images docker file image is stored in nexus to download image how to manage authentication and put to k8s 
+When Docker images are stored in a private Nexus registry, Kubernetes must authenticate before pulling the image. We create a Docker registry Secret (imagePullSecret) with the Nexus credentials and reference it in the Pod or ServiceAccount. During deployment, Kubernetes uses the imagePullSecret to authenticate with Nexus, pull the image, and start the Pod.
 ## in a node created deployment yaml run kubectl apply 4 pod all 4 split into 4 worker node like pod1 got to node 1
 ## 
 
 # Ispace
 
 how to integrate load testing in cicd pipeline  
-what is deployment and daemon set .  
-what is ingress how to use .  
-two module a & b moudle a is creating ec2 instance module instance id how to to get instance id by module b
+# what is deployment and daemon set .  
+A Deployment is used to manage stateless applications by maintaining the desired number of replicas and supporting rolling updates and rollbacks. A DaemonSet ensures that a copy of a Pod runs on every worker node, making it ideal for node-level services such as log collectors, monitoring agents, and networking components. In production, we use Deployments for applications and DaemonSets for infrastructure services.
+
+# what is ingress how to use .  
+Ingress is a Kubernetes resource that manages external HTTP/HTTPS access to applications running inside the cluster. It routes incoming traffic to the appropriate Service based on the hostname or URL path.
+
+# two module a & b moudle a is creating ec2 instance module instance id how to to get instance id by module b 
+
+To share the EC2 instance ID between Terraform modules, I expose the instance ID as an output from Module A using an output block. Then, in the root module, I pass module.ec2.instance_id as an input variable to Module B. This keeps the modules loosely coupled and follows Terraform best practices.
 
 # Pepsico
 ==========
@@ -50,7 +83,6 @@ two module a & b moudle a is creating ec2 instance module instance id how to to 
 ### 3 instance in 3 diff regions 
 ### 3 ec3 instance load from external source i have to divide traffic equally on all 3 
 ### git stash 
-### shared lib in jenkins 
 
 # Bristlecone interview
 ------------------------
@@ -61,6 +93,45 @@ In production, the deployment process starts when a developer pushes code to Git
 ### how to setup k8s in eks    
 ### types of loadbalancer in k8s    
 ### how to setup hpa na vpa    
+HPA (Horizontal Pod Autoscaler)
+
+Purpose: Automatically scales the number of Pods based on metrics such as CPU, memory, or custom metrics.
+
+Example
+kubectl autoscale deployment nginx \
+  --cpu-percent=70 \
+  --min=2 \
+  --max=10
+
+Or apply an HPA YAML.
+
+Use case:
+
+If CPU usage exceeds 70%, Kubernetes increases the number of Pods.
+When CPU usage drops, it scales the Pods down.
+
+VPA (Vertical Pod Autoscaler)
+
+Purpose: Automatically adjusts the CPU and memory requests/limits of Pods instead of changing the number of Pods.
+
+Example VPA
+apiVersion: autoscaling.k8s.io/v1
+kind: VerticalPodAutoscaler
+metadata:
+  name: myapp-vpa
+spec:
+  targetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: myapp
+  updatePolicy:
+    updateMode: Auto
+
+Use case:
+
+If a Pod needs more memory, VPA increases its CPU/memory requests.
+It may recreate Pods to apply the new resource settings.
+
 ### what is selinux    
 ### what is loadbalncer in aws & how to setup app LB and NW LB , how network LB works    
 ### What is the difference between the count and for_each meta-arguments?    
@@ -72,9 +143,28 @@ In production, the deployment process starts when a developer pushes code to Git
 ------------------
 ### Terraform list vs terraform show  
 ### IN CI/CD pipeline how to configure that pipeline run during change window and deploy app in cluster  
+1. Jenkins (Most Common)
+
+Use an input step for CAB/change approval and a time check before deployment.
+
+stage('Deploy') {
+    steps {
+        script {
+            def hour = new Date().format("HH", TimeZone.getTimeZone('Asia/Kolkata')) as Integer
+
+            if (hour >= 22 && hour <= 23) {
+                sh 'helm upgrade --install myapp ./chart'
+            } else {
+                error("Deployment is allowed only during the change window (10 PM - 11 PM).")
+            }
+        }
+    }
+}
+
 ### In prometheus grafana lets say we have distributed monitoring lsts say resources are spread across diff region how we can build now.  
 ### In terraform dependecy error like linear & circular  
 ### What is lifecycle in TF  
+Terraform lifecycle is a meta-argument that controls how resources are created, updated, or destroyed. The most commonly used lifecycle rules are create_before_destroy to minimize downtime during replacements, prevent_destroy to protect critical resources from accidental deletion, ignore_changes to ignore updates made outside Terraform, and replace_triggered_by to force resource replacement when dependent resources change. These settings help manage infrastructure safely in production.
 
 # TechMahindra
 ---------------
@@ -127,12 +217,49 @@ master node build that
 # AHEAD questions asked me for AWS cloud devops Engineer
 ---------------------------------------------------------------------
 ### Question: Recent infrastructure architecture in aws  >> see in aws file infra provisioning project.
+In my recent project, we hosted a highly available microservices application on AWS using Amazon EKS. The infrastructure was deployed across multiple Availability Zones within a custom VPC. The VPC had public and private subnets. Public subnets hosted the Internet-facing Application Load Balancer and NAT Gateways, while private subnets hosted the EKS worker nodes and application workloads. We used Terraform to provision the infrastructure and Jenkins for CI. After the Docker image was built and scanned, it was pushed to Nexus/ECR. Argo CD handled continuous deployment to the EKS cluster using a GitOps approach.
+
 # How do you approach sudden traffic spikes in production?
+Step-by-Step Approach
+Identify the cause – Genuine traffic or DDoS?
+Check monitoring – CPU, memory, response time, error rates (CloudWatch, Prometheus, Grafana).
+Scale the application – Auto Scaling Group (EC2) or HPA (Kubernetes).
+Check dependencies – ALB, database, Redis/cache, queues.
+Mitigate if needed – Use CloudFront, WAF, Shield, rate limiting.
+Monitor and validate – Ensure the application remains healthy and stable.
+
 ### Question: Expalin vpc component and traffic flow how it happen  
+VPC Components
+VPC – Private network in AWS.
+Public Subnet – Hosts internet-facing resources (ALB, Bastion Host, NAT Gateway).
+Private Subnet – Hosts application servers, EKS worker nodes, RDS.
+Internet Gateway (IGW) – Enables internet access for public subnets.
+NAT Gateway – Allows private subnet resources to access the internet for outbound traffic only.
+Route Table – Determines where traffic is routed.
+Security Group (SG) – Stateful firewall attached to resources.
+Network ACL (NACL) – Stateless firewall applied at the subnet level.
+Elastic IP – Static public IP address.
+VPC Endpoint – Private access to AWS services without using the internet.
+
 ### Question: How does NAT Gateway works internally  
+A NAT Gateway enables instances in a private subnet to initiate outbound connections to the internet while preventing unsolicited inbound connections. Internally, it performs Source Network Address Translation (SNAT) by replacing the private IP address of the instance with its own Elastic IP address. It also maintains a connection tracking table so that when the response returns from the internet, it translates the destination back to the original private IP and forwards the traffic to the instance. 
+
 ### Question: diff b/w security group vs nacl  
+A Security Group is a stateful firewall attached to an EC2 instance or network interface. It allows only permit rules, and return traffic is automatically allowed. A Network ACL is a stateless firewall applied at the subnet level. It supports both allow and deny rules, and both inbound and outbound traffic must be explicitly configured. In production, Security Groups are used to control access to individual resources, while NACLs provide an additional security layer for the entire subnet. 
+
 ### Question: How to create  highly availabe web application in aws  
 ### Question:  Diff b/w ALB VS NLB when do you choose 
+# ALB vs NLB
+
+| **ALB (Application Load Balancer)** | **NLB (Network Load Balancer)** |
+|-------------------------------------|---------------------------------|
+| Operates at **Layer 7 (HTTP/HTTPS)** | Operates at **Layer 4 (TCP/UDP/TLS)** |
+| Routes based on **URL path and host name** | Routes based on **IP address and port** |
+| Supports **path-based** and **host-based routing** | Does **not** support path-based routing |
+| Supports **SSL termination** | Supports **TCP/TLS pass-through** and **TLS termination** |
+| Best for **web applications** and **microservices** | Best for **high-performance TCP/UDP applications** |
+| Slightly **higher latency** | **Very low latency** and **high throughput** | 
+
 ### Question: Explain me CI/CD pipeline which you have build in AWS  
 ### Question: EC2 based application is slow during high traffic cpu is normal response time is high how to troubleshoot.   
 ### Question: Production application behind ALB app LB return 502 error intermitently how to troubleshoot.
