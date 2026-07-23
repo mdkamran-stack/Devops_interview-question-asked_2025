@@ -262,13 +262,555 @@ A Security Group is a stateful firewall attached to an EC2 instance or network i
 
 ### Question: Explain me CI/CD pipeline which you have build in AWS  
 ### Question: EC2 based application is slow during high traffic cpu is normal response time is high how to troubleshoot.   
+# EC2 Application Slow During High Traffic (CPU Normal, Response Time High)
+
+## Troubleshooting Steps
+
+### 1. Check ALB Metrics
+- Request Count
+- Target Response Time
+- HTTP 5XX Errors
+- Healthy/Unhealthy Targets
+
+---
+
+### 2. Check Application Logs
+- Slow API responses
+- Exceptions and errors
+- Thread blocking / Thread pool exhaustion
+- Application response time
+
+---
+
+### 3. Check Database
+- Slow queries
+- Database connections
+- CPU utilization
+- IOPS
+- Read/Write latency
+
+---
+
+### 4. Check Cache
+- Redis/Memcached health
+- Cache hit ratio
+- Cache latency
+
+---
+
+### 5. Check Network & External APIs
+- API latency
+- DNS resolution issues
+- Network latency
+- Third-party API response time
+
+---
+
+### 6. Check EC2 Instance
+- Memory Usage
+  ```bash
+  free -h
+  ```
+
+- Disk I/O
+  ```bash
+  iostat
+  ```
+
+- Network Statistics
+  ```bash
+  sar -n DEV
+  ```
+
+- System Load
+  ```bash
+  top
+  vmstat
+  ```
+
+---
+
+## Common Root Causes
+- Slow database queries
+- Database connection pool exhausted
+- External API latency
+- High disk I/O
+- Memory pressure or swapping
+- Network latency
+- ALB target response delay
+- Application thread pool exhaustion
 ### Question: Production application behind ALB app LB return 502 error intermitently how to troubleshoot.
+# Troubleshooting Steps
+
+## 1. Check ALB Metrics (CloudWatch)
+- HTTPCode_ELB_502_Count
+- TargetResponseTime
+- RequestCount
+- HealthyHostCount
+- UnHealthyHostCount
+
+---
+
+## 2. Check Target Group
+- Verify target health
+- Ensure targets are registered
+- Check health check path
+- Check health check port
+- Review health check timeout and interval
+
+```bash
+aws elbv2 describe-target-health --target-group-arn <target-group-arn>
+```
+
+---
+
+## 3. Check Application Logs
+- Application exceptions
+- Application crashes
+- OutOfMemoryError
+- Thread pool exhaustion
+- Slow API responses
+
+---
+
+## 4. Check EC2 Instance
+- CPU utilization
+- Memory usage
+
+```bash
+free -h
+```
+
+- Disk usage
+
+```bash
+df -h
+```
+
+- Disk I/O
+
+```bash
+iostat
+```
+
+- System load
+
+```bash
+top
+vmstat
+```
+
+---
+
+## 5. Verify Application Port
+
+Ensure the application is listening on the configured port.
+
+```bash
+ss -tulpn
+```
+
+or
+
+```bash
+netstat -tulpn
+```
+
+---
+
+## 6. Check Security Groups & NACL
+
+- ALB Security Group → EC2 Security Group
+- Target port allowed
+- NACL rules allow traffic
+
+---
+
+## 7. Check Network Connectivity
+
+From EC2
+
+```bash
+curl http://localhost:8080/health
+```
+
+or
+
+```bash
+curl http://<private-ip>:8080/health
+```
+
+---
+
+## 8. Check ALB Timeout
+
+- Idle Timeout
+- Application response timeout
+- Backend timeout configuration
+
+---
+
+## 9. Check Deployment
+
+- Recent deployment
+- Rolling update failures
+- New application version
+- Container restart count (Kubernetes)
+
+---
+
+## Common Causes of 502
+
+- Application process stopped
+- Wrong target port
+- Failed health checks
+- Application timeout
+- Application crash
+- Thread pool exhausted
+- Memory issue
+- Security Group misconfiguration
+- Target deregistered
 ### Question: Your AWS bill jump from 1k to 4k in a month how do you identify the root cause and prevent for next time recurrence.  
+# AWS Bill Increased from $1K to $4K – How to Identify the Root Cause?
+
+## Interview Answer (1 Minute)
+
+> If my AWS bill suddenly increased from **$1K to $4K**, I would first identify **which AWS service caused the increase** using AWS Cost Explorer and the Cost & Usage Report. Then I would drill down by account, region, service, and resource tags to identify the exact resource responsible. After finding the root cause, I would take corrective actions such as terminating unused resources, rightsizing instances, enabling lifecycle policies, or optimizing storage. Finally, I would implement preventive measures like AWS Budgets, Cost Anomaly Detection, tagging policies, and regular cost reviews to avoid recurrence.
+
+---
+
+# Troubleshooting Steps
+
+## 1. Check AWS Cost Explorer
+- Compare current month vs previous month
+- Identify which service increased the cost
+- Filter by:
+  - Service
+  - Region
+  - Account
+  - Usage Type
+  - Tags
+
+---
+
+## 2. Check Cost & Usage Report (CUR)
+- Identify the exact resource
+- EC2
+- EBS
+- S3
+- NAT Gateway
+- RDS
+- Data Transfer
+- Load Balancer
+
+---
+
+## 3. Identify Root Cause
+
+Examples:
+- New EC2 instances launched
+- Auto Scaling misconfiguration
+- Unused EBS volumes
+- Large snapshots
+- NAT Gateway data processing charges
+- High internet data transfer
+- S3 storage growth
+- RDS storage increase
+- Load balancer running continuously
+
+---
+
+## 4. Verify Recent Changes
+
+- Terraform changes
+- CloudFormation deployment
+- Jenkins deployment
+- Auto Scaling policies
+- New application rollout
+
+---
+
+## 5. Take Corrective Actions
+
+- Stop/Delete unused EC2 instances
+- Delete unattached EBS volumes
+- Remove old snapshots
+- Enable S3 Lifecycle policies
+- Resize EC2/RDS instances
+- Optimize NAT Gateway usage
+- Use VPC Endpoints for AWS services
+- Purchase Savings Plans or Reserved Instances
+
+---
+
+# Prevent Future Recurrence
+
+- Configure AWS Budgets
+- Enable AWS Cost Anomaly Detection
+- Apply mandatory resource tags
+- Schedule automated cleanup of unused resources
+- Review Cost Explorer weekly
+- Configure CloudWatch billing alarms
+- Enable Trusted Advisor cost recommendations
+
+---
+
+# Common AWS Services That Increase Cost
+
+- EC2
+- EBS
+- RDS
+- NAT Gateway
+- Data Transfer
+- S3
+- Load Balancer
+- CloudWatch Logs
+- Elastic IPs
+- EKS Worker Nodes
+
+---
+
+# Interview Answer (30 Seconds)
+
+> I first use **AWS Cost Explorer** to identify which service caused the cost increase. Then I analyze the **Cost & Usage Report** to find the specific resource responsible. I verify recent infrastructure changes, optimize or remove unnecessary resources, and implement preventive controls such as **AWS Budgets, Cost Anomaly Detection, tagging policies, CloudWatch billing alarms, and regular cost reviews** to prevent similar issues in the future.
+>
+
 ### Question: we have 50 developers need aws access no shared access allowed how to achive using tf  
+I would automate access management using Terraform by creating IAM groups, users, and least-privilege policies. Permissions are assigned to groups, and developers are added to the appropriate group. In production, I prefer AWS IAM Identity Center integrated with an identity provider such as Microsoft Entra ID or Okta, allowing each developer to have an individual account with SSO, MFA, and role-based access without any shared credentials  
+
 ### Question: how do you enable zero downtime deployment
-### Questions what sort of automation you have done.
-### Question: write ebs module and it should attach to ec2
-### Question: my statefile is locked you are trying to deploy you cant able to deploy what will you do?
+### Questions what sort of automation you have done.  
+# What Sort of Automation Have You Done?
+
+## Interview Answer (2 Minutes)
+
+> In my recent projects, I automated infrastructure provisioning, application deployments, configuration management, monitoring, security scanning, and routine operational tasks. This reduced manual effort, improved deployment consistency, and minimized production errors.
+
+---
+
+## 1. Infrastructure Automation
+- Provisioned VPC, EC2, ALB, Auto Scaling Groups, RDS, IAM, and EKS using Terraform.
+- Reused Terraform modules across multiple environments (Dev, QA, UAT, Prod).
+
+---
+
+## 2. CI/CD Automation
+- Built Jenkins pipelines triggered by GitHub webhooks.
+- Automated:
+  - Build
+  - Unit Testing
+  - SonarQube Scan
+  - Trivy Scan
+  - Docker Image Build
+  - Push to ECR/Nexus
+  - Deployment to EKS using Argo CD
+
+---
+
+## 3. Kubernetes Automation
+- Automated application deployments using Helm.
+- Configured HPA for auto scaling.
+- Automated rolling updates and rollbacks.
+- Managed Kubernetes manifests through GitOps.
+
+---
+
+## 4. Configuration Management
+- Used Ansible to automate:
+  - Package installation
+  - User creation
+  - Server hardening
+  - Application deployment
+  - Configuration updates
+
+---
+
+## 5. Monitoring Automation
+- Configured CloudWatch alarms.
+- Automated Prometheus monitoring.
+- Created Grafana dashboards.
+- Configured Slack/Email alerts.
+
+---
+
+## 6. Security Automation
+- Automated vulnerability scanning using Trivy.
+- Integrated SonarQube quality gates.
+- Managed secrets using AWS Secrets Manager.
+- Automated IAM role and policy provisioning.
+
+---
+
+## 7. Linux Automation
+- Wrote Shell scripts for:
+  - Log cleanup
+  - Disk space management
+  - Backup automation
+  - Service health checks
+  - Process monitoring
+
+---
+
+## 8. Python Automation
+- Used Python (Boto3) to automate:
+  - EC2 management
+  - S3 bucket operations
+  - Snapshot creation
+  - Start/Stop EC2 instances
+  - AWS resource reporting
+
+---  
+### Question: write ebs module and it should attach to ec2 
+# Terraform EBS Module
+
+## Project Structure
+
+```text
+terraform/
+├── main.tf
+├── variables.tf
+├── outputs.tf
+└── modules/
+    └── ebs/
+        ├── main.tf
+        ├── variables.tf
+        └── outputs.tf
+```
+
+---
+
+## modules/ebs/variables.tf
+
+```hcl
+variable "availability_zone" {
+  type = string
+}
+
+variable "size" {
+  type = number
+}
+
+variable "volume_type" {
+  type    = string
+  default = "gp3"
+}
+
+variable "instance_id" {
+  type = string
+}
+
+variable "device_name" {
+  type    = string
+  default = "/dev/sdf"
+}
+
+variable "tags" {
+  type    = map(string)
+  default = {}
+}
+```
+
+---
+
+## modules/ebs/main.tf
+
+```hcl
+resource "aws_ebs_volume" "this" {
+  availability_zone = var.availability_zone
+  size              = var.size
+  volume_type       = var.volume_type
+
+  tags = var.tags
+}
+
+resource "aws_volume_attachment" "this" {
+  device_name = var.device_name
+  volume_id   = aws_ebs_volume.this.id
+  instance_id = var.instance_id
+
+  force_detach = false
+}
+```
+
+---
+
+## modules/ebs/outputs.tf
+
+```hcl
+output "volume_id" {
+  value = aws_ebs_volume.this.id
+}
+```
+### Question: my statefile is locked you are trying to deploy you cant able to deploy what will you do?  
+> If Terraform reports that the **state file is locked**, I first verify whether another Terraform operation is currently running, such as `terraform apply` or `terraform destroy`, because Terraform locks the state to prevent concurrent changes. If another deployment is in progress, I wait for it to complete. If the process has crashed or the lock is stale, I identify the lock holder and safely remove the lock using `terraform force-unlock`. Before unlocking, I ensure no one else is actively using the state to avoid state corruption.
+
+---
+
+# Troubleshooting Steps
+
+## 1. Read the Error Message
+
+Terraform usually displays:
+- Lock ID
+- Who acquired the lock
+- Timestamp
+- Backend information (S3, DynamoDB, Azure Blob, etc.)
+
+---
+
+## 2. Verify Another Deployment
+
+Check:
+- Jenkins pipeline
+- GitHub Actions
+- Azure DevOps pipeline
+- Another engineer running Terraform locally
+
+If yes, **wait for the deployment to complete**.
+
+---
+
+## 3. Check Backend Lock
+
+### AWS (S3 + DynamoDB)
+
+Verify the lock exists in the DynamoDB table.
+
+---
+
+## 4. If the Lock is Stale
+
+If the previous Terraform process crashed:
+
+```bash
+terraform force-unlock <LOCK_ID>
+```
+
+Example:
+
+```bash
+terraform force-unlock 9f0e6f24-3f8d-4c6f-a7d1-123456789abc
+```
+
+---
+
+## 5. Verify State
+
+```bash
+terraform plan
+```
+
+Ensure the state is consistent before applying changes.
+
+---
+
+## 6. Deploy Again
+
+```bash
+terraform apply
+```
+
+---
 
 Get thses question from whatapp resources.
 ========================
