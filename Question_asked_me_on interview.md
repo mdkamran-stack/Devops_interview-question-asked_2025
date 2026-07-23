@@ -92,6 +92,7 @@ To share the EC2 instance ID between Terraform modules, I expose the instance ID
 In production, the deployment process starts when a developer pushes code to Git. A CI tool such as Jenkins or builds and tests the application, creates a Docker image, and pushes it to a container registry like ECR. A CD tool such as Argo CD then deploys the updated Kubernetes manifests or Helm chart to the cluster. Kubernetes creates or updates the Deployment, which manages ReplicaSets and Pods. A Service exposes the Pods internally, and an Ingress or LoadBalancer exposes the application externally. After deployment, I verify the rollout using kubectl rollout status and monitor the Pods and application health
 ### how to setup k8s in eks    
 > I start by creating a VPC with public and private subnets across multiple Availability Zones. Then I create the EKS cluster and managed node groups using `eksctl` or Terraform. After configuring `kubectl`, I install essential add-ons such as the VPC CNI, CoreDNS, kube-proxy, AWS Load Balancer Controller, Metrics Server, EBS CSI Driver, and Cluster Autoscaler. Finally, I deploy applications, configure monitoring with Prometheus and Grafana, enable autoscaling, and secure the cluster using IAM roles, RBAC, and AWS Secrets Manager.
+---
 ### types of loadbalancer in k8s    
  Kubernetes Service Types
 
@@ -101,6 +102,8 @@ In production, the deployment process starts when a developer pushes code to Git
 | NodePort | Outside via Node IP and Port | Testing and development |
 | LoadBalancer | Internet (Cloud Provider) | Production applications |
 | ExternalName | External DNS | External services |
+---
+
 ### how to setup hpa na vpa    
 HPA (Horizontal Pod Autoscaler)
 
@@ -140,9 +143,12 @@ Use case:
 
 If a Pod needs more memory, VPA increases its CPU/memory requests.
 It may recreate Pods to apply the new resource settings.
+---
 
-### what is selinux    
-### what is loadbalncer in aws & how to setup app LB and NW LB , how network LB works    
+### what is selinux
+
+---
+# what is loadbalncer in aws & how to setup app LB and NW LB , how network LB works    
 How to Set Up an Application Load Balancer (ALB)
 
 ## Step 1: Launch EC2 Instances
@@ -280,10 +286,8 @@ HTTP
 ```
 
 ---
-### What is the difference between the count and for_each meta-arguments?    
+# What is the difference between the count and for_each meta-arguments?    
 > Both **`count`** and **`for_each`** are Terraform meta-arguments used to create multiple resources. The key difference is that **`count`** creates resources using a numeric index, while **`for_each`** creates resources using unique keys from a map or set. I use **`count`** when all resources are nearly identical, and **`for_each`** when each resource has unique attributes or names. In production, `for_each` is generally preferred because it provides stable resource addressing and avoids unnecessary resource recreation when items are added or removed.
-
----
 
 # count
 
@@ -340,11 +344,11 @@ resource "aws_instance" "web" {
   }
 }
 
----  
+---    
 
-### how to communicate with two infrastructure?
+# how to communicate with two infrastructure?
 
-The communication method depends on where the infrastructures are hosted. If both are AWS VPCs, I use **VPC Peering** or **AWS Transit Gateway**. If communication is between on-premises and AWS, I use **Site-to-Site VPN** or **AWS Direct Connect**. For communication between different cloud providers such as AWS and Azure, I use **VPN** or **Direct Connect + ExpressRoute**. After connectivity is established, I configure **route tables**, **security groups**, and **network ACLs** to allow only the required traffic.
+## The communication method depends on where the infrastructures are hosted. If both are AWS VPCs, I use **VPC Peering** or **AWS Transit Gateway**. If communication is between on-premises and AWS, I use **Site-to-Site VPN** or **AWS Direct Connect**. For communication between different cloud providers such as AWS and Azure, I use **VPN** or **Direct Connect + ExpressRoute**. After connectivity is established, I configure **route tables**, **security groups**, and **network ACLs** to allow only the required traffic.
 
 ---
 
