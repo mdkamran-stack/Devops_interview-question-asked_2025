@@ -52,6 +52,7 @@ two module a & b moudle a is creating ec2 instance module instance id how to to 
 ### create 10 ubnut server with apache installations  /var/lib/html via terraform   
 ### write shell script get the process with user name kamran and kill the process   
 ### how to deploy application in k8s     
+In production, the deployment process starts when a developer pushes code to Git. A CI tool such as Jenkins or builds and tests the application, creates a Docker image, and pushes it to a container registry like ECR. A CD tool such as Argo CD then deploys the updated Kubernetes manifests or Helm chart to the cluster. Kubernetes creates or updates the Deployment, which manages ReplicaSets and Pods. A Service exposes the Pods internally, and an Ingress or LoadBalancer exposes the application externally. After deployment, I verify the rollout using kubectl rollout status and monitor the Pods and application health
 ### how to setup k8s in eks    
 ### types of loadbalancer in k8s    
 ### how to setup hpa na vpa    
