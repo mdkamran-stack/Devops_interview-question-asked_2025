@@ -7,6 +7,11 @@ A multi-stage Dockerfile uses multiple FROM statements in a single Dockerfile to
 ## Setup build application multibrach java app and load the artifactory  
 ## Autobuild jenkins pipeline  
 ## How to push repository in nexus  
+Method 2: Upload Using cURL 
+curl -u username:password \
+--upload-file app.jar \
+http://nexus.company.com/repository/maven-releases/app.jar
+
 ## Jenkins jobs running almost 2 hours jobs start normally.
 ## aws secret can't fetched how do you debug.
 
