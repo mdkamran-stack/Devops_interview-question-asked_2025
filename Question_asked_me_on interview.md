@@ -3,6 +3,7 @@
 # Trinet
 
 ## What is multistage docker file why it is used. 
+A multi-stage Dockerfile uses multiple FROM statements in a single Dockerfile to separate the build environment from the runtime environment.
 ## Setup build application multibrach java app and load the artifactory  
 ## Autobuild jenkins pipeline  
 ## How to push repository in nexus  
