@@ -3,6 +3,15 @@ Use above linkedin id for AWS sceanrio based questions
 Below services must have clear understanding check KR NEtwork video   
 1: EC2  - run apps   2: S3 -sore file    3: IAM - manage access   4: RDS  - databases    5: LAMBDA - run code without server   6: cloudwatch  -Monitor     7: VPC - Network setup   7>> scp  EC2 isntance cant connect how to debug  
 
+# AWS Infrastrucutre
+1> Route 53 DNS Service connect domain name to AWS  
+2> Cloud front where fronted served globally paired with S3 where static content saved   
+3> fronted calls to backend API Gateway acts as entry point auhentication routing ratelimiting & access control   
+4> To run our application aws gives 3 services Lambda ECS EC2 ec2 is vm where we choose ram disk  manager run time ENV on ECS when you want to run docker conatiner ECS is perfect when our app is containerized, lambda it is serverless no need to manage server only we have to loda funtion and aws will run it best for event drive archececture. 
+5> for heavy workload like emailing notification generation SQS  
+6> to storing data we have 2 option RDS and dynamoDB RDS we use when we need relational DB like mysql postgresql , we use Dynamodb for nosql workload.  
+7> last we have S3 for object storage where we upload images videos logs file backup.
+
 ## P1 AWS Scenarios  
 During a peak traffic event, API response times increased to 8 seconds. I checked CloudWatch and found EC2 CPU utilization above 90%. The Auto Scaling policy was misconfigured and not scaling. I manually increased capacity, restored service within 10 minutes, corrected the scaling policy, and added alerts and load testing to prevent recurrence.
 
