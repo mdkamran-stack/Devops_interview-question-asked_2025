@@ -459,17 +459,17 @@ In my recent project, we hosted a highly available microservices application on 
 First, I check CloudWatch or Prometheus/Grafana to confirm the traffic spike and identify the affected layer by looking at request rate, CPU, memory, latency, and error rates. Then I check the ALB and application health, followed by the database and downstream dependencies. If the application is the bottleneck, I scale horizontally using ASG or HPA. If EKS nodes are insufficient, I use Karpenter or Cluster Autoscaler. If the database is the bottleneck, I address its capacity or connection limits. For excessive or cacheable traffic, I use WAF, rate limiting, and CloudFront. After scaling, I verify that latency and errors return to normal, and finally I perform RCA and update the runbook and autoscaling configuration.
 
 ### Question: Expalin vpc component and traffic flow how it happen  
-VPC Components
-VPC – Private network in AWS.
-Public Subnet – Hosts internet-facing resources (ALB, Bastion Host, NAT Gateway).
-Private Subnet – Hosts application servers, EKS worker nodes, RDS.
-Internet Gateway (IGW) – Enables internet access for public subnets.
-NAT Gateway – Allows private subnet resources to access the internet for outbound traffic only.
-Route Table – Determines where traffic is routed.
-Security Group (SG) – Stateful firewall attached to resources.
-Network ACL (NACL) – Stateless firewall applied at the subnet level.
-Elastic IP – Static public IP address.
-VPC Endpoint – Private access to AWS services without using the internet.
+VPC Components  
+VPC – Private network in AWS.  
+Public Subnet – Hosts internet-facing resources (ALB, Bastion Host, NAT Gateway).  
+Private Subnet – Hosts application servers, EKS worker nodes, RDS.  
+Internet Gateway (IGW) – Enables internet access for public subnets.  
+NAT Gateway – Allows private subnet resources to access the internet for outbound traffic only.  
+Route Table – Determines where traffic is routed.  
+Security Group (SG) – Stateful firewall attached to resources.  
+Network ACL (NACL) – Stateless firewall applied at the subnet level.  
+Elastic IP – Static public IP address.  
+VPC Endpoint – Private access to AWS services without using the internet.  
 
 ### Question: How does NAT Gateway works internally  
 A NAT Gateway enables instances in a private subnet to initiate outbound connections to the internet while preventing unsolicited inbound connections. Internally, it performs Source Network Address Translation (SNAT) by replacing the private IP address of the instance with its own Elastic IP address. It also maintains a connection tracking table so that when the response returns from the internet, it translates the destination back to the original private IP and forwards the traffic to the instance. 
