@@ -159,6 +159,13 @@ resource "aws_route_table_association" "public" {
 
 # EC2 instance_TF_File 
 
+main.tf
+
+AWS Provider
+provider "aws" {
+  region = "ap-south-1"
+}
+Find Latest Amazon Linux AMI
 data "aws_ami" "amazon_linux" {
   most_recent = true
 
@@ -174,17 +181,37 @@ data "aws_ami" "amazon_linux" {
     values = ["available"]
   }
 }
-
-Example EC2 resource:
-
+EC2 Instance
 resource "aws_instance" "web" {
   ami           = data.aws_ami.amazon_linux.id
   instance_type = var.instance_type
   subnet_id     = var.subnet_id
 
   tags = {
-    Name = "web-server"
+    Name = var.instance_name
   }
+}
+variables.tf
+variable "instance_type" {
+  type    = string
+  default = "t3.micro"
+}
+
+variable "subnet_id" {
+  type = string
+}
+
+variable "instance_name" {
+  type    = string
+  default = "web-server"
+}
+outputs.tf
+output "instance_id" {
+  value = aws_instance.web.id
+}
+
+output "private_ip" {
+  value = aws_instance.web.private_ip
 }
 
 Interview Explanation
