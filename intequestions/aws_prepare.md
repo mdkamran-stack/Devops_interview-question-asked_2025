@@ -94,148 +94,70 @@ Backups
 # tf module for vpc 
 # modules/vpc/variables.tf
 
-variable "vpc_cidr" {
-  type = string
-}
+provider "aws" {  
+  region = "ap-south-1"  
+}  
 
-variable "vpc_name" {
-  type = string
-}
+# VPC  
+resource "aws_vpc" "main" {  
+  cidr_block = "10.0.0.0/16"  
 
-variable "public_subnet_cidr" {
-  type = string
-}
+  tags = {  
+    Name = "my-vpc"    
+  }  
+}  
 
-variable "private_subnet_cidr" {
-  type = string
-}
+# Internet Gateway  
+resource "aws_internet_gateway" "main" {  
+  vpc_id = aws_vpc.main.id  
 
-variable "availability_zone" {
-  type = string
-}
+  tags = {  
+    Name = "my-igw"  
+  }  
+}  
 
-# modules/vpc/main.tf
+# Public Subnet    
+resource "aws_subnet" "public" {  
+  vpc_id                  = aws_vpc.main.id   
+  cidr_block              = "10.0.1.0/24"  
+  map_public_ip_on_launch = true  
 
-VPC
+  tags = {  
+    Name = "public-subnet"  
+  }  
+}  
 
-resource "aws_vpc" "this" {
-  cidr_block           = var.vpc_cidr
-  enable_dns_support   = true
-  enable_dns_hostnames = true
+# Private Subnet  
+resource "aws_subnet" "private" {  
+  vpc_id     = aws_vpc.main.id  
+  cidr_block = "10.0.2.0/24"  
 
-  tags = {
-    Name = var.vpc_name
-  }
-}
+  tags = {  
+    Name = "private-subnet"  
+  }  
+}  
 
-Internet Gateway
+# Public Route Table  
+resource "aws_route_table" "public" {  
+  vpc_id = aws_vpc.main.id  
 
-resource "aws_internet_gateway" "this" {
-  vpc_id = aws_vpc.this.id
+  route {   
+    cidr_block = "0.0.0.0/0"  
+    gateway_id = aws_internet_gateway.main.id  
+  }  
 
-  tags = {
-    Name = "${var.vpc_name}-igw"
-  }
-}
+  tags = {  
+    Name = "public-route-table"  
+  }  
+}  
 
-Public Subnet
+# Public Subnet - Route Table Association  
+resource "aws_route_table_association" "public" {  
+  subnet_id      = aws_subnet.public.id  
+  route_table_id = aws_route_table.public.id  
+}  
 
-resource "aws_subnet" "public" {
-  vpc_id                  = aws_vpc.this.id
-  cidr_block              = var.public_subnet_cidr
-  availability_zone       = var.availability_zone
-  map_public_ip_on_launch = true
-
-  tags = {
-    Name = "${var.vpc_name}-public"
-  }
-}
-
-Private Subnet
-
-resource "aws_subnet" "private" {
-  vpc_id            = aws_vpc.this.id
-  cidr_block        = var.private_subnet_cidr
-  availability_zone = var.availability_zone
-
-  tags = {
-    Name = "${var.vpc_name}-private"
-  }
-}
-
-Public Route Table
-
-resource "aws_route_table" "public" {
-  vpc_id = aws_vpc.this.id
-
-  route {
-    cidr_block = "0.0.0.0/0"
-    gateway_id = aws_internet_gateway.this.id
-  }
-
-  tags = {
-    Name = "${var.vpc_name}-public-rt"
-  }
-}
-
-Public Subnet Association
-
-resource "aws_route_table_association" "public" {
-  subnet_id      = aws_subnet.public.id
-  route_table_id = aws_route_table.public.id
-}
-
-# modules/vpc/outputs.tf
-
-output "vpc_id" {
-  value = aws_vpc.this.id
-}
-
-output "public_subnet_id" {
-  value = aws_subnet.public.id
-}
-
-output "private_subnet_id" {
-  value = aws_subnet.private.id
-}
-
-# Root main.tf
-
-provider "aws" {
-  region = "ap-south-1"
-}
-
-module "vpc" {
-  source = "./modules/vpc"
-
-  vpc_name = "interview-vpc"
-  vpc_cidr = "10.0.0.0/16"
-
-  public_subnet_cidr  = "10.0.1.0/24"
-  private_subnet_cidr = "10.0.2.0/24"
-
-  availability_zone = "ap-south-1a"
-}
-
-Interview Explanation
-
-variables.tf defines module inputs.
-
-main.tf creates the AWS resources.
-
-outputs.tf exposes values to the root module.
-
-A subnet is public because its associated route table has 0.0.0.0/0 pointing to an Internet Gateway.
-
-The private subnet does not have a route to the Internet Gateway.
-
-If the private EC2 needs outbound internet access for package updates, add a NAT Gateway in the public subnet and route the private subnet through it.
-
-2. EC2 Instance
-
-Dynamic Amazon Linux AMI
-
-# EC2 instance 
+# EC2 instance_TF_File 
 
 data "aws_ami" "amazon_linux" {
   most_recent = true
