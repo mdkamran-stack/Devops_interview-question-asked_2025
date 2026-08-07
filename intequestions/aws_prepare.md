@@ -284,3 +284,7 @@ output "bucket_id" {
 output "bucket_arn" {
   value = aws_s3_bucket.this.arn
 }
+
+# How would you set up an EKS cluster?"
+
+I would provision the EKS infrastructure using Terraform. First, I create a multi-AZ VPC with public and private subnets. The EKS control plane is AWS-managed, while worker nodes are deployed in private subnets. I configure IAM roles for the EKS cluster and node groups, security groups, and the required networking. Then I create the EKS cluster, add managed node groups, configure the AWS VPC CNI, CoreDNS and kube-proxy, and configure access using IAM and Kubernetes RBAC. Finally, I install the AWS Load Balancer Controller, configure monitoring and logging, and validate cluster connectivity and workloads."
