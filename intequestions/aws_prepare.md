@@ -91,9 +91,8 @@ User access
 Monitoring and CloudWatch
 Backups  
 
-# Terraform module for vpc 
-
 modules/vpc/variables.tf
+
 variable "vpc_cidr" {
   type = string
 }
@@ -113,11 +112,11 @@ variable "private_subnet_cidr" {
 variable "availability_zone" {
   type = string
 }
-Security Groups
-Performance
 
-# modules/vpc/main.tf
- VPC
+modules/vpc/main.tf
+
+VPC
+
 resource "aws_vpc" "this" {
   cidr_block           = var.vpc_cidr
   enable_dns_support   = true
@@ -128,7 +127,8 @@ resource "aws_vpc" "this" {
   }
 }
 
-# Internet Gateway
+Internet Gateway
+
 resource "aws_internet_gateway" "this" {
   vpc_id = aws_vpc.this.id
 
@@ -137,7 +137,8 @@ resource "aws_internet_gateway" "this" {
   }
 }
 
-# Public Subnet
+Public Subnet
+
 resource "aws_subnet" "public" {
   vpc_id                  = aws_vpc.this.id
   cidr_block              = var.public_subnet_cidr
@@ -149,7 +150,8 @@ resource "aws_subnet" "public" {
   }
 }
 
-# Private Subnet
+Private Subnet
+
 resource "aws_subnet" "private" {
   vpc_id            = aws_vpc.this.id
   cidr_block        = var.private_subnet_cidr
@@ -160,7 +162,8 @@ resource "aws_subnet" "private" {
   }
 }
 
-# Public Route Table
+Public Route Table
+
 resource "aws_route_table" "public" {
   vpc_id = aws_vpc.this.id
 
@@ -174,12 +177,15 @@ resource "aws_route_table" "public" {
   }
 }
 
-# Public Subnet Association
+Public Subnet Association
+
 resource "aws_route_table_association" "public" {
   subnet_id      = aws_subnet.public.id
   route_table_id = aws_route_table.public.id
 }
-# modules/vpc/outputs.tf
+
+modules/vpc/outputs.tf
+
 output "vpc_id" {
   value = aws_vpc.this.id
 }
@@ -192,7 +198,7 @@ output "private_subnet_id" {
   value = aws_subnet.private.id
 }
 
-# Root main.tf
+Root main.tf
 
 provider "aws" {
   region = "ap-south-1"
@@ -208,9 +214,27 @@ module "vpc" {
   private_subnet_cidr = "10.0.2.0/24"
 
   availability_zone = "ap-south-1a"
-}  
+}
 
-# EC2 instance 
+Interview Explanation
+
+variables.tf defines module inputs.
+
+main.tf creates the AWS resources.
+
+outputs.tf exposes values to the root module.
+
+A subnet is public because its associated route table has 0.0.0.0/0 pointing to an Internet Gateway.
+
+The private subnet does not have a route to the Internet Gateway.
+
+If the private EC2 needs outbound internet access for package updates, add a NAT Gateway in the public subnet and route the private subnet through it.
+
+2. EC2 Instance
+
+Dynamic Amazon Linux AMI
+
+Avoid hardcoding the AMI ID when the requirement is to use the latest Amazon Linux image.
 
 data "aws_ami" "amazon_linux" {
   most_recent = true
@@ -228,9 +252,35 @@ data "aws_ami" "amazon_linux" {
   }
 }
 
-# S3 bucket creation
+Example EC2 resource:
+
+resource "aws_instance" "web" {
+  ami           = data.aws_ami.amazon_linux.id
+  instance_type = var.instance_type
+  subnet_id     = var.subnet_id
+
+  tags = {
+    Name = "web-server"
+  }
+}
+
+Interview Explanation
+
+I avoid hardcoding AMI IDs. I use the aws_ami data source to dynamically find the required Amazon Linux AMI. In an enterprise environment, if the organization uses a golden AMI, I would pass the approved AMI ID as a variable instead.
+
+3. S3 Bucket Creation
+
+Folder Structure
+
+terraform/
+└── modules/
+    └── s3/
+        ├── main.tf
+        ├── variables.tf
+        └── outputs.tf
 
 modules/s3/variables.tf
+
 variable "bucket_name" {
   type = string
 }
@@ -239,7 +289,10 @@ variable "environment" {
   type = string
 }
 
-# modules/s3/main.tf
+modules/s3/main.tf
+
+S3 Bucket
+
 resource "aws_s3_bucket" "this" {
   bucket = var.bucket_name
 
@@ -249,6 +302,8 @@ resource "aws_s3_bucket" "this" {
   }
 }
 
+Versioning
+
 resource "aws_s3_bucket_versioning" "this" {
   bucket = aws_s3_bucket.this.id
 
@@ -256,6 +311,8 @@ resource "aws_s3_bucket_versioning" "this" {
     status = "Enabled"
   }
 }
+
+Server-Side Encryption
 
 resource "aws_s3_bucket_server_side_encryption_configuration" "this" {
   bucket = aws_s3_bucket.this.id
@@ -267,6 +324,8 @@ resource "aws_s3_bucket_server_side_encryption_configuration" "this" {
   }
 }
 
+Public Access Block
+
 resource "aws_s3_bucket_public_access_block" "this" {
   bucket = aws_s3_bucket.this.id
 
@@ -276,13 +335,23 @@ resource "aws_s3_bucket_public_access_block" "this" {
   restrict_public_buckets = true
 }
 
-# modules/s3/outputs.tf
+modules/s3/outputs.tf
+
 output "bucket_id" {
   value = aws_s3_bucket.this.id
 }
 
 output "bucket_arn" {
   value = aws_s3_bucket.this.arn
+}
+
+Example Root Module
+
+module "s3" {
+  source = "./modules/s3"
+
+  bucket_name = "my-interview-bucket-12345"
+  environment = "prod"
 }
 
 # How would you set up an EKS cluster?"
