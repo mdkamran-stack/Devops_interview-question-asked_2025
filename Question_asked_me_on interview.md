@@ -456,13 +456,7 @@ master node build that
 In my recent project, we hosted a highly available microservices application on AWS using Amazon EKS. The infrastructure was deployed across multiple Availability Zones within a custom VPC. The VPC had public and private subnets. Public subnets hosted the Internet-facing Application Load Balancer and NAT Gateways, while private subnets hosted the EKS worker nodes and application workloads. We used Terraform to provision the infrastructure and Jenkins for CI. After the Docker image was built and scanned, it was pushed to Nexus/ECR. Argo CD handled continuous deployment to the EKS cluster using a GitOps approach.
 
 # How do you approach sudden traffic spikes in production?
-Step-by-Step Approach
-Identify the cause – Genuine traffic or DDoS?
-Check monitoring – CPU, memory, response time, error rates (CloudWatch, Prometheus, Grafana).
-Scale the application – Auto Scaling Group (EC2) or HPA (Kubernetes).
-Check dependencies – ALB, database, Redis/cache, queues.
-Mitigate if needed – Use CloudFront, WAF, Shield, rate limiting.
-Monitor and validate – Ensure the application remains healthy and stable.
+First, I check CloudWatch or Prometheus/Grafana to confirm the traffic spike and identify the affected layer by looking at request rate, CPU, memory, latency, and error rates. Then I check the ALB and application health, followed by the database and downstream dependencies. If the application is the bottleneck, I scale horizontally using ASG or HPA. If EKS nodes are insufficient, I use Karpenter or Cluster Autoscaler. If the database is the bottleneck, I address its capacity or connection limits. For excessive or cacheable traffic, I use WAF, rate limiting, and CloudFront. After scaling, I verify that latency and errors return to normal, and finally I perform RCA and update the runbook and autoscaling configuration.
 
 ### Question: Expalin vpc component and traffic flow how it happen  
 VPC Components
