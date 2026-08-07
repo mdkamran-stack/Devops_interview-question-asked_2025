@@ -91,6 +91,20 @@ User access
 Monitoring and CloudWatch
 Backups  
 
+# Cross account Account A wants to access account B S3 access  
+
+1. Create an IAM role in Account B
+
+The role has a trust policy allowing Account A to assume it.  
+
+2. Give the role S3 permissions
+
+Attach a least-privilege S3 policy to the role in Account B, such as s3:GetObject and s3:ListBucket.
+
+3. Account A assumes the role
+
+The principal in Account A uses STS AssumeRole to assume the Account B role and gets temporary credentials, which it uses to access the S3 bucket.
+
 # tf module for vpc 
 # modules/vpc/variables.tf
 
