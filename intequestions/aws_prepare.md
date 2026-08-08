@@ -225,12 +225,15 @@ type =string
 default = "web-server"  
 }  
 
-output.tf  
+# output.tf  
 
-out "instance.id" {  
-value = aws_insatnce.web.private_ip   
-}  
+output "instance_id" {
+  value = aws_instance.this.id
+}
 
+output "private_ip" {
+  value = aws_instance.this.private_ip
+}
 I avoid hardcoding AMI IDs. I use the aws_ami data source to dynamically find the required Amazon Linux AMI. In an enterprise environment, if the organization uses a golden AMI, I would pass the approved AMI ID as a variable instead.
 
 # S3 Bucket Creation
