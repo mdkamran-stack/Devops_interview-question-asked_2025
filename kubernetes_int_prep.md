@@ -76,8 +76,14 @@ A toleration is added in pod specification to allow the pod to run on tainted no
 ## Affinity >> Affinity tells Kubernetes to place pods together based on labels or node conditions.  
 ## Anti-Affinity >> Anti-affinity tells Kubernetes not to place certain pods together.  
 
-# CrashllopBackoff Error Resolution.  
 # CrashLoopBackOff in Kubernetes
+
+## Explain: when we deploying app to k8s at lower level k8s will create a pod inside conatiner our app is running because of some reason app is crash and conatainer is also crash 
+As conatiner is crash k8s is retrying to restart conatainer multiple times this called as crashloopbackoff error. the main cause is application crash 
+## reason 
+1 missing env variable at application level app is not able to initiate connectivity to the database may be liveness probe is not correctly configured may be application itself has
+some error may be incorrect CMD or entry point command mentioned into a docker file their could be multiple reason 
+simply check log of pod "kubectl log pod pod name along with that use --previous you may get logs of previously crashed conatiner.
 
 ## What is CrashLoopBackOff?
 
