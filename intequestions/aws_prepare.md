@@ -387,6 +387,17 @@ pipeline {
         }
     }
 }
+
+# if we have to show env variable 
+stage('Build') {
+    environment {
+        ENV = "dev"
+    }
+
+    steps {
+        sh 'echo $ENV'
+    }
+}
 ```
 
 # Multi-Stage Dockerfile for Node.js
