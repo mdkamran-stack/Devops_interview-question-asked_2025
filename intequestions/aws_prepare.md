@@ -98,12 +98,12 @@ Backups
 The role has a trust policy allowing Account A to assume it.  
 
 2. Give the role S3 permissions
-
-Attach a least-privilege S3 policy to the role in Account B, such as s3:GetObject and s3:ListBucket.
+   
+I attach least-privilege S3 permissions to that role.
 
 3. Account A assumes the role
 
- Account B role and gets temporary credentials, which it uses to access the S3 bucket.
+Account A uses AWS STS AssumeRole to obtain temporary credentials and access the S3 bucket in Account B.
 
 # tf module for vpc 
 # modules/vpc/variables.tf
