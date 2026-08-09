@@ -103,7 +103,7 @@ Attach a least-privilege S3 policy to the role in Account B, such as s3:GetObjec
 
 3. Account A assumes the role
 
-The principal in Account A uses STS AssumeRole to assume the Account B role and gets temporary credentials, which it uses to access the S3 bucket.
+ Account B role and gets temporary credentials, which it uses to access the S3 bucket.
 
 # tf module for vpc 
 # modules/vpc/variables.tf
