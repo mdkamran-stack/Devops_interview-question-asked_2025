@@ -89,6 +89,8 @@ But application inside container crashes repeatedly
 Kubelet keeps restarting the container continuously
 ```
 
+when we deploy application to 
+
 Flow:
 
 ```text
@@ -98,6 +100,14 @@ Start → Crash → Restart → Crash
 ---
 
 # Common Reasons Behind CrashLoopBackOff
+
+Explain : when it comes to image pull back off error try to understand how it occurs when we deploying a application to k8s at lower level k8s will create a pod when it creating conatainer indside pod it need docker image but we get imagepullbackoff error when k8s is not able to pull docker image from container registry then we get imagepullbackerror.
+Below reson could be for this issue 
+1> name of the the docker image is not correctly mention in k8s manifest file  
+2> image we have mentioned in manifest file is doesn't exist in the registry 
+3> sometime image stored in the private registry but container is not able to authenticate to that container registry which is private registry
+4> secret are not configured correctly 
+kubectl describe pod ( in the event section we get specific error and after checking error verify the correct docker image may the image pull secret in manifest file .
 
 ## 1. Application Crash
 - Unhandled exception
