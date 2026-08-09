@@ -91,6 +91,21 @@ User access
 Monitoring and CloudWatch
 Backups  
 
+# Aws Cost Optimization:
+
+1> Selecting right size of EC2 instance based on upon cpu & memory utilization of application workload we selct rigt size of insatnce if we have predictable workload if we are planning 
+to use application one yeayr or more than that we will go for reserved instance which provide upto 75% discount compare to ondemand insatnces.
+
+2> we use spot instance for non production workload 
+3> In my curent project we have microservices based application which runs on eks cluster we are using aws eks in eks we can also follow some cost optimization startegies like we are using clsuter autoscaler that is nothing but autoscaling group itself promte cost optimzation because when running instances whenever needed along with that define right size of cpu & memory limits in my clsuter 
+4> followed but when it comes to stoarage i can also do the cost optimization by moving the data from one storage to another storage by using S3 lifecycle policy by deleting unused snapshort and EBS volume .
+5> when it comes to networking instead of using nat gateway we can use vpc endpoints within the aws communication if it goes through vpc endpoint we avoid the charge of nat & data transfer cost.  
+6> we use right size of database instances 
+7> we have some native services in aws aws cost oxplorer i can track daily weekly and montly costing of my resources i can create some budget and cost anamoly alert if it reaches we get an alert .
+
+# Disaster recovery setup
+In Production we run the application in a primary aws region and maintain DR environment in a secondary Region we use aws backup for scheduled backup and cross region copies, with encryption using KMS , for critical application we maintain a warm standy or multi site DR environment , route53 monitors the primary endpoint using health check s and if the primary Region failes DNS traffic is automatically failed over to the DR Region we define RTO and RPO based on business requirements .
+
 # Cross account Account A wants to access account B S3 access  
 
 1. Create an IAM role in Account B
