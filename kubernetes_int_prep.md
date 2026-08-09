@@ -105,7 +105,7 @@ Start → Crash → Restart → Crash
 
 ---
 
-# Common Reasons Behind CrashLoopBackOff
+# Common Reasons Behind ImageLoopBackOff
 
 Explain : when it comes to image pull back off error try to understand how it occurs when we deploying a application to k8s at lower level k8s will create a pod when it creating conatainer indside pod it need docker image but we get imagepullbackoff error when k8s is not able to pull docker image from container registry then we get imagepullbackerror.
 Below reson could be for this issue 
@@ -114,6 +114,7 @@ Below reson could be for this issue
 3> sometime image stored in the private registry but container is not able to authenticate to that container registry which is private registry
 4> secret are not configured correctly 
 kubectl describe pod ( in the event section we get specific error and after checking error verify the correct docker image may the image pull secret in manifest file .
+
 
 ## 1. Application Crash
 - Unhandled exception
