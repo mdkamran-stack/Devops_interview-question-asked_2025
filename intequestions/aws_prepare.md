@@ -249,14 +249,6 @@ output "private_ip" {
 
 # S3 Bucket Creation
 
-Folder Structure
-
-terraform/
-└── modules/
-    └── s3/
-        ├── main.tf
-        ├── variables.tf
-        └── outputs.tf
 
 # modules/s3/variables.tf
 
@@ -270,68 +262,36 @@ variable "environment" {
 
 # modules/s3/main.tf
 
-S3 Bucket
+#S3 Bucket
+# main.tf  
+provider "aws" {   
+region = "ap-south-1"  
+}  
+resource "aws_s3_bucket" "my_bucket" {   
+bucket = var.bucket_name  
+tags = {   
+Name = var.bucket_name    
+Environment = var.environment    
+}  
+}  
 
-resource "aws_s3_bucket" "this" {
-  bucket = var.bucket_name
+# variables.tf
+variable "bucket_name" {  
+  type = string  
+}  
 
-  tags = {
-    Name        = var.bucket_name
-    Environment = var.environment
-  }
-}
+variable "environment" {  
+  type    = string  
+  default = "dev"  
+}  
 
-Versioning
-
-resource "aws_s3_bucket_versioning" "this" {
-  bucket = aws_s3_bucket.this.id
-
-  versioning_configuration {
-    status = "Enabled"
-  }
-}
-
-Server-Side Encryption
-
-resource "aws_s3_bucket_server_side_encryption_configuration" "this" {
-  bucket = aws_s3_bucket.this.id
-
-  rule {
-    apply_server_side_encryption_by_default {
-      sse_algorithm = "AES256"
-    }
-  }
-}
-
-Public Access Block
-
-resource "aws_s3_bucket_public_access_block" "this" {
-  bucket = aws_s3_bucket.this.id
-
-  block_public_acls       = true
-  block_public_policy     = true
-  ignore_public_acls      = true
-  restrict_public_buckets = true
-}
-
-# modules/s3/outputs.tf
-
-output "bucket_id" {
-  value = aws_s3_bucket.this.id
-}
-
-output "bucket_arn" {
-  value = aws_s3_bucket.this.arn
-}
-
-# Example Root Module
-
-module "s3" {
-  source = "./modules/s3"
-
-  bucket_name = "my-interview-bucket-12345"
-  environment = "prod"
-}
+# output.tf  
+output "bucket_name" {  
+value = aws_s3_bucket.my_bucket.bucket    
+}    
+output "bucket_arn" {   
+value = aws_s3_bucket.my_bucket.arn   
+}   
 
 # How would you set up an EKS cluster?"
 
