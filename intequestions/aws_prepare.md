@@ -7,6 +7,20 @@
 
 make sure public subent as route to IGW  whereas private subnet has route to natgateway 
 
+Instance types
+General purpose T2 M5 M4 M3
+Memory optimized x1e X1 R4 R3
+Storage opt h1 i3 D2
+Accelarated computing P3 P2 G3 F1
+Compute opt C5 C4 C3  
+
+# EC2 instance in private subnet need package update
+1 create natgateway attach to public subnet with your vpc & Allocate ealstic ip
+
+3 Edit route table of private subnet add route 0.0.0.0 target should be natgateway
+
+make sure public subent as route to IGW whereas private subnet has route to natgateway
+
 # How to migrate :  hot migration migration on running mc   cold migration off the m/c do the migration
 # migration of DB on-perm to aws 
 ## Correct DMS Migration Flow (On-premises → AWS RDS)  
