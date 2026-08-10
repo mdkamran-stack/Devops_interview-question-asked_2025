@@ -128,8 +128,7 @@ I attach least-privilege S3 permissions to that role.
 
 Account A uses AWS STS AssumeRole to obtain temporary credentials and access the S3 bucket in Account B.
 
-# tf module for vpc 
-# modules/vpc/variables.tf
+# terraform module for vpc 
 
 provider "aws" {  
   region = "ap-south-1"  
