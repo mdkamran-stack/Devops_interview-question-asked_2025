@@ -195,68 +195,57 @@ resource "aws_route_table_association" "public" {
 
 # EC2 instance_TF_File 
 
-AWS Provider block 
+1. main.tf
+provider "aws" {
+  region = "ap-south-1"
+}
 
-provider "aws" { 
-region = "ap-south-1"  
+data "aws_ami" "amazon_linux" {
+  most_recent = true
+  owners      = ["amazon"]
 
-}  
+  filter {
+    name   = "name"
+    values = ["al2023-ami-*-x86_64"]
+  }
 
-Find Latest Amzon AMI  
+  filter {
+    name   = "state"
+    values = ["available"]
+  }
+}
 
-data"aws_ami" "amazon_linux" {   
-most_recent =true  
+resource "aws_instance" "web" {
+  ami           = data.aws_ami.amazon_linux.id
+  instance_type = var.instance_type
+  subnet_id     = var.subnet_id
 
-owners = ["amazon"]  
+  tags = {
+    Name = var.instance_name
+  }
+}
+2. variables.tf
+variable "instance_type" {
+  type    = string
+  default = "t3.micro"
+}
 
-filter {  
-name = "name"  
-values = ["ami-*86_64"]  
-}  
+variable "subnet_id" {
+  type = string
+}
 
-fileter {  
-name = "state"  
-values = ["availability"]  
-}  
-}  
+variable "instance_name" {
+  type    = string
+  default = "web-server"
+}
+3. outputs.tf
+output "instance_id" {
+  value = aws_instance.web.id
+}
 
-# 2. Deploy instance using the dynamic AMI id   
-resource "aws_instacne" "web" {  
-ami = data.aws_ami linux.id  
-instacne_type "t3.micro"  
-subnet_id = var.subnet_id  
-
-tags = {  
-Name = "web_server"  
-}  
-}  
-
-# Varibale.tf 
-
-variable "instance_type" {  
-type = string    
-default ="t3.micro"  
-}  
-
-varibale "subnet_id" {  
-type = string   
-}  
-
-varibale "instance_name" {  
-type =string    
-default = "web-server"    
-}  
-
-# output.tf  
-
-output "instance_id" {  
-  value = aws_instance.this.id  
-}  
-
-output "private_ip" {  
-  value = aws_instance.this.private_ip  
-}  
-I avoid hardcoding AMI IDs. I use the aws_ami data source to dynamically find the required Amazon Linux AMI. In an enterprise environment, if the organization uses a golden AMI, I would pass the approved AMI ID as a variable instead.
+output "private_ip" {
+  value = aws_instance.web.private_ip
+}
 
 # S3 Bucket Creation
 
