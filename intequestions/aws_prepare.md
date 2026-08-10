@@ -249,48 +249,36 @@ output "private_ip" {
 
 # S3 Bucket Creation
 
-
-# modules/s3/variables.tf
-
-variable "bucket_name" {
-  type = string
-}
-
-variable "environment" {
-  type = string
-}
-
 # modules/s3/main.tf
 
-#S3 Bucket
 # main.tf  
-provider "aws" {   
-region = "ap-south-1"  
-}  
-resource "aws_s3_bucket" "my_bucket" {   
-bucket = var.bucket_name  
-tags = {   
-Name = var.bucket_name    
-Environment = var.environment    
+provider "aws" {     
+region = "ap-south-1"    
+}    
+resource "aws_s3_bucket" "my_bucket" {     
+bucket = var.bucket_name    
+tags = {    
+Name = var.bucket_name      
+Environment = var.environment      
 }  
 }  
 
 # variables.tf
-variable "bucket_name" {  
-  type = string  
-}  
+variable "bucket_name" {   
+  type = string    
+}   
 
 variable "environment" {  
-  type    = string  
-  default = "dev"  
-}  
+  type    = string    
+  default = "dev"    
+}    
 
 # output.tf  
-output "bucket_name" {  
-value = aws_s3_bucket.my_bucket.bucket    
+output "bucket_name" {    
+value = aws_s3_bucket.my_bucket.bucket      
 }    
-output "bucket_arn" {   
-value = aws_s3_bucket.my_bucket.arn   
+output "bucket_arn" {     
+value = aws_s3_bucket.my_bucket.arn     
 }   
 
 # How would you set up an EKS cluster?"
