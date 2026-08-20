@@ -27,6 +27,8 @@ Add-on services:
 
    Master1: Nic1-Private Network
             Nic2- Internet
+
+   # In OC NS = project in k8s it is namesapce but in OC it is project 
    
 # if their is two nw interface one for private one for public ping google not working it basically confused the we have use cmd ip route  and we have to set the matrix 
 
@@ -82,6 +84,9 @@ Client --Router ---service ---podIP
 
 
 Now we have to start from chapter 1 API resources
+
+# if check new deployment oc rollout history deploy deployment name 
+# how to cehck running version  oc describe deployment deployment name |grep -i image 
 
 
 
