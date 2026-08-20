@@ -53,6 +53,8 @@ oc create deploy test --image=registry.ocp4.example.com:8443/redhattraining/hell
 
 # Graphical command "oc whoami --show-console" 
 
+# Graphical user name is admin password redhatocp
+
 ## API Resources:
 Example
 1. Image url
